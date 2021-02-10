@@ -7,7 +7,7 @@
         "magento/module-sales": "100.0.*",
         "magento/module-checkout": "100.0.*",
         "magento/module-payment": "100.0.*",
-        "daanrijpkema/bluem-php":"master"
+        "daanrijpkema/bluem-php":"dev-master"
     },
     "type": "magento2-module",
     "version": "100.0.3",
