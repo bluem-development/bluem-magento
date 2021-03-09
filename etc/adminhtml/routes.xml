@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+<router id="admin">
+<route id="createmenubackend" frontName="createmenubackend">
+<module name="Bluem_Integration"/>
+</route>
+</router>
+</config>
+
+<!-- <?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="integration" frontName="integration">
+            <module name="Bluem_Integration" />
+        </route>
+    </router>
+</config> -->

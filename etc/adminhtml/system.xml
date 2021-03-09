@@ -1,50 +1,179 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
+        <tab id="bluem" translate="label" sortOrder="10">
+            <label>Bluem</label>
+        </tab>
+        <section id="integration" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>All settings</label>
+            <tab>bluem</tab>
+            <resource>Bluem_Integration::integration_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Account Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable the Bluem module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="environment" translate="label" 
+                type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Environment</label>
+                    <comment>Type in test or prod, if you want to use testing mode or production mode respectively.</comment>
+                    <source_model>Bluem\Integration\Model\Config\Source\Environment</source_model>
+                </field>
+
+                <field id="sender_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Sender ID</label>
+                    <comment>Fill in the Sender ID which is provided by Bluem. It starts with an S and contains a number.</comment>
+                </field>
+
+                <field id="test_token" translate="label" type="password" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Test Access token</label>
+                    <comment>Fill in the Test access token which is provided by Bluem. This setting is stored securely.</comment>
+                </field>
+
+                     <field id="prod_token" translate="label" type="password" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Production access token</label>
+                    <comment>Fill in the Production access token which is provided by Bluem. This setting is stored securely.</comment>
+                </field>
+
+            </group>
+            <group id="identity" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Identity</label>
+
+                <field id="identity_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Identity Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the Identity service. It usually contains your company name and "Identity".</comment>
+                </field>
+                <!-- <field id="block_if_not_identified" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Block the shopping procedure if the user is not identified</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="block_if_not_min_age" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Block the shopping procedure if the user age requirement is not met</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> -->
+                <field id="identity_min_age" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Minimum age requirement for identity verification</label>
+                    <comment>Fill in the minimum age requirement as a whole number.</comment>
+                </field>
+
+                <field id="identity_scenario" 
+                    translate="label" 
+                    type="select" 
+                    sortOrder="2" 
+                    showInDefault="1" 
+                    showInWebsite="0" 
+                    showInStore="0">
+                    <label>Identification scenario</label>
+                    <source_model>Bluem\Integration\Model\Config\Source\IdentityScenario</source_model>
+                </field>
+
+                <field id="identity_request_name" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store name?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's name from the bank in the identity request?</comment>
+                </field>
+
+                <field id="identity_request_address" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store address?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's address from the bank in the identity request?</comment>
+                </field>
+
+                <field id="identity_request_birthdate" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store birthdate?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's birthdate from the bank in the identity request? Will automatically be retrieved if you enforce a minimum age check whilst asking for a full identity report</comment>
+                </field>
+
+                <field id="identity_request_gender" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store gender?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's gender from the bank in the identity request?</comment>
+                </field>
+
+                <field id="identity_request_telephone" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store telephone?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's telephone number from the bank in the identity request?</comment>
+                </field>
+
+                <field id="identity_request_email" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retrieve and store email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want to retrieve the user's email address from the bank in the identity request?</comment>
+                </field>
+            
+
+            </group>
+            <group id="payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Payments</label>
+                
+                <field id="payments_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ePayments (iDEAL) Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (iDEAL) service. It usually contains your company name and "Payments".</comment>
+                </field>
+            </group>
+        </section>
+<!-- 
         <section id="payment">
-            <group id="sample_gateway" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Sample Gateway</label>
-                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <group id="bluempayment" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Bluem ePayments</label>
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="merchant_gateway_key" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Merchant Gateway Key</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>New Order Status</label>
+                    <source_model>Bluem\Integration\Model\Config\Source\Order\Status\Pendingpayment</source_model>
                 </field>
-                <field id="debug" translate="label" type="select" sortOrder="85" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Debug</label>
+                <field id="test" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Test Mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="payment_action" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Payment Action</label>
-                    <source_model>Magento\SamplePaymentGateway\Model\Adminhtml\Source\PaymentAction</source_model>
+                <field id="pass_word_1" translate="label" type="obscure" sortOrder="36" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Password 1</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
-                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="9"
-                       showInWebsite="1" showInStore="0">
-                    <label>Payment From Applicable Countries</label>
+                <field id="pass_word_2" translate="label" type="obscure" sortOrder="37" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Password 2</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="merchant_id" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Merchant ID</label>
+                </field>
+                <field id="allowed_carrier" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Allowed Shipping Methods</label>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Applicable Countries</label>
                     <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
                 </field>
-                <field id="specificcountry" translate="label" type="multiselect" sortOrder="140" showInDefault="1"
-                       showInWebsite="1" showInStore="0">
-                    <label>Payment From Specific Countries</label>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1"
-                       showInStore="0">
+                <field id="instructions" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Instructions</label>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
                 </field>
             </group>
-        </section>
+        </section> -->
+        
     </system>
 </config>
+
+<!-- TYPES:
+
+https://magently.com/blog/magento-2-backend-configuration-source-model/
+
+ -->

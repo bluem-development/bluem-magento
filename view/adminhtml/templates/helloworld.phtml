@@ -1,0 +1,35 @@
+<p>
+Here you can see all the important data surrounding iDIN (Identification). 
+Also make sure the module is configured properly in the settings.
+<p>
+Refer to the readme at module for detailed instructions. If you have any questions or problems, contact the primary developer at <a 
+href="mailto:d.rijpkema@bluem.nl?subject=Magento" target="_blank">d.rijpkema@bluem.nl</a>.</p>
+<br>
+<h3>
+Usage
+</h3>
+<p>
+An Identity Request can be 
+<strong>by a logged in user</strong>
+request and view it via the page 
+<a href="<?php echo $block->getBaseUrl()."bluem/identity/index";?>" target="_blank" rel="noopener noreferrer">
+<?php echo $block->getBaseUrl()."bluem/identity/index";?>
+</a>. 
+</p>
+<p>Guest users cannot be identified at this moment: this will be rolled out in upcoming releases.</p>
+<p>A request for identification can be initiated directly via the 
+<a href="<?php echo $block->getBaseUrl()."bluem/identity/request";?>" target="_blank" rel="noopener noreferrer">
+<?php echo $block->getBaseUrl()."bluem/identity/request";?>
+</a>, even if the user is already identified. In that case, a previous identification is overwritten.
+</p>
+
+
+<h3>
+Identity Requests Overview
+</h3>
+<p>Below you see the details of all identity verifications performed so far. 
+The Payload column contains the information of the verification.
+</p>
+<?php
+echo $block->getRequestsTableHTML();
+?>  

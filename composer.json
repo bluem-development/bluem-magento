@@ -1,22 +1,24 @@
 {
-    "name": "daanrijpkema/bluem-magento",
-    "description": "Demonstrates integration with payment gateway",
+    "name": "daanrijpkema/bluem-magento-dev",
+    "description": "Bluem integration with payment gateway and identity verification",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0|~7.2|~7.1|~7.3",
-        "magento/framework": "100.0.*",
-        "magento/module-sales": "100.0.*",
-        "magento/module-checkout": "100.0.*",
-        "magento/module-payment": "100.0.*",
-        "daanrijpkema/bluem-php":"dev-master"
+        "daanrijpkema/bluem-php": "^1.0",
+        "magento/module-sales": "~100.0.4",
+        "magento/module-checkout": "~100.0.4",
+        "magento/module-payment": "~100.0.4",
+        "magento/framework": "~100.0.4"
     },
     "type": "magento2-module",
-    "version": "100.0.3",
+    "version": "0.4.0",
     "authors": [
         {
-            "name": "Daan Rijpkema",
-            "email": "info@daanrijpkema.com"
+          "name": "Daan Rijpkema",
+          "email": "d.rijpkema@bluem.nl",
+          "homepage": "https://www.bluem.nl",
+          "role": "Developer"
         }
-    ],
+      ],
     "license": [
         "OSL-3.0",
         "AFL-3.0"
@@ -24,7 +26,7 @@
     "autoload": {
         "files": [ "registration.php" ],
         "psr-4": {
-            "Magento\\SamplePaymentGateway\\": ""
+            "Bluem\\Integration\\": ""
         }
     }
 }

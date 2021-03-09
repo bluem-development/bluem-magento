@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceContainer name="page.messages">
+        <block class="Bluem\Integration\Block\Display" name="CUSTOM_ID" as="CUSTOM_ID"
+               template="Bluem_Integration::messages.phtml" after="messages"/>
+    </referenceContainer>
+</page>
+<!-- https://magento.stackexchange.com/questions/219457/add-message-on-product-page -->

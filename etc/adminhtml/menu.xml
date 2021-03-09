@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add 
+            id="Bluem_Integration::menu"
+           title="Bluem" module="Bluem_Integration"
+           sortOrder="50"
+           resource="Magento_Backend::content"
+           />
+           
+        <add id="Bluem_Integration::menu_item"
+           title="Identity Requests" module="Bluem_Integration"
+           sortOrder="10" parent="Bluem_Integration::menu"
+           action="createmenubackend/create/index"
+           resource="Bluem_Integration::menu_item"
+           />
+
+
+       <add id="Bluem_Integration::settings" 
+       title="Configure Bluem" 
+       module="Bluem_Integration" 
+       parent="Bluem_Integration::menu" 
+       sortOrder="30" 
+       action="adminhtml/system_config/edit/section/integration" 
+       resource="Bluem_Integration::settings"
+       />
+
+    </menu>
+</config>
