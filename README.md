@@ -1,3 +1,5 @@
+# Bluem Magento module
+
 ## Requirements
 
 - Magento2.* (tested up to v2.4)
