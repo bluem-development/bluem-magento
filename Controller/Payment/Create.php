@@ -20,11 +20,6 @@ class Create extends Action
     protected $orderFactory;
 
     /**
-     * @var \PHPCuong\OnePay\Helper\Data
-     */
-    protected $onePayHelperData;
-
-    /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
     protected $resultJsonFactory;
@@ -32,18 +27,14 @@ class Create extends Action
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Sales\Model\OrderFactory $orderFactory
-     * @param \PHPCuong\OnePay\Helper\Data $onePayHelperData
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Sales\Model\OrderFactory $orderFactory,
-        \PHPCuong\OnePay\Helper\Data $onePayHelperData,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        Session $checkoutSession
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
     ) {
         $this->orderFactory = $orderFactory;
-        $this->onePayHelperData = $onePayHelperData;
         $this->resultJsonFactory = $resultJsonFactory;
         parent::__construct($context);
         

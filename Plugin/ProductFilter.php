@@ -5,9 +5,10 @@ use \Magento\Framework\App\ObjectManager;
 use stdClass;
 use Bluem\Integration\Helper\Data as DataHelper;
 use Bluem\Integration\Helper\Bluem as BluemHelper;
+use \Magento\Catalog\Model\Product ;
 
 
-class Product
+class ProductFilter
 {
     protected $_customerSession;
 
@@ -21,27 +22,12 @@ class Product
 
         $this->_dataHelper = $dataHelper;
         $this->_bluemHelper = $bluemHelper;
-    }           
-    
+    }
+
     // https://magento.stackexchange.com/questions/165218/disable-entire-cart-functionality-checkout-in-magento-2
-    public function afterIsSaleable(\Magento\Catalog\Model\Product $product)
+    public function afterIsSaleable(Product $product)
     {           
         $identity_valid = $this->_dataHelper->getIdentityValid();
         return $identity_valid->valid;
-        // $block_if_not_identified = $this->_dataHelper->getGeneralConfig('block_if_not_identified');
-        
-        // if($this->_customerSession->isLoggedIn()) {
-            // $identity = $this->getBluemIdentified();
-            // return $identity->status;
-        //     return true;
-        // }
-        
-        // return true;
-
     }
-
-
-    // copied from display
-    
-
 }
