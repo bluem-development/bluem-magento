@@ -138,7 +138,7 @@ class InstallSchema implements InstallSchemaInterface
 
 
 
-		if ($installer->tableExists('quote_payment')) {
+		if ($setup->tableExists('quote_payment')) {
             $tableName = $setup->getTable('quote_payment');
             $connection = $setup->getConnection();
             if (!$connection->tableColumnExists($tableName, 'assistant_id')) {
@@ -157,7 +157,7 @@ class InstallSchema implements InstallSchemaInterface
             }
         }
 
-        if ($installer->tableExists('sales_order_payment')) {
+        if ($setup->tableExists('sales_order_payment')) {
             $tableName = $setup->getTable('sales_order_payment');
             $connection = $setup->getConnection();
             if (!$connection->tableColumnExists($tableName, 'assistant_id')) {

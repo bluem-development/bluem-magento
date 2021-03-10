@@ -37,12 +37,12 @@ class Create extends Action
     public function execute()
     {
 
-        echo " HI" ; die();
+        // echo " HI" ; die();
         /** @var Order $order */
-        // $order = $this->checkoutSession->getLastRealOrder();
+        $order = $this->checkoutSession->getLastRealOrder();
 
         /** do stuff here */
-// var_dump($order);
+var_dump($order);
 // die();
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
