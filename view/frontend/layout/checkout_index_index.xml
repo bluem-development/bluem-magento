@@ -20,7 +20,7 @@
                                                             <!-- merge payment method renders here -->
                                                             <item name="children" xsi:type="array">
                                                                 <item name="epayment" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">Bluem_Integration/js/view/payment/offline-payments</item>
+                                                                    <item name="component" xsi:type="string">Bluem_Integration/js/view/payment/epayments</item>
                                                                     <item name="methods" xsi:type="array">
                                                                         <item name="epayment" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>

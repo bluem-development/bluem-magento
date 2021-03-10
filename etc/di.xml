@@ -5,4 +5,4 @@
         <plugin name="module-filter" type="Bluem\Integration\Plugin\Product" sortOrder="1" />
     </type>
 
-</config> 
+</config>

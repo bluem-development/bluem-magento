@@ -17,13 +17,23 @@
 
 
        <add id="Bluem_Integration::settings" 
-       title="Configure Bluem" 
+       title="Configure Account" 
        module="Bluem_Integration" 
        parent="Bluem_Integration::menu" 
        sortOrder="30" 
        action="adminhtml/system_config/edit/section/integration" 
        resource="Bluem_Integration::settings"
        />
+       
+
+       <add id="Bluem_Integration::configuration" 
+       title="Configure ePayments" 
+       module="Bluem_Integration" 
+       sortOrder="10" 
+       action="adminhtml/system_config/edit/section/payment" 
+       resource="Magento_Payment::payment" 
+       parent="Bluem_Integration::menu"/>
+    
 
     </menu>
 </config>

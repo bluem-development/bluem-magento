@@ -25,10 +25,10 @@
             <!--/ko-->
         </div>
         <div class="carts-list">
-            <span><img data-bind="attr: {src: require.toUrl('Bluem_Integration/images/bluem.png'), alt: $t('Bluem'), title: $t('Bluem')}" class="bluem-logo"/></span>  
+            <span><img data-bind="attr: {src: require.toUrl('Bluem_Integration/images/bluem.png'), alt: $t('Bluem'), title: $t('Bluem')}" class="bluem-logo" style="max-height:64px;" /></span>  
         </div>
 
-        <form id="pdqpayment-form" class="form form-pdqpayment" data-role="pdqpayment-form">
+        <form id="epayment-form" class="form form-epayment" data-role="epayment-form">
             <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
                 <div class="field field-number required">
                     <label for="assistant_id" class="label">
