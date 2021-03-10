@@ -48,6 +48,7 @@ define([
         /**
          * Place order.
          */
+        
         placeOrder: function (data, event) {
             var self = this;
 
@@ -59,22 +60,21 @@ define([
             if (this.validate() && additionalValidators.validate()) {
                 this.isPlaceOrderActionAllowed(false);
 
-                this.getPlaceOrderDeferredObject()
-                    .fail(function () {
-                            self.isPlaceOrderActionAllowed(true);
-                    })
-                    .done(function(orderID) {
-                        console.log('Order placed, with ID ',orderID)
+                // this.getPlaceOrderDeferredObject()
+                //     .fail(function () {
+                //             self.isPlaceOrderActionAllowed(true);
+                //     })
+                //     .done(function(orderID) {
+                        console.log('Order placed, with ID ','')
                         console.log("Lets go pay!")
                         $.ajax({
                             url: urlBuilder.build('bluem/payment/create'),
-                            data: {'order_id': orderID},
+                            data: {'order_id': ''},
                             dataType: 'json',
                             type: 'POST'
                         }).done(function (response) {
                             console.log("Response from Payment controller")
-                            console.log(response)'
-                            '
+                            console.log(response);
                             if (!response.error) {
                                 window.location.replace(response.payment_url);
                                 self.redirectAfterPlaceOrder = false;
@@ -87,7 +87,7 @@ define([
                         });
 
                         self.afterPlaceOrder();
-                    });
+                    // });
                 return true;
             }
 

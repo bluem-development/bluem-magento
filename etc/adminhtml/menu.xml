@@ -17,7 +17,7 @@
 
 
        <add id="Bluem_Integration::settings" 
-       title="Configure Account" 
+       title="Configure Account &amp; Identity" 
        module="Bluem_Integration" 
        parent="Bluem_Integration::menu" 
        sortOrder="30" 
