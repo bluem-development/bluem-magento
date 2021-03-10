@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce35aaafe126d4cabba3d4699c9ff528",
+    "content-hash": "62c39fd8b51b13f41a65985845109d41",
     "packages": [
         {
             "name": "daanrijpkema/bluem-php",
