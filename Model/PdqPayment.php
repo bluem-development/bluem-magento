@@ -5,9 +5,9 @@ namespace Bluem\Integration\Model;
 
 use Magento\Quote\Api\Data\PaymentInterface;
 
-class PdqPayment extends \Magento\Payment\Model\Method\AbstractMethod
+class EPayment extends \Magento\Payment\Model\Method\AbstractMethod
 {
-    const PAYMENT_METHOD_PDQPAYMENT_CODE = 'pdqpayment';
+    const PAYMENT_METHOD_PDQPAYMENT_CODE = 'epayment';
 
     /**
      * Payment method code
@@ -19,12 +19,12 @@ class PdqPayment extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @var string
      */
-    protected $_formBlockType = \Bluem\Integration\Block\Form\PdqPayment::class;
+    protected $_formBlockType = \Bluem\Integration\Block\Form\EPayment::class;
 
     /**
      * @var string
      */
-    protected $_infoBlockType = \Bluem\Integration\Block\Info\PdqPayment::class;
+    protected $_infoBlockType = \Bluem\Integration\Block\Info\EPayment::class;
 
     /**
      * Availability option

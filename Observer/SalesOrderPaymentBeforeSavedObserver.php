@@ -3,25 +3,29 @@
 
 namespace Bluem\Integration\Observer;
 
+use \Magento\Webapi\Controller\Rest\InputParamsResolver;
+use \Magento\Framework\App;
+
+
 class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * @var \Magento\Webapi\Controller\Rest\InputParamsResolver
+     * @var InputParamsResolver
      */
     protected $inputParamsResolver;
 
     /**
-     * @var \Magento\Framework\App\RequestInterface
+     * @var RequestInterface
      */
     protected $requestInterface;
 
     /**
-     * @param \Magento\Webapi\Controller\Rest\InputParamsResolver $inputParamsResolver
-     * @param \Magento\Framework\App\RequestInterface $requestInterface
+     * @param InputParamsResolver $inputParamsResolver
+     * @param RequestInterface $requestInterface
      */
     public function __construct(
-        \Magento\Webapi\Controller\Rest\InputParamsResolver $inputParamsResolver,
-        \Magento\Framework\App\RequestInterface $requestInterface
+        InputParamsResolver $inputParamsResolver,
+        RequestInterface $requestInterface
     ) {
         $this->inputParamsResolver = $inputParamsResolver;
         $this->requestInterface = $requestInterface;
@@ -38,7 +42,7 @@ class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\O
             return $this;
         }
 
-        if ($payment->getMethod() != 'pdqpayment') {
+        if ($payment->getMethod() != 'epayment') {
             return $this;
         }
 

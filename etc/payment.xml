@@ -10,7 +10,7 @@
         </group>
     </groups>
     <methods>
-        <method name="pdqpayment">
+        <method name="epayment">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
     </methods>

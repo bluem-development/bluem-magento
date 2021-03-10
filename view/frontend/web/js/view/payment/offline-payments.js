@@ -7,8 +7,8 @@ define([
 
     rendererList.push(
         {
-            type: 'pdqpayment',
-            component: 'Bluem_Integration/js/view/payment/method-renderer/pdqpayment-method'
+            type: 'epayment',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
         }
     );
 

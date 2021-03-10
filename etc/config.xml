@@ -27,14 +27,16 @@
         </integration>
 
          <payment>
-            <pdqpayment>
+            <epayment>
                 <active>0</active>
-                <model>Bluem\Integration\Model\PdqPayment</model>
+                <model>Bluem\Integration\Model\EPayment</model>
                 <order_status>pending</order_status>
-                <title>PDQ Payment</title>
+                <title>Bluem ePayment (iDeal)</title>
                 <allowspecific>0</allowspecific>
                 <group>offline</group>
-            </pdqpayment>
+                <sort_order>5</sort_order>
+                
+            </epayment>
         </payment>
     </default>
 </config>

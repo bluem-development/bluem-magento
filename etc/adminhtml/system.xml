@@ -117,7 +117,7 @@
             </group>
         </section>
        <section id="payment">
-            <group id="pdqpayment" translate="label" type="text" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="epayment" translate="label" type="text" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>PDQ Payment</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Enabled</label>
