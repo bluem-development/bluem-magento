@@ -7,14 +7,14 @@ use Magento\Quote\Api\Data\PaymentInterface;
 
 class EPayment extends \Magento\Payment\Model\Method\AbstractMethod
 {
-    const PAYMENT_METHOD_PDQPAYMENT_CODE = 'epayment';
+    const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment';
 
     /**
      * Payment method code
      *
      * @var string
      */
-    protected $_code = self::PAYMENT_METHOD_PDQPAYMENT_CODE;
+    protected $_code = self::PAYMENT_METHOD_EPAYMENT_CODE;
 
     /**
      * @var string

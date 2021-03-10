@@ -149,7 +149,7 @@ class InstallSchema implements InstallSchemaInterface
                         'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                         'nullable' => true,
                         'default' => null,
-                        'comment' => 'Added by Bluem for the PDQ Payment',
+                        'comment' => 'Added by Bluem for the ePayment method',
                         'after' => 'po_number',
                         'length' => 255
                     ]
@@ -168,7 +168,7 @@ class InstallSchema implements InstallSchemaInterface
                         'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                         'nullable' => true,
                         'default' => null,
-                        'comment' => 'Added by Bluem for the PDQ Payment',
+                        'comment' => 'Added by Bluem for the ePayment method',
                         'after' => 'po_number',
                         'length' => 255
                     ]

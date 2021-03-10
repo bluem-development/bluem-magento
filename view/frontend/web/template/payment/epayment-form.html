@@ -16,11 +16,18 @@
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
+        <div class="payment-description">
+            <span data-bind="i18n: 'Betaal gemakkelijk via Bluem.'" class="intro"></span>
+        </div>
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+        <div class="carts-list">
+            <span><img data-bind="attr: {src: require.toUrl('Bluem_Integration/images/bluem.png'), alt: $t('Bluem'), title: $t('Bluem')}" class="bluem-logo"/></span>  
+        </div>
+
         <form id="pdqpayment-form" class="form form-pdqpayment" data-role="pdqpayment-form">
             <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
                 <div class="field field-number required">
