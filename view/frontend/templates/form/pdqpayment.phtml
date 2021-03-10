@@ -1,0 +1,17 @@
+<?php
+/* Based on  php-cuong/magento-offline-payments  */
+/**
+ * @var $block \Bluem\Integration\Block\Form\PdqPayment
+ */
+$methodCode = $block->escapeHtml($block->getMethodCode());
+?>
+<fieldset class="fieldset items <?= /* @noEscape */ $methodCode ?>" id="payment_form_<?= /* @noEscape */ $methodCode ?>" style="display: none">
+    <div class="field number required">
+        <label for="assistant_id" class="label"><span><?= $block->escapeHtml(__('Assistant ID')) ?></span></label>
+        <div class="control">
+            <input type="text" id="assistant_id" name="payment[additional_data][assistant_id]" title="<?= $block->escapeHtml(__('Assistant ID')) ?>"
+                   class="input-text required-entry"
+                   value="<?= $block->escapeHtml($block->getInfoData('additional_data')['assistant_id']) ?>" />
+        </div>
+    </div>
+</fieldset>

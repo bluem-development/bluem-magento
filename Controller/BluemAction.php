@@ -2,7 +2,7 @@
 
 namespace Bluem\Integration\Controller;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\View\Result\PageFactory;

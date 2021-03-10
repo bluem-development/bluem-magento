@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/* Based on  php-cuong/magento-offline-payments  */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_quote_payment_save_before">
+        <observer name="Bluem_offline_payments_before_save_quote_payment" instance="Bluem\Integration\Observer\SalesQuotePaymentBeforeSavedObserver"/>
+    </event>
+    <event name="sales_order_payment_save_before">
+        <observer name="Bluem_offline_payments_before_save_order_payment" instance="Bluem\Integration\Observer\SalesOrderPaymentBeforeSavedObserver"/>
+    </event>
+</config>

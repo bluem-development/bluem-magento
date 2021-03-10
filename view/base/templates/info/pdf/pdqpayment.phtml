@@ -1,0 +1,8 @@
+<?php
+/* Based on  php-cuong/magento-offline-payments  */
+/**
+ * @var $block \Bluem\Integration\Block\Info\PdqPayment
+ */
+?>
+<?= $block->escapeHtml(__('Assistant ID: %1', $block->getInfo()->getData('assistant_id'))) ?>
+    {{pdf_row_separator}}
