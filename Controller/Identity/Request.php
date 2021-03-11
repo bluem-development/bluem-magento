@@ -99,7 +99,7 @@ class Request extends BluemAction
                 'ReturnUrl'=>$returnURL, // also updated this
                 'Status'=>"requested"
             ];
-            $this->_updateRequest($request_db_id,$update_data);
+            $this->_updateRequest($request_db_id, $update_data);
             
             
             // $_SESSION['entranceCode'] = $entranceCode;

@@ -5,7 +5,7 @@ namespace Bluem\Integration\Observer;
 
 use \Magento\Webapi\Controller\Rest\InputParamsResolver;
 use \Magento\Framework\App;
-
+use \Magento\Framework\App\RequestInterface;
 
 class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\ObserverInterface
 {

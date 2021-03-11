@@ -112,7 +112,7 @@ class Display extends \Magento\Framework\View\Element\Template
 
 
 
-function getRequestsTableHTML() 
+function getRequestsTableHTML($type_filter = false) 
 {
     $html = "";
     $requests = $this->getBluemRequests();
@@ -126,6 +126,9 @@ function getRequestsTableHTML()
                 continue;
             }
             foreach ($request->getData() as $k => $v) {
+                if($k == "type") {
+                    continue;
+                }
                 $headers[] = $k;
             }
         }
@@ -146,12 +149,16 @@ function getRequestsTableHTML()
         $html.= "</thead><tbody>";
 
         foreach($requests as $request) {
+            // only show requests of this type if present
+            if($type_filter!==false && $request->getType() !== $type_filter) {
+                continue;
+            }
             $html.= "<tr>";
             // $html.= "<td>";
             // var_dump($request->getData());
             foreach($request->getData() as $k=>$v) {
                 //{$k}<br>
-                if($k == "type" ) {
+                if($k == "type") {
                     continue;
                 }
                 $html.= "<td>";

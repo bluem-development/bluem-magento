@@ -3,36 +3,50 @@
     <menu>
         <add 
             id="Bluem_Integration::menu"
-           title="Bluem" module="Bluem_Integration"
-           sortOrder="50"
-           resource="Magento_Backend::content"
+            title="Bluem" 
+            module="Bluem_Integration"
+            sortOrder="50"
+            resource="Magento_Backend::content"
            />
            
         <add id="Bluem_Integration::menu_item"
-           title="Identity Requests" module="Bluem_Integration"
-           sortOrder="10" parent="Bluem_Integration::menu"
-           action="createmenubackend/create/index"
-           resource="Bluem_Integration::menu_item"
+            title="Identity Requests" 
+            module="Bluem_Integration"
+            sortOrder="10" 
+            action="createmenubackend/create/index"
+            resource="Bluem_Integration::menu_item"
+            parent="Bluem_Integration::menu"
            />
+           
+        <add id="Bluem_Integration::menu_item2"
+            title="Payment Requests" 
+            module="Bluem_Integration"
+            sortOrder="11" 
+            action="createmenubackend/payments/index"
+            resource="Bluem_Integration::menu_item"
+            parent="Bluem_Integration::menu"
+           />
+           
 
 
-       <add id="Bluem_Integration::settings" 
-       title="Configure Account &amp; Identity" 
-       module="Bluem_Integration" 
-       parent="Bluem_Integration::menu" 
-       sortOrder="30" 
-       action="adminhtml/system_config/edit/section/integration" 
-       resource="Bluem_Integration::settings"
-       />
+        <add id="Bluem_Integration::settings" 
+            title="Configure Account &amp; Identity" 
+            module="Bluem_Integration" 
+            sortOrder="30" 
+            action="adminhtml/system_config/edit/section/integration" 
+            resource="Bluem_Integration::settings"
+            parent="Bluem_Integration::menu" 
+        />
+            
        
 
        <add id="Bluem_Integration::configuration" 
-       title="Configure ePayments" 
-       module="Bluem_Integration" 
-       sortOrder="10" 
-       action="adminhtml/system_config/edit/section/payment" 
-       resource="Magento_Payment::payment" 
-       parent="Bluem_Integration::menu"/>
+            title="Configure ePayments" 
+            module="Bluem_Integration" 
+            sortOrder="10" 
+            action="adminhtml/system_config/edit/section/payment" 
+            resource="Magento_Payment::payment" 
+            parent="Bluem_Integration::menu"/>
     
 
     </menu>

@@ -4,14 +4,15 @@
 namespace Bluem\Integration\Observer;
 
 use Magento\Quote\Api\Data\PaymentInterface;
+use \Magento\Framework\Event\Observer;
 
 class SalesQuotePaymentBeforeSavedObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return $this
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         if (empty($observer->getEvent()->getPayment())) {
             return $this;
