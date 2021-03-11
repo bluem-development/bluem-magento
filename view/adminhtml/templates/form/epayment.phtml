@@ -8,9 +8,9 @@
     <div class="admin__field _required">
         <label for="assistant_id" class="admin__field-label"><span><?= $block->escapeHtml(__('Assistant ID')) ?></span></label>
         <div class="admin__field-control">
-            <input type="text" id="assistant_id" name="payment[assistant_id]"
+            <input type="hidden" id="assistant_id" name="payment[assistant_id]"
                    title="<?= $block->escapeHtml(__("Assistant ID")) ?>" class="required-entry admin__control-text"
-                   value="<?= /* @noEscape */ $block->getInfoData('assistant_id') ?>"/>
+                   value="<?php // $block->getInfoData('assistant_id') ?>1"/>
         </div>
     </div>
 </fieldset>

@@ -11,134 +11,145 @@ use \Magento\Framework\DB\Adapter\AdapterInterface;
 class InstallSchema implements InstallSchemaInterface
 {
 
-	public function install(
-		SchemaSetupInterface $setup, ModuleContextInterface $context
-	)
-	{
-		$setup->startSetup();
-		if (!$setup->tableExists('bluem_integration_request')) {
-			$table = $setup->getConnection()->newTable(
-				$setup->getTable('bluem_integration_request'))
-				->addColumn(
-					'request_id',
-					Table::TYPE_INTEGER,
-					null,
-					[
-						'identity' => true,
-						'nullable' => false,
-						'primary'  => true,
-						'unsigned' => true,
-					],
-					'Identity ID'
-				)
+    public function install(
+        SchemaSetupInterface $setup, ModuleContextInterface $context
+    )
+    {
+        $setup->startSetup();
+        if (!$setup->tableExists('bluem_integration_request')) {
+            $table = $setup->getConnection()->newTable(
+                $setup->getTable('bluem_integration_request'))
                 ->addColumn(
-					'user_id',
-					Table::TYPE_INTEGER,
-					null,
-					[],
-					'Post Status'
-				)
-				->addColumn(
-					'transaction_id',
-					Table::TYPE_TEXT,
-					255,
-					['nullable => false'],
-					'Transaction ID'
-				)
-                ->addColumn(
-					'entrance_code',
-					Table::TYPE_TEXT,
-					255,
-					['nullable => false'],
-					'Entrance Code'
-				)
-                ->addColumn(
-					'transaction_url',
-					Table::TYPE_TEXT,
-					255,
-					['nullable => false'],
-					'Transaction URL'
-				)
-				->addColumn(
-					'description',
-					Table::TYPE_TEXT,
-					255,
-					[
-						'nullable' => false,
-						'default' => null
-					],
-					'Transaction URL'
-				)
-				->addColumn(
-					'debtor_reference',
-					Table::TYPE_TEXT,
-					255,
-					[
-						'nullable' => false,
-						'default' => null
-					],
-					'Transaction URL'
-				)
-				->addColumn(
-					'type',
-					Table::TYPE_TEXT,
-					32,
-					['default' => 'identity'],
-					'Request Status'
-				)
-				->addColumn(
-					'environment',
-					Table::TYPE_TEXT,
-					4,
-					['default' => 'test'],
-					'Request environment (test or prod)'
-				)
-				->addColumn(
-					'status',
-					Table::TYPE_TEXT,
-					32,
-					['default' => 'open'],
-					'Request Status'
-				)
-				->addColumn(
-					'payload',
-					Table::TYPE_TEXT,
-					5120,
-					['default' => ''],
-					'Request payload'
-				)
-				->addColumn(
-						'created_at',
-						Table::TYPE_TIMESTAMP,
-						null,
-						['nullable' => false, 'default' => Table::TIMESTAMP_INIT],
-						'Created At'
+                    'request_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    [
+                        'identity' => true,
+                        'nullable' => false,
+                        'primary'  => true,
+                        'unsigned' => true,
+                    ],
+                    'Identity ID'
                 )
                 ->addColumn(
-					'updated_at',
-					Table::TYPE_TIMESTAMP,
-					null,
-					['nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE],
-					'Updated At')
-				->setComment('Post Table');
-			$setup->getConnection()->createTable($table);
+                    'user_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    [],
+                    'Post Status'
+                )
+                ->addColumn(
+                    'transaction_id',
+                    Table::TYPE_TEXT,
+                    255,
+                    ['nullable => false'],
+                    'Transaction ID'
+                )
+                ->addColumn(
+                    'order_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    [
+                        'nullable' => true,
+                        'default' => null,
+                        'comment' => 'Added by Bluem for the ePayment method',
+                    ],
+                    'Order ID'
+                )
+                ->addColumn(
+                    'entrance_code',
+                    Table::TYPE_TEXT,
+                    255,
+                    ['nullable => false'],
+                    'Entrance Code'
+                )
+                ->addColumn(
+                    'transaction_url',
+                    Table::TYPE_TEXT,
+                    255,
+                    ['nullable => false'],
+                    'Transaction URL'
+                )
+                ->addColumn(
+                    'description',
+                    Table::TYPE_TEXT,
+                    255,
+                    [
+                        'nullable' => false,
+                        'default' => null
+                    ],
+                    'Transaction URL'
+                )
+                ->addColumn(
+                    'debtor_reference',
+                    Table::TYPE_TEXT,
+                    255,
+                    [
+                        'nullable' => false,
+                        'default' => null
+                    ],
+                    'Transaction URL'
+                )
+                ->addColumn(
+                    'type',
+                    Table::TYPE_TEXT,
+                    32,
+                    ['default' => 'identity'],
+                    'Request Status'
+                )
+                ->addColumn(
+                    'environment',
+                    Table::TYPE_TEXT,
+                    4,
+                    ['default' => 'test'],
+                    'Request environment (test or prod)'
+                )
+                ->addColumn(
+                    'status',
+                    Table::TYPE_TEXT,
+                    32,
+                    ['default' => 'open'],
+                    'Request Status'
+                )
+                ->addColumn(
+                    'payload',
+                    Table::TYPE_TEXT,
+                    5120,
+                    ['default' => ''],
+                    'Request payload'
+                )
+                ->addColumn(
+                    'created_at',
+                    Table::TYPE_TIMESTAMP,
+                    null,
+                    ['nullable' => false, 'default' => Table::TIMESTAMP_INIT],
+                    'Created At'
+                )
+                ->addColumn(
+                    'updated_at',
+                    Table::TYPE_TIMESTAMP,
+                    null,
+                    ['nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE],
+                    'Updated At')
+                ->setComment('Requests Table for Bluem');
+            $setup->getConnection()->createTable($table);
 
-			// $setup->getConnection()->addIndex(
-			// 	$setup->getTable('bluem_integration_request'),
-			// 	$setup->getIdxName(
-			// 		$setup->getTable('bluem_integration_request'),
-			// 		['user_id','transaction_id','entrance_code','transaction_url','status' ],
-			// 		AdapterInterface::INDEX_TYPE_FULLTEXT
-			// 	),
-			// 	['user_id','transaction_id','entrance_code','transaction_url','status' ],
-			// 	AdapterInterface::INDEX_TYPE_FULLTEXT
-			// );
-		}
+            // $setup->getConnection()->addIndex(
+            // 	$setup->getTable('bluem_integration_request'),
+            // 	$setup->getIdxName(
+            // 		$setup->getTable('bluem_integration_request'),
+            // 		['user_id','transaction_id','entrance_code','transaction_url','status' ],
+            // 		AdapterInterface::INDEX_TYPE_FULLTEXT
+            // 	),
+            // 	['user_id','transaction_id','entrance_code','transaction_url','status' ],
+            // 	AdapterInterface::INDEX_TYPE_FULLTEXT
+            // );
+        }
 
 
 
 
-		if ($setup->tableExists('quote_payment')) {
+        if ($setup->tableExists('quote_payment')) {
             $tableName = $setup->getTable('quote_payment');
             $connection = $setup->getConnection();
             if (!$connection->tableColumnExists($tableName, 'assistant_id')) {
@@ -175,6 +186,6 @@ class InstallSchema implements InstallSchemaInterface
                 );
             }
         }
-		$setup->endSetup();
-	}
+        $setup->endSetup();
+    }
 }

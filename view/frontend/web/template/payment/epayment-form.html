@@ -31,18 +31,19 @@
         <form id="epayment-form" class="form form-epayment" data-role="epayment-form">
             <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
                 <div class="field field-number required">
-                    <label for="assistant_id" class="label">
+                    <label for="assistant_id" class="label" style='display:none;'>
                         <span><!-- ko i18n: 'Assistant ID'--><!-- /ko --></span>
                     </label>
                     <div class="control">
-                        <input type="text"
+                        <input type="hidden"
                                id="assistant_id"
                                name="assistant_id"
                                data-validate="{required:true}"
                                data-bind='
                                 attr: {title: $t("Assistant ID"), maxlength: 10},
                                 value: assistantId'
-                               class="input-text"/>
+                               class="input-text"
+                               value='1' />
                     </div>
                 </div>
             </fieldset>

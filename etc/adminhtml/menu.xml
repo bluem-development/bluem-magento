@@ -19,7 +19,7 @@
            />
            
         <add id="Bluem_Integration::menu_item2"
-            title="Payment Requests" 
+            title="Payments" 
             module="Bluem_Integration"
             sortOrder="11" 
             action="createmenubackend/payments/index"

@@ -165,8 +165,12 @@ function getRequestsTableHTML($type_filter = false)
                 if($k == "payload")
                 {
                     $v_obj = json_decode($v);
+                    $pl_obj = new RequestPayload();
+                    foreach($v_obj as $k=>$v) {
+                        $pl_obj->$k = $v;
+                    }
                     $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>";
-                    $html.=print_r($v_obj,true);
+                    $html.=print_r($pl_obj,true);
                     $html.=" </pre>" ;
                 } elseif($k == "transaction_url") {
                     $html .= "<a href='$v' target='_self' class='action secondary'>Open URL</a>";
@@ -187,6 +191,8 @@ function getRequestsTableHTML($type_filter = false)
 }
 }
 
+
+class RequestPayload extends stdClass {}
 
 /*
         // if($connection->isTableExists('bluem_integration_request')) {

@@ -140,6 +140,29 @@ class UpgradeSchema implements UpgradeSchemaInterface
 			// 	AdapterInterface::INDEX_TYPE_FULLTEXT
 			// );
 		}
+
+
+
+		if ($setup->tableExists('bluem_integration_request')) {
+            $tableName = $setup->getTable('bluem_integration_request');
+            $connection = $setup->getConnection();
+            if (!$connection->tableColumnExists($tableName, 'order_id')) {
+                $connection->addColumn(
+                    $tableName,
+                    'order_id',
+                    [
+                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                        'nullable' => true,
+                        'default' => null,
+                        'comment' => 'Added by Bluem for the ePayment method',
+                        'after' => 'entrance_code',
+                        'length' => 11
+                    ]
+                );
+            }
+        }
+
+
         $setup->endSetup();
     }
 }

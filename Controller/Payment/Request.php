@@ -21,47 +21,52 @@ class Request extends BluemAction
      */
     public function execute()
     {
+
+        // @todo: eventually, only execute via AJAX & POST
+
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
         $order = $checkout_session->getLastRealOrder();
-        $order->getEntityId();
-        $order_id =  $order->getIncrementId();
+        $orderId = (int) $order->getEntityId();
+        $orderIncrementId =  $order->getIncrementId();
+
+        // @todo: check status
+        // if order is not paid yet
 
         // :: Float
         $amount = $order->getGrandTotal();
-
+        $currency = "EUR";
 
         if ($this->_customerSession->isLoggedIn()) {
-            $email = $this->_customerSession->getCustomer()->getEmail();
-            $name = $this->_customerSession->getCustomer()->getName();
-            $id = $this->_customerSession->getCustomer()->getId();
+            $userEmail = $this->_customerSession->getCustomer()->getEmail();
+            $userName = $this->_customerSession->getCustomer()->getName();
+            $userId = $this->_customerSession->getCustomer()->getId();
 
             // description is shown to customer
-            $description = "Order $order_id (klantnummer $id)"; 
+            $description = "Order {$orderIncrementId} (klantnummer {$userId})";
             // client reference/number
-            $debtorReference = "{$order_id}-{$id}"; 
+            $debtorReference = "{$orderId}-{$userId}";
         } else {
-            $description = "Order $order_id (gastbestelling)";
-            $debtorReference = "{$order_id}-gast";
+            $description = "Order {$orderIncrementId} (gastbestelling)";
+            $debtorReference = "{$orderId}-guest";
         }
 
-        $debtorReference = "{$id}";
+        // $debtorReference = "{$userId}";
         // $returnURL .= "requestId/{$request_db_id}";
         $returnURL = $this->_baseURL
-            . "/bluem/payment/response/"
-            . "?order_id={$order_id}";
+            . "/bluem/payment/response/order_id/{$orderId}";
 
 
         try {
-            //code...
             $request = $this->_bluem->CreatePaymentRequest(
                 $description,
                 $debtorReference,
                 $amount,
                 null,
-                "EUR",
-                null
+                $currency,
+                null,
+                $returnURL
             );
             $response = $this->_bluem->PerformRequest($request);
         } catch (\Throwable $th) {
@@ -73,47 +78,64 @@ class Request extends BluemAction
         }
 
         $payload = [
-            'order_id'=>$order_id,
-            'amount'=> $amount
+            'user_email'        => $userEmail,
+            'user_name'         => $userName,
+            'order_id'          => $orderId,
+            'order_increment_id'=>$orderIncrementId,
+            'amount'            => $amount,
+            'return_url'        => $returnURL,
+            'currency'          => $currency
         ];
 
         /* Create request in database*/
-        $request_data = [
-            'Type'=>"payment",
-            'Description'=>$description,
-            'DebtorReference'=>$debtorReference,
-            'ReturnUrl'=>$returnURL,
-            'Payload'=>json_encode($payload),
-            'Status'=>"created"
+        $request_db_data = [
+            'Type'              => "payment",
+            'Description'       => $description,
+            'DebtorReference'   => $debtorReference,
+            'OrderId'           => $orderId,
+            'Payload'           => json_encode($payload),
+            'Status'            => "created"
         ];
 
         $request_db_id = parent::_createRequest(
-            $request_data
+            $request_db_data
         );
-
-        $transactionURL ="";
+        
         if ($response->ReceivedResponse()) {
-            $entranceCode = $response->getEntranceCode();
-            $transactionID = $response->getTransactionID();
+
+            $transactionURL ="";
+
+            $entranceCode   = $response->getEntranceCode();
+            $transactionID  = $response->getTransactionID();
             $transactionURL = $response->getTransactionURL();
 
-
             $update_data = [
-                'EntranceCode'=>$entranceCode,
-                'TransactionId'=>$transactionID,
-                'TransactionUrl'=>$transactionURL,
-                'Status'=>"requested"
+                'EntranceCode'      => $entranceCode,
+                'TransactionId'     => $transactionID,
+                'TransactionUrl'    => $transactionURL,
+                'Status'            => "requested"
             ];
             parent::_updateRequest($request_db_id, $update_data);
 
             $result = [
-                'error'=>false,
-                'payment_url'=>$transactionURL
+                'error'             => false,
+                'payment_url'       => $transactionURL,
+                'description'       => $description,
+                'debtorReference'   => $debtorReference,
+                'amount'            => $amount,
+                'returnURL'         => $returnURL,
+                'payload'           => $payload
             ];
         } else {
             $result = [
-                'error' => true,
-                'message' => 'Could not create the Payment Request, no response received'
+                'error'    => true,
+                'message'  => 'Could not create the Payment Request, no response received',
+                'description'       => $description,
+                'debtorReference'   => $debtorReference,
+                'amount'            => $amount,
+                'returnURL'         => $returnURL,
+                'payload'           => $payload,
+                'response'          => $response
             ];
         }
 

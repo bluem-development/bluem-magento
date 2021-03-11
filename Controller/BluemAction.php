@@ -12,10 +12,12 @@ use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Framework\App\ObjectManager;
 use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ResourceConnection;
+use \Magento\Framework\Controller\ResultFactory;
 
 use Bluem\Integration\Helper\Data as DataHelper;
 use stdClass;
 use Bluem\BluemPHP\Integration;
+use Exception;
 
 class BluemAction extends Action {
     
@@ -47,14 +49,15 @@ class BluemAction extends Action {
         PageFactory $pageFactory,
         DataHelper $dataHelper,
         Session $customerSession,
-        ResourceConnection $resourceConnection
+        ResourceConnection $resourceConnection,
+        ResultFactory $resultFactory
         )
     {
         $this->_pageFactory = $pageFactory;
         $this->_dataHelper = $dataHelper;
         $this->_customerSession = $customerSession;
         $this->_resourceConnection = $resourceConnection;
-        
+        $this->_resultFactory = $resultFactory;
         
         $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
@@ -77,8 +80,11 @@ class BluemAction extends Action {
         $bluem_config->brandID = "DRIdentity";                         // What's your BrandID? Set at BlueM
         $bluem_config->expectedReturnStatus = "success" ;    // What status would you like to get back for a TEST transaction or status request? Possible values: none, success, cancelled, expired, failure, open, pending
         $bluem_config->merchantReturnURLBase = $this->_baseURL;  // URL to return to after finishing the process
+        
         $bluem_config->IDINbrandID = "DRIdentity";
         
+        $bluem_config->expected_return = "success"; 
+        // legacy: will be changed to expectedReturnStatus from 1.1.2 version of `bluem-php`
         
         $this->_bluem = new Integration($bluem_config);
         
@@ -95,6 +101,8 @@ class BluemAction extends Action {
     
     public function execute()
     {
+        // This function is overridden in all children
+        throw new Exception("Not implemented!");
     }
     
     
@@ -119,6 +127,8 @@ class BluemAction extends Action {
     {
         $request = $this->_objectManager->create('Bluem\Integration\Model\Request');
         
+        // @todo: make this a loop
+
         // validating input data
         $data = [];
         if (isset($request_obj['Type'])
@@ -135,6 +145,11 @@ class BluemAction extends Action {
         && $request_obj['TransactionId'] !== ""
         ) {
             $data['TransactionId'] = $request_obj['TransactionId'];
+        }
+        if (isset($request_obj['OrderId'])
+        && $request_obj['OrderId'] !== ""
+        ) {
+            $data['OrderId'] = $request_obj['OrderId'];
         }
         if (isset($request_obj['DebtorReference'])
         && $request_obj['DebtorReference'] !== ""
@@ -194,9 +209,24 @@ class BluemAction extends Action {
     }
     
     protected function _getRequestByRequestId($request_id) {
+        return $this->_getRequestByField($request_id, "request_id");
+    }
+    
+    protected function _getRequestByTransactionId($request_id) {
+        return $this->_getRequestByField($request_id, "transaction_id");
+    }
+
+    protected function _getRequestByOrderId($request_id) {
+        return $this->_getRequestByField($request_id, "order_id");
+    }
+
+    // @todo: improve filtering by searching for selection of items here directly, for admin display
+
+    private function _getRequestByField($request_id,$field) {
+        
         $requestModel = $this->_objectManager->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection()->addFieldToFilter(
-            'request_id', 
+            $field,
             array('eq'=> $request_id)
         );
         if($collection->count()==0) {
@@ -206,6 +236,7 @@ class BluemAction extends Action {
         $obj = $collection->getFirstItem();
         return $obj;
     }
+    
 
     
     // foreach($collection as $contact) {

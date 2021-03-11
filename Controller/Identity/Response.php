@@ -23,8 +23,8 @@ class Response extends BluemAction
         $requestId = (int) $this->getRequest()->getParam('requestId');
         if($debug) {
             
-            echo " ALLE GET REQS";
-            var_dump($this->getRequest()->getParams());
+            echo " ALLE GET REQ PARAMS: <BR>";
+            print_r($this->getRequest()->getParams());
             echo "<HR>" ;
             var_dump($requestId);
         }
