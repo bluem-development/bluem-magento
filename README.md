@@ -23,7 +23,7 @@ GNU GPLv3.
 ```bash
 composer require daanrijpkema/bluem-magento
 ```
-*Manual (Advanced) installation*: Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Identity` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
+*Manual (Advanced) installation*: Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Integration` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
 
 ### 2: Enable the module
 Check to see if you can see the plug-in:
