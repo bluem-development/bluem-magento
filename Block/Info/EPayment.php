@@ -21,22 +21,9 @@ class EPayment extends \Magento\Payment\Block\Info
 
 
     function getPaymentRequestInfo() {
-
-        $orderId = $this->getRequest()->getParam('order_id');
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $order = $objectManager->create('Magento\Sales\Api\Data\OrderInterface')->load($orderId);
-                
-        $requestModel = $objectManager->create('Bluem\Integration\Model\Request');
-        $collection = $requestModel->getCollection()->addFieldToFilter(
-            'order_id',
-            array('eq'=> $orderId)
-        );
-        if ($collection->count()==0) {
-            return false;
-        }
-
-        $obj = $collection->getFirstItem();
-        return $obj;
-        // return $orderId;
+        return $this->getInfoData('order_id');
+        // $orderId = $this->getRequest()->getParam('order_id');
+        // $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+     
     }
 }

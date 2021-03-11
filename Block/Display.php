@@ -206,21 +206,7 @@ function getRequestsTableHTML($type_filter = false)
 }
 }
 
+// starting to make use of elegant classes, here:
+class RequestPayload extends stdClass {
 
-class RequestPayload extends stdClass {}
-
-/*
-        // if($connection->isTableExists('bluem_integration_request')) {
-
-        //     $table = $connection->getTableName('bluem_integration_request');
-        //     //For Select query
-        //     $query = "Select * FROM " . $table;
-        //     $result = $connection->fetchAll($query);
-            
-        //     $identity->result = "Success: Verification received";
-        //     $identity->payload = $result;
-        // } else {
-        //     $identity->result = "Error: No DB table created, reinstall and activate the module Bluem_Integration first" ;
-        // }
-            
- */
+}
