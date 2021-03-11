@@ -11,7 +11,7 @@ $methodCode = $block->escapeHtml($block->getMethodCode());
         <div class="control">
             <input type="text" id="assistant_id" name="payment[additional_data][assistant_id]" title="<?= $block->escapeHtml(__('Assistant ID')) ?>"
                    class="input-text required-entry"
-                   value="<?= $block->escapeHtml($block->getInfoData('additional_data')['assistant_id']) ?>" />
+                   value="<?php echo "1";// $block->escapeHtml($block->getInfoData('additional_data')['assistant_id']) ?>" />
         </div>
     </div>
 </fieldset>

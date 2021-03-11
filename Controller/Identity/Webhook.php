@@ -6,7 +6,7 @@ use Bluem\Integration\Controller\BluemAction;
 
 require_once __DIR__ . '/../BluemAction.php';
 
-class Webhook extends BluemAction
+class Webhook extends BluemWebhookAction
 {
     public function execute()
     {

@@ -37,6 +37,8 @@ class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\O
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        return $this;
+        
         $payment = $observer->getEvent()->getPayment();
         if (empty($payment)) {
             return $this;
@@ -51,26 +53,26 @@ class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\O
         }
 
         // This is used while creating an order from the backend by an administrator.
-        if ($this->requestInterface->getFullActionName() == 'sales_order_create_save') {
-            $paymentFromPosting = $this->requestInterface->getParam('payment');
-            if ($paymentFromPosting && isset($paymentFromPosting['assistant_id'])) {
-                $payment->setAssistantId($paymentFromPosting['assistant_id']);
-            }
-            return $this;
-        }
+        // if ($this->requestInterface->getFullActionName() == 'sales_order_create_save') {
+        //     $paymentFromPosting = $this->requestInterface->getParam('payment');
+        //     if ($paymentFromPosting && isset($paymentFromPosting['assistant_id'])) {
+        //         $payment->setAssistantId($paymentFromPosting['assistant_id']);
+        //     }
+        //     return $this;
+        // }
 
-        // This is used while creating an order from the frontend by a customer.
-        $inputParams = $this->inputParamsResolver->resolve();
+        // // This is used while creating an order from the frontend by a customer.
+        // $inputParams = $this->inputParamsResolver->resolve();
 
-        foreach ($inputParams as $inputParam) {
-            if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
-                $additionalData = $inputParam->getData('additional_data');
-                if (isset($additionalData['assistant_id'])) {
-                    $payment->setAssistantId($additionalData['assistant_id']);
-                    break;
-                }
-            }
-        }
+        // foreach ($inputParams as $inputParam) {
+        //     if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
+        //         $additionalData = $inputParam->getData('additional_data');
+        //         if (isset($additionalData['assistant_id'])) {
+        //             $payment->setAssistantId($additionalData['assistant_id']);
+        //             break;
+        //         }
+        //     }
+        // }
 
         return $this;
     }

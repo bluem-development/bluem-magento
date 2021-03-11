@@ -6,6 +6,7 @@ use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ResourceConnection;
 use \Magento\Framework\App\ObjectManager;
+use \Magento\Backend\Helper\Data as BackendHelper;
 
 use Bluem\Integration\Helper\Data as DataHelper;
 use stdClass;
@@ -30,12 +31,13 @@ class Display extends \Magento\Framework\View\Element\Template
         Context $context,
         Session $customerSession,
         ResourceConnection $resourceConnection,
-        DataHelper $dataHelper
-    )
-	{
+        DataHelper $dataHelper,
+        BackendHelper $backendHelper
+    ) {
         $this->_resourceConnection = $resourceConnection;
         $this->_customerSession = $customerSession;
         $this->_dataHelper = $dataHelper;
+        $this->_backendHelper = $backendHelper;
 
         $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
@@ -114,6 +116,11 @@ class Display extends \Magento\Framework\View\Element\Template
 
 function getRequestsTableHTML($type_filter = false) 
 {
+    // $_key = $this->getRequest()->getParam('key');
+    
+    // @todo: added replace to get base url, instead of admin route. Should be done more elegantly later
+    // $_admin_url = str_replace("admin/admin","admin", $this->_backendHelper->getHomePageUrl());
+    
     $html = "";
     $requests = $this->getBluemRequests();
 
@@ -143,7 +150,13 @@ function getRequestsTableHTML($type_filter = false)
             if($k == "type" ) {
                 continue;
             }
-            $hs = ucfirst(str_replace("_"," ",$h));
+            $hs = ucfirst(
+                str_replace(
+                    ["_","id"],
+                    [" ","ID"],
+                    $h
+                )
+            );
             $html.="<th style='text-align:center'>$hs</th>";
         }
         $html.= "</thead><tbody>";
@@ -162,8 +175,10 @@ function getRequestsTableHTML($type_filter = false)
                     continue;
                 }
                 $html.= "<td>";
-                if($k == "payload")
-                {
+                if($k == "order_id") {
+                    $url = $this->getUrl('sales/order/view', ['order_id' => $v]);
+                    $html .= "<a href='{$url}' target='_self'>{$v}</a>";
+                } elseif($k == "payload") {
                     $v_obj = json_decode($v);
                     $pl_obj = new RequestPayload();
                     foreach($v_obj as $k=>$v) {

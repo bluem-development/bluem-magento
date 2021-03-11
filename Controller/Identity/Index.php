@@ -18,3 +18,5 @@ class Index extends BluemAction
         return $this->_pageFactory->create();
     }
 }
+
+// @todo: add iDIN as checkout step https://devdocs.magento.com/guides/v2.4/howdoi/checkout/checkout_new_step.html

@@ -21,9 +21,11 @@ class Request extends BluemAction
      */
     public function execute()
     {
+        $debug = false;
 
         // @todo: eventually, only execute via AJAX & POST
 
+        
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
@@ -38,6 +40,9 @@ class Request extends BluemAction
         $amount = $order->getGrandTotal();
         $currency = "EUR";
 
+        $userEmail = "";
+        $userId = "";
+        $userName = "";
         if ($this->_customerSession->isLoggedIn()) {
             $userEmail = $this->_customerSession->getCustomer()->getEmail();
             $userName = $this->_customerSession->getCustomer()->getName();
@@ -46,17 +51,70 @@ class Request extends BluemAction
             // description is shown to customer
             $description = "Order {$orderIncrementId} (klantnummer {$userId})";
             // client reference/number
-            $debtorReference = "{$orderId}-{$userId}";
+            $debtorReference = "{$orderId}";
         } else {
             $description = "Order {$orderIncrementId} (gastbestelling)";
-            $debtorReference = "{$orderId}-guest";
+            $debtorReference = "{$orderId}";
         }
-
-        // $debtorReference = "{$userId}";
-        // $returnURL .= "requestId/{$request_db_id}";
+        
         $returnURL = $this->_baseURL
-            . "/bluem/payment/response/order_id/{$orderId}";
+            . "/bluem/payment/response/order_id/"
+            . $orderId;
 
+        $payload = [
+            'user_email'        => $userEmail,
+            'user_name'         => $userName,
+            'order_id'          => $orderId,
+            'order_increment_id'=> $orderIncrementId,
+            'amount'            => $amount,
+            'return_url'        => $returnURL,
+            'currency'          => $currency
+        ];
+
+        $request_db = $this->_getRequestByOrderId($orderId);
+
+        // validate if item is already present in requests table
+        if ($request_db === false) {
+
+            // Request does not exist yet
+
+            /* Create request in database*/
+            $request_db_data = [
+                'Type'              => "payment",
+                'Description'       => $description,
+                'DebtorReference'   => $debtorReference,
+                'OrderId'           => $orderId,
+                'Payload'           => json_encode($payload),
+                'Status'            => "created"
+            ];
+
+            $request_db_id = parent::_createRequest(
+                $request_db_data
+            );
+        } else {
+            // request already exists,
+            if($debug) {
+                echo "REQUEST ALREADY EXISTS";
+                die();
+            }
+            $request_db_id = $request_db->getId();
+
+            $transactionUrl = $request_db->getTransactionUrl();
+            if ($transactionUrl !=="") {
+                $result = [
+                    'error'       => false,
+                    'payment_url' => $transactionUrl
+                ];
+            } else {
+                $result = [
+                    'error'       => true,
+                    'message'     => "Kon transactie niet juist initialiseren"
+                ];
+            }
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($result);
+            exit;
+        }
 
         try {
             $request = $this->_bluem->CreatePaymentRequest(
@@ -68,39 +126,21 @@ class Request extends BluemAction
                 null,
                 $returnURL
             );
+
             $response = $this->_bluem->PerformRequest($request);
+
         } catch (\Throwable $th) {
             $result = [
                 'error' => true,
                 'message' => 'Could not create the Payment Request, more details: '.
                     $th->getMessage()
             ];
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($result);
+            exit;
         }
 
-        $payload = [
-            'user_email'        => $userEmail,
-            'user_name'         => $userName,
-            'order_id'          => $orderId,
-            'order_increment_id'=>$orderIncrementId,
-            'amount'            => $amount,
-            'return_url'        => $returnURL,
-            'currency'          => $currency
-        ];
-
-        /* Create request in database*/
-        $request_db_data = [
-            'Type'              => "payment",
-            'Description'       => $description,
-            'DebtorReference'   => $debtorReference,
-            'OrderId'           => $orderId,
-            'Payload'           => json_encode($payload),
-            'Status'            => "created"
-        ];
-
-        $request_db_id = parent::_createRequest(
-            $request_db_data
-        );
-        
         if ($response->ReceivedResponse()) {
 
             $transactionURL ="";
@@ -115,8 +155,10 @@ class Request extends BluemAction
                 'TransactionUrl'    => $transactionURL,
                 'Status'            => "requested"
             ];
-            parent::_updateRequest($request_db_id, $update_data);
-
+            // var_dump($request_db_id);
+            // var_dump($updated);
+            // die();
+            $updated= parent::_updateRequest($request_db_id, $update_data);
             $result = [
                 'error'             => false,
                 'payment_url'       => $transactionURL,
@@ -124,18 +166,16 @@ class Request extends BluemAction
                 'debtorReference'   => $debtorReference,
                 'amount'            => $amount,
                 'returnURL'         => $returnURL,
-                'payload'           => $payload
+                'payload'           => $payload,
+                'EntranceCode'      => $entranceCode,
+                'TransactionId'     => $transactionID,
+                'TransactionUrl'    => $transactionURL,
+                'Status'            => "requested"
             ];
         } else {
             $result = [
                 'error'    => true,
-                'message'  => 'Could not create the Payment Request, no response received',
-                'description'       => $description,
-                'debtorReference'   => $debtorReference,
-                'amount'            => $amount,
-                'returnURL'         => $returnURL,
-                'payload'           => $payload,
-                'response'          => $response
+                'message'  => 'Could not create the Payment Request: no response received'
             ];
         }
 

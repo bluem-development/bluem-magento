@@ -19,7 +19,8 @@ use stdClass;
 use Bluem\BluemPHP\Integration;
 use Exception;
 
-class BluemAction extends Action {
+class BluemAction extends Action 
+{
     
     
     /**
@@ -78,13 +79,15 @@ class BluemAction extends Action {
         // have with the bank for receiving direct debit mandates.
         // NOTE that MerchantID for test environment is set automatically to a valid test value
         $bluem_config->brandID = "DRIdentity";                         // What's your BrandID? Set at BlueM
-        $bluem_config->expectedReturnStatus = "success" ;    // What status would you like to get back for a TEST transaction or status request? Possible values: none, success, cancelled, expired, failure, open, pending
+        $bluem_config->expectedReturnStatus = "failure" ;    // What status would you like to get back for a TEST transaction or status request? 
+        // Possible values: none, success, cancelled, expired, failure, open, pending
         $bluem_config->merchantReturnURLBase = $this->_baseURL;  // URL to return to after finishing the process
         
         $bluem_config->IDINbrandID = "DRIdentity";
         
         $bluem_config->expected_return = "success"; 
-        // legacy: will be changed to expectedReturnStatus from 1.1.2 version of `bluem-php`
+        $bluem_config->expectedReturnStatus = "success"; 
+        // legacy: will be changed to be just expectedReturnStatus from 1.1.2 version of `bluem-php`
         
         $this->_bluem = new Integration($bluem_config);
         
