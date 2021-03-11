@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluem\Integration\Controller\Adminhtml\Create;
+namespace Bluem\Integration\Controller\Adminhtml\Identity;
 
 class Index extends \Magento\Backend\App\Action
 {

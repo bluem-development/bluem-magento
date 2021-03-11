@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Magento2.* (tested up to v2.4)
+- Magento2.* (tested on v2.4)
 
 ## Support
 
@@ -17,20 +17,20 @@ GNU GPLv3.
 ## Installation:
 
 ### 1: Installing the module files
-Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Identity`.
-<!-- 
-Or install via Composer (coming soon):
+
+**Recommended way:** Install via Composer from your Magento Root:
 
 ```bash
-composer require daanrijpkema/bluem-magento-module:1.0
-``` -->
+composer require daanrijpkema/bluem-magento
+```
+*Manual (Advanced) installation*: Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Identity` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
 
 ### 2: Enable the module
 Check to see if you can see the plug-in:
 ```bash
 php bin/magento module:status
 ```
-
+Enable the module as such:
 ```bash
 php bin/magento module:enable Bluem_Integration
 ```
@@ -48,10 +48,33 @@ Run this in **production** mode or if you notice that the layout of your webshop
 php bin/magento setup:static-content:deploy
 ```
 
+## Updating this plugin
+
+Periodically we will improve this plugin. Incorporating these brand new updates is easy:
+
+Run:
+```bash
+composer require daanrijpkema/bluem-magento
+```
+and repeat step 2 and 3 from the aforementioned installation.
+
 
 # Configuration of Bluem settings
 Go to Stores > Configuration and open the Bluem Tab. 
 Fill in all settings there - appropriate instructions are available on the page and through your account manager.
+
+# Payments
+This module offers a payment gateway that can be enabled to work inside the normal checkout flow of your webshop. 
+
+To enable the payment gateway, go to Stores > Configuration, select Sales > Payment methods and scroll down. You should see a Bluem ePayment gateway there, which you can Enable. You might have to disable System setting; the small checkbox to the right.
+
+**Important**: Also set your account settings and the Payment brandID by going to Bluem > Configure Account & Identity and scroll down to verify everything is filled in.
+
+Once enabled within your webshop settings, end users can select the Bluem payment method. Once checkout has been initiated, a payment request will be created based on your Bluem settings and account credentials and the flow brings the end user to the Bluem payment page which, in turn, directs the user to their bank and consequently back to your webshop with a response.
+
+In the administrator side, navigating to Bluem > Payments will yield an overview of all payment requests thus far, their status and their corresponding orders. Order status will also be automatically updated when customers pay.
+
+_note_: Payments work out of the box for logged-in and guest customers
 
 # Identity 
 ## How Identity Works
@@ -59,7 +82,7 @@ This module enables a page that is usable to verify **logged in user identities*
 
 - _Note:_ Please make sure the settings (see Configuration section) for Identity are configured properly. One important setting to focus on is the type of request you want to initiate: either an AgeCheck Request or a CustomerData Request.
 
-## Enable automatic identity checking
+## Enabling automatic identity checking
 
 Enforce an identity check before **logged in** users can add products to cart by selecting a desired scenario from the Bluem configuration page. Options are:
 
@@ -68,7 +91,7 @@ Enforce an identity check before **logged in** users can add products to cart by
 - Requiring a regular identity verification to be completed 
 - Requiring a regular identity verification to be completed and requiring a minimum age (default 18 years and up)
 
-## Perform ad-hoc identity requests
+## Performing ad-hoc identity requests
 
 - _Note:_ Replace `myawesome.shop` with your own store domain in the following steps.
 
@@ -97,17 +120,6 @@ The simplest way to do so is simply include a link to the page from step 2 of th
 
 _Instructions on how to change the redirect after identification will follow soon_ Refer to the Configuration section to enable this functionality.
 
-# Payments
-Coming soon.
-
-<!-- To enable the payment gateway, go to Stores > Configuration, select Sales > Payment methods -->
-
-## How Payments Work
-
-This module offers a payment gateway that can be enabled to work inside the normal checkout flow of your webshop. 
-
-Once enabled within your webshop settings, end users can select the Bluem payment method. Once checkout has been initiated, a payment request will be created based on your Bluem settings and account credentials and the flow brings the end user to the Bluem payment page which, in turn, directs the user to their bank and consequently back to your webshop with a response.
-
 ## Webhooks
 Webhooks are vital to retrieve information about transactions in asynchronously and periodically about order processing, independent of your end-users explicit transaction and request page visit.
 
@@ -127,16 +139,17 @@ As soon as the module webhook functionality has been developed, you can communic
 
 ## Changelog
 
+0.4.6   Working payment method
+
 0.3.4   Initial release (Identity functions) to first participant testing.
 
 
 ### References:
 
-Referred quite often to: https://www.mageplaza.com/magento-2-module-development/
+Referred quite often to: https://www.mageplaza.com/magento-2-module-development/ and the official devdocs
 
-
-
+<!-- 
 # note to self, deployment:
- zip -r bluem-integration-0.4.0.zip . -x '.git/*'
+zip -r bluem-integration-0.4.0.zip . -x '.git/*' -->
 
  

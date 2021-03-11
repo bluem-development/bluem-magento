@@ -13,7 +13,7 @@
             title="Identity Requests" 
             module="Bluem_Integration"
             sortOrder="10" 
-            action="createmenubackend/create/index"
+            action="bluemadmin/identity/index"
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
@@ -22,7 +22,7 @@
             title="Payments" 
             module="Bluem_Integration"
             sortOrder="11" 
-            action="createmenubackend/payments/index"
+            action="bluemadmin/payments/index"
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
@@ -41,7 +41,7 @@
        
 
        <add id="Bluem_Integration::configuration" 
-            title="Configure ePayments" 
+            title="Configure Payments" 
             module="Bluem_Integration" 
             sortOrder="10" 
             action="adminhtml/system_config/edit/section/payment" 
