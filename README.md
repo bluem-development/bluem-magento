@@ -1,13 +1,13 @@
-# Bluem Magento module
+![Bluem](https://bluem.nl/img/BluemAboutIcon.svg)
+Bluem is an independent Dutch payment and identity specialist based in Amersfoort and Sofia, which has developed its viamijnbank cloud platform for handling online payments, mandates, identification services, digital signatures and IBAN name checks. Companies send high volumes of payment requests through our software, bills are paid faster, and direct debit mandates are issued digitally.
 
-## Description
-_ Notice_: This is the developer repository for the Bluem Magento2 module. The stable, production-ready version of the module will be available from the Magento2 directory later. Use this repository to get insight and possibly contribute to the development of this module. A subset of this documentation will be available as end-user documentation in the future as well.
+This Magento2 module is an integration that connects your website to Bluem's eMandate, ePayments and iDIN Identity services.
 
-This module is an integration that connects your website to Bluem's eMandate, ePayments and iDIN Identity services.
+
 
 Concretely, the module delivers:
 
-- A custom plug and play page allows logged-in users to perform an iDIN Identity request and store this information within the user profile metadata for further usage in third-party modules or functions within your webshop. 
+- A custom plug and play page allows logged-in users to perform an iDIN Identity request and store it within the user profile metadata for further usage in third-party modules or functions within your webshop. 
 -  An extensive settings page that allows for enabling/disabling and configuration of specific services
 -  A payment gateway to accept eMandate transactions within a Magento2 checkout procedure (in development)
 - A payment gateway to accept ePayment transactions within a Magento2 checkout procedure (in development)
@@ -40,9 +40,14 @@ _ Notice:_ This method is still undergoing some configuration changes, so if it 
 composer require daanrijpkema/bluem-magento
 ```
 
+
 You require authorization keys from Magento's module repository. You can find these in your Magento account. [Refer to this help article to find your auth credentials](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html). [Here, you can find a guide on how to install and update modules through composer](https://devdocs.magento.com/cloud/howtos/install-components.html).
 
-**Manual (Advanced) installation** Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Integration` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
+_ Notice_: This is the developer repository for the Bluem Magento2 module. Use the code in this repository to get insight and possibly contribute to the development of this module. A subset of this documentation will be available as end-user documentation in the future as well. Only if you are familiar with Magento will you be able to properly install the module from the pure source code.
+
+**Manual (Advanced) installation** 
+- Either download the provided ZIP file of the latest version from the root directory or clone/fork the source code.  
+- Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Integration` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
 
 **Magento Marketplace**: will be considered at a later stage of development.
 
@@ -84,23 +89,35 @@ Then repeat step 2 and 3 from the aforementioned installation.
 
 
 # Configuration of Bluem settings
-Go to Stores > Configuration and open the Bluem Tab. 
+Go to `Stores` > `Configuration` and open the Bluem Tab. 
 Fill in all settings there - appropriate instructions are available on the page and through your account manager.
 
-Detailed instructions per service follow below:
+Detailed instructions per service are stated below:
 
 # Payments
 This module offers a payment gateway that functions seamlessly inside the checkout flow of your webshop. 
 
-To enable the payment gateway, go to Stores > Configuration, select Sales > Payment methods and scroll down. You should see a Bluem ePayment gateway there, which you can Enable. You might have to disable the System setting, the small checkbox to the right.
+## Enabling and configuring payments
 
-**Important**: Set your account settings and the Payment brandID by going to Bluem > Configure Account & Identity and scroll down to verify the complete configuration.
+To enable the payment gateway, go to Stores > Configuration, select Sales > Payment methods. You should see a Bluem ePayment gateway there, which you can Enable. *Note:* You might have to disable the System setting, the small checkbox to the right, to allow changes to specific settings.
 
-Once enabled within your webshop settings, end users can select the Bluem payment method. Once the checkout has is initiated, a payment request is created based on your Bluem settings and account credentials. The flow brings the end-user to the Bluem payment page, which, in turn, directs the user to their bank and consequently back to your webshop with a response.
+**Important**: Set your account settings by going to Bluem > Configure Account & Identity and scroll down to verify the complete configuration. You have to fill in your account details such as your SenderID, the Payment brandID and the access token for the Test and or Production environment setting. It is strongly advised to first test all functionality in an isolated test instance of your website and use the Test environment setting of this module.
 
-On the administrator side, navigating to Bluem > Payments will yield an overview of all payment requests thus far, their status, and corresponding orders. The order status will also be automatically updated when customers pay.
+If end users encounter errors _within_ the Bluem portal viamijnbank.net, this is probably because of an incorrectly configured or not yet activated account within the bank or a problem with your account credentials. Please check if your details are correctly filled in. Refer to your Bluem account manager if you are unsure.
 
-_note_: Payments work out of the box for logged-in and guest customers
+## Using payments
+
+Once enabled within your webshop settings, end users can select the Bluem payment method when they check out. 
+
+Once the checkout is completed, a payment request is created based on your Bluem settings and account credentials. The flow brings the end-user to the Bluem payment page, which, in turn, directs the user to their bank and consequently back to your webshop with a response. A webhook (described below) transfers additional status information from Bluem to your website after the transaction has been completed or otherwise processed (failed, expired, etc.).
+
+## Managing and viewing payments
+
+On the administrator side, navigating to Bluem > Payments will yield an overview of all payment requests thus far, their status, and corresponding orders. The order status will also be automatically updated when users pay. In the payload section of this overview, you can view details of each transaction.
+
+Also refer to the [Production viamijnbank.net](https://viamijnbank.net) or [Test viamijnbank.net](https://test.viamijnbank.net) portal. Bluem client can see more in-depth details of each transaction to troubleshoot or investigate your end users' payment habits. 
+
+Payments work out of the box for logged-in and guest users. Payments work alongside and independently from identity. An identity can be configured to be required before the Checkout procedure can be completed. Only after this requirement is met, the checkout procedure and subsequent payment methods will be selectable.
 
 # Identity 
 ## How Identity service Works
@@ -110,7 +127,7 @@ The Identity Requests page consists of an overview of the requests made so far, 
 
 On the Settings page, you can now find several settings around the items Account, Identification and Payments. Mainly elaborated is now account settings and settings for identity. See also the scenarios as they are in the [WordPress and WooCommerce plug-in](https://wordpress.org/plugins/bluem/). All these scenarios are available and explained below. _Do note that the automatic checks are currently only possible for logged in users_. 
 
-In the next release, guest users will also be identifiable based on their IP address. 
+In the next release, guest users will also be identifiable based on their IP address.
 
 You can indicate in the settings which parts of an IDIN request are requested. CustomerID (an identifier set by the bank) is always requested. All these settings are already in active use and can therefore are present in this version.
 
@@ -155,6 +172,18 @@ _Instructions on how to include the Identify button will follow soon_
 The simplest way to do so is to include a link to the page from step 2 of the above set-up procedure. When unverified users are redirected there, they can follow the procedure right away. If they are already verified, they will be told so and can return to the previous page.
 
 _Instructions on how to change the redirect after identification will follow soon._ Refer to the Configuration section to enable this functionality.
+# eMandates
+
+Will follow in a future release, as soon as Bluem clients have shown interest in integrating this into the Magento ecosystem.
+
+# Developer notes
+
+- At the moment, it is not yet possible to choose the issuer (Bank) from within the webshop; this is done from within the Bluem portal, so as soon as the end-user has clicked on 'checkout' and temporarily leaves the webshop.
+- At the moment, the payment reference and client reference are automatically generated based on client information. This will be added at a later date if it appears to be necessary.
+- All transaction requests, also for identity, are logged within a database table which is created when the module is first activated.
+- Notes on Magento version 2: This module is targeted at Magento2, and there is no support for Magento v1.* at the moment.
+- Regarding data and privacy: IP Addresses are used at the moment to trace guest users. Any new transaction stores the IP Address. Please notice this when using this module within your site and acknowledge this within your privacy policy.
+- Please contact us with any remarks or notes on the module and its installation procedure: the module is rather new and therefore not yet broadly tried and tested.
 
 ## Webhooks (in development)
 Webhooks are vital to retrieve information about transactions asynchronously and periodically about order processing, independent of your end-users explicit transaction and request page visit.
@@ -169,9 +198,6 @@ They will function in the environment set in settings (either `test` or `prod`).
 
 When completed, you can communicate this fact and the above URLs to your Bluem account manager to have the webhook functionality enabled for your account.
 
-
-## Remarks on data and privacy
-- IP Addresses are used at the moment to trace guest users. Any new transaction stores the IP Address. Please notice this when using this module within your site and acknowledge this within your privacy policy.
 
 ## Changelog
 0.4.7   Documentation updated
