@@ -25,7 +25,6 @@ class Request extends BluemAction
 
         // @todo: eventually, only execute via AJAX & POST
 
-        
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
@@ -52,8 +51,11 @@ class Request extends BluemAction
             $description = "Order {$orderIncrementId} (klantnummer {$userId})";
             // client reference/number
             $debtorReference = "{$orderId}";
+
+            // @todo: also create setting to template these fields.
         } else {
-            $description = "Order {$orderIncrementId} (gastbestelling)";
+            // guest order
+            $description = "Order {$orderIncrementId} (gastbestelling)"; // @todo Localize this to the store locale
             $debtorReference = "{$orderId}";
         }
         
@@ -93,9 +95,9 @@ class Request extends BluemAction
             );
         } else {
             // request already exists,
-            if($debug) {
-                echo "REQUEST ALREADY EXISTS";
-                die();
+            if ($debug) {
+                echo "REQUEST ALREADY EXISTS, exiting";
+                exit;
             }
             $request_db_id = $request_db->getId();
 
@@ -128,7 +130,6 @@ class Request extends BluemAction
             );
 
             $response = $this->_bluem->PerformRequest($request);
-
         } catch (\Throwable $th) {
             $result = [
                 'error' => true,
@@ -142,7 +143,6 @@ class Request extends BluemAction
         }
 
         if ($response->ReceivedResponse()) {
-
             $transactionURL ="";
 
             $entranceCode   = $response->getEntranceCode();

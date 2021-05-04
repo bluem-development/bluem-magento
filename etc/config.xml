@@ -19,6 +19,7 @@
                 <identity_request_gender>0</identity_request_gender>
                 <identity_request_telephone>1</identity_request_telephone>
                 <identity_request_email>1</identity_request_email>
+                <identity_product_agecheck_attribute>agecheck_required</identity_product_agecheck_attribute>
             </identity>
             <payments>
                 <payments_brand_id>ExamplePayments</payments_brand_id>

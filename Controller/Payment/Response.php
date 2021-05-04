@@ -10,13 +10,13 @@ use \Magento\Framework\App\Action\Context;
 use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ResourceConnection;
 use \Magento\Framework\Controller\ResultFactory;
-// require_once __DIR__ . '/../BluemAction.php';
+
 use Bluem\Integration\Controller\BluemAction;
 use Bluem\Integration\Helper\Data as DataHelper;
 
+
 class Response extends BluemAction
 {
-
     public function __construct(
         Context $context,
         PageFactory $pageFactory,
@@ -26,9 +26,6 @@ class Response extends BluemAction
         ResultFactory $resultFactory,
         ManagerInterface $messageManager
     ) {
-
-        
-        
         parent::__construct(
             $context,
             $pageFactory,
@@ -47,13 +44,10 @@ class Response extends BluemAction
      */
     public function execute()
     {
-
-
         $debug = false;
 
         $order_id = (int) $this->getRequest()->getParam('order_id');
         if ($debug) {
-
             echo " ALLE GET REQ PARAMS: ";
             var_dump($this->getRequest()->getParams());
             echo "<HR>order id: " ;
@@ -65,51 +59,17 @@ class Response extends BluemAction
             exit;
         }
 
-        $objectManager = ObjectManager::getInstance();   
-        $orderRepository = $objectManager->create('\Magento\Sales\Model\OrderRepository');    
+        $objectManager = ObjectManager::getInstance();
+        $orderRepository = $objectManager->create('\Magento\Sales\Model\OrderRepository');
         
         try {
             $order = $orderRepository->get($order_id);
-        } catch(\Throwable $th) {
+        } catch (\Throwable $th) {
             echo "Fout bij opvragen bestelling: ".$th->getMessage();
             exit;
         }
-        // var_dump($order);
-        // die();
-        $state = $order->getState(); 
-        
-    //     /*get customer details*/
 
-
-    // https://meetanshi.com/blog/get-order-information-by-order-id-in-magento-2/
-      
-    //     $custLastName= $orders->getCustomerLastname();
-    //     $custFirsrName= $orders->getCustomerFirstname();
-    //     $ipaddress=$order->getRemoteIp();
-    //     $customer_email=$order->getCustomerEmail();
-    //     $customerid=$order->getCustomerId();
-      
-    //     /* get Billing details */  
-    //     $billingaddress=$order->getBillingAddress();
-    //     $billingcity=$billingaddress->getCity();      
-    //     $billingstreet=$billingaddress->getStreet();
-    //     $billingpostcode=$billingaddress->getPostcode();
-    //     $billingtelephone=$billingaddress->getTelephone();
-    //     $billingstate_code=$billingaddress->getRegionCode();
-      
-    //     /* get shipping details */
-      
-    //     $shippingaddress=$order->getShippingAddress();        
-    //     $shippingcity=$shippingaddress->getCity();
-    //     $shippingstreet=$shippingaddress->getStreet();
-    //     $shippingpostcode=$shippingaddress->getPostcode();      
-    //     $shippingtelephone=$shippingaddress->getTelephone();
-    //     $shippingstate_code=$shippingaddress->getRegionCode();
-      
-    //    /* get  total */
-      
-    //     $tax_amount=$order->getTaxAmount();
-    //     $total=$order->getGrandTotal();
+        $state = $order->getState();
 
         $request_db = $this->_getRequestByOrderId($order_id);
         // var_dump($request_db);
@@ -131,16 +91,15 @@ class Response extends BluemAction
             var_dump($transactionId);
             var_dump($entranceCode);
             // die();
-            
         }
 
-// validate TransactionId
-// validate EntranceCode
-// validate TransactionID and Entrance COde matching GET PARAMS
+        // validate TransactionId
+        // validate EntranceCode
+        // validate TransactionID and Entrance COde matching GET PARAMS
 
 
         
-        // perform status request 
+        // perform status request
         $statusResponse = $this->_bluem->PaymentStatus(
             $transactionId,
             $entranceCode
@@ -151,7 +110,7 @@ class Response extends BluemAction
             echo "No response received; please try again:<br> ";
             echo $request_db->getTransactionUrl();
             exit;
-        } 
+        }
         
         if (!isset($statusResponse->PaymentStatusUpdate->Status)) {
             echo "Invalid / no status received; please try again:<br> ";
@@ -172,7 +131,6 @@ class Response extends BluemAction
             \Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT
         );
 
-
         switch ($statusCode) {
         case 'Success':
             // echo "do what you need to do in case of success!";
@@ -190,12 +148,9 @@ class Response extends BluemAction
                 ]
             );
 
-            // $order->setState(Order::STATE_PROCESSING);
             $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING);
             $order->save();
 
-            // echo "HIER";
-            // die();
             $redirect->setUrl($this->_baseURL.'/checkout/onepage/success');
             return $redirect;
             // echo "<p>Thanks for verifying your identity. You can now go back and proceed to other areas of our shop: <a href='".$home_url."'>$home_url</a>";
@@ -214,7 +169,6 @@ class Response extends BluemAction
                 $this->_baseURL.'/checkout/onepage/failure'
             );
             return $redirect;
-            // return $resultRedirect->setPath('checkout/onepage/failure');
             break;
         case 'Open':
             // do something when the request has not yet been completed by the user, redirecting to the transactionURL again";
@@ -246,25 +200,6 @@ class Response extends BluemAction
         }
     }
 
-
-
-
-
-
-
-
-    //     $status = false;
-
-    //     if ($status) {
-    //         $this->_success();
-    //     } else {
-    //         $this->_cancel();
-    //     }
-
-    //     //return $this->resultPageFactory->create();
-    // }
-
-
     // private function _success()
     // {
     //     $this->messageManager->addError(__('Payment has been successful.'));
@@ -291,3 +226,37 @@ class Response extends BluemAction
     //     return $resultRedirect;
     // }
 }
+
+
+
+
+//     /*get customer details*/
+// https://meetanshi.com/blog/get-order-information-by-order-id-in-magento-2/
+
+//     $custLastName= $orders->getCustomerLastname();
+//     $custFirsrName= $orders->getCustomerFirstname();
+//     $ipaddress=$order->getRemoteIp();
+//     $customer_email=$order->getCustomerEmail();
+//     $customerid=$order->getCustomerId();
+
+//     /* get Billing details */
+//     $billingaddress=$order->getBillingAddress();
+//     $billingcity=$billingaddress->getCity();
+//     $billingstreet=$billingaddress->getStreet();
+//     $billingpostcode=$billingaddress->getPostcode();
+//     $billingtelephone=$billingaddress->getTelephone();
+//     $billingstate_code=$billingaddress->getRegionCode();
+
+//     /* get shipping details */
+
+//     $shippingaddress=$order->getShippingAddress();
+//     $shippingcity=$shippingaddress->getCity();
+//     $shippingstreet=$shippingaddress->getStreet();
+//     $shippingpostcode=$shippingaddress->getPostcode();
+//     $shippingtelephone=$shippingaddress->getTelephone();
+//     $shippingstate_code=$shippingaddress->getRegionCode();
+
+//    /* get  total */
+
+//     $tax_amount=$order->getTaxAmount();
+//     $total=$order->getGrandTotal();

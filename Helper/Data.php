@@ -122,23 +122,10 @@ class Data extends AbstractHelper
             }
             // definitely require any identification already
 
-            // print_r($identity_checked->report);
-            // var_dump($identity_checked->report->BirthDateResponse."");
-            $now_time = strtotime("now");
-            $then_time = strtotime($identity_checked->report->BirthDateResponse."");
-
-            $diff_sec = $now_time - $then_time;
-
-            $age_in_years = $diff_sec / 60 / 60/ 24 / 365;
-            // echo "<br>now_time = {$now_time}";
-            // echo "<br>then_time = {$then_time}";
-            // echo "<br>diff_sec = {$diff_sec}";
-            // echo "<br>age_in_years = {$age_in_years}";
-            // die();
             if ($identity_scenario == 3) {
                 // also require age check
                 if (isset($identity_checked->report->BirthDateResponse)
-                    && ($identity_checked->report->BirthDateResponse."")!==""
+                && ($identity_checked->report->BirthDateResponse."")!==""
                 ) {
 
                     // calculate difference
@@ -150,6 +137,15 @@ class Data extends AbstractHelper
 
                     $age_in_years = round($diff_sec / 60 / 60/ 24 / 365, 0);
 
+                    /* if($debug) {
+                        // print_r($identity_checked->report);
+                    // var_dump($identity_checked->report->BirthDateResponse."");
+
+                    // echo "<br>now_time = {$now_time}";
+                    // echo "<br>then_time = {$then_time}";
+                    // echo "<br>diff_sec = {$diff_sec}";
+                    // echo "<br>age_in_years = {$age_in_years}";
+                     } */
 
                     if ($age_in_years < $min_age) {
                         $valid = false;

@@ -104,6 +104,14 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Do you want to retrieve the user's email address from the bank in the identity request?</comment>
                 </field>
+
+                  <field id="identity_product_agecheck_attribute" translate="label" type="text" 
+                  sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1"
+                  >
+                    <label>What product attribute do you want to use to activate the identity filter (given the scenario). </label>
+                    <comment>If a product has this attribute set to "1" or "true", an identity is required in the checkout.</comment>
+                </field>
+
             
 
             </group>

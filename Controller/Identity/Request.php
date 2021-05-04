@@ -11,31 +11,31 @@ class Request extends BluemAction
     public function execute()
     {
         $debug = false;
- 
+
         $scenario = $this->_dataHelper->getIdentityConfig('identity_scenario');
         $requestCategories = $this->_dataHelper->getIdentityRequestCategories();
+
         // validate:
         // mandatory: if user is logged in (constraint for now)
-        // optional: if user is not already verified? 
+        // optional: if user is not already verified?
         // Make a mention they can return to the previous page, create a view?
-        
-        $returnURL = $this->_baseURL . "/bluem/identity/response/"; // provide a link here to the callback function; either in this script or another script
-        
+
+        // provide a link here to the callback function; either in this script or another script
+        $returnURL = $this->_baseURL . "/bluem/identity/response/";
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $remote = $objectManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
         $ip = $remote->getRemoteAddress();
-        
+
         $payload = [
             'usecase'=>$scenario,
             'categories'=>$requestCategories,
             'ip'=>$ip,
             'userdata'=>[]
         ];
-                
 
-        if($this->_customerSession->isLoggedIn())
-        {
+
+        if ($this->_customerSession->isLoggedIn()) {
             $email = $this->_customerSession->getCustomer()->getEmail();
             $name = $this->_customerSession->getCustomer()->getName();
             $id = $this->_customerSession->getCustomer()->getId();
@@ -45,9 +45,17 @@ class Request extends BluemAction
                 'name'=> $name,
                 'id'  => $id
             ];
-            $description = "Verificatie $name (klantnummer $id)"; // description is shown to customer
-            $debtorReference = "$id"; // client reference/number
+            
+            // description is shown to customer
+            $description = "Verificatie $name (klantnummer $id)"; 
+            // client reference/number
+            $debtorReference = "$id"; 
+
+            // @todo Create settings for the description and debtorReference template/pointer
+
         } else {
+            // guest user payload
+
             $payload['userdata'] = [];
             $description = "Verificatie identiteit";
             $debtorReference = "";
@@ -65,7 +73,7 @@ class Request extends BluemAction
         $request_db_id = parent::_createRequest(
             $request_data
         );
-        
+
         // append created requestID to the URL to return to
         $returnURL .= "requestId/{$request_db_id}";
 
@@ -75,20 +83,17 @@ class Request extends BluemAction
             $debtorReference,
             $returnURL
         );
-        
 
         $response = $this->_bluem->PerformRequest($request);
-        
+
         if ($response->ReceivedResponse()) {
             $entranceCode = $response->getEntranceCode();
             $transactionID = $response->getTransactionID();
             $transactionURL = $response->getTransactionURL();
-            
-            if($debug) {
-                
+
+            if ($debug) {
                 echo "entranceCode: {$entranceCode}<br>";
                 echo "transactionID: {$transactionID}<br>";
-                
             }
             // todo: add ageverify type
             // save this somewhere in your data store
@@ -100,26 +105,16 @@ class Request extends BluemAction
                 'Status'=>"requested"
             ];
             $this->_updateRequest($request_db_id, $update_data);
-            
-            
-            // $_SESSION['entranceCode'] = $entranceCode;
-            // $_SESSION['transactionID'] = $transactionID;
-            // $_SESSION['transactionURL'] = $transactionURL;
-            
+
             // direct the user to this place
             header("Location: ".$transactionURL);
-            
-              // .. or for now, just show the URL:
-                // echo "<hr>TransactionURL: <a href='{$transactionURL}' target='_blank'>
-                // $transactionURL
-                // </a>";
-                exit;
-            } else {
-                echo " Invalid response received, please contact your webshop administrator";
-                exit;
-                // no proper response received, tell the user
-            }
+            exit;
+
+        } else {
+            // no proper response received, tell the user:
+            echo " Invalid response received, please contact your webshop administrator";
             exit;
         }
+        exit;
     }
-    
+}

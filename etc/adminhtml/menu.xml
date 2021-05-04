@@ -1,53 +1,44 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add 
+        <add
             id="Bluem_Integration::menu"
-            title="Bluem" 
+            title="Bluem"
             module="Bluem_Integration"
             sortOrder="50"
             resource="Magento_Backend::content"
            />
-           
         <add id="Bluem_Integration::menu_item"
-            title="Identity Requests" 
+            title="Identity Requests"
             module="Bluem_Integration"
-            sortOrder="10" 
+            sortOrder="10"
             action="bluemadmin/identity/index"
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-           
+
         <add id="Bluem_Integration::menu_item2"
-            title="Payments" 
+            title="Payments"
             module="Bluem_Integration"
-            sortOrder="11" 
+            sortOrder="11"
             action="bluemadmin/payments/index"
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-           
-
-
-        <add id="Bluem_Integration::settings" 
-            title="Configure Account &amp; Identity" 
-            module="Bluem_Integration" 
-            sortOrder="30" 
-            action="adminhtml/system_config/edit/section/integration" 
+        <add id="Bluem_Integration::settings"
+            title="Configure Account &amp; Identity"
+            module="Bluem_Integration"
+            sortOrder="30"
+            action="adminhtml/system_config/edit/section/integration"
             resource="Bluem_Integration::settings"
-            parent="Bluem_Integration::menu" 
+            parent="Bluem_Integration::menu"
         />
-            
-       
-
-       <add id="Bluem_Integration::configuration" 
-            title="Configure Payments" 
-            module="Bluem_Integration" 
-            sortOrder="10" 
-            action="adminhtml/system_config/edit/section/payment" 
-            resource="Magento_Payment::payment" 
+       <add id="Bluem_Integration::configuration"
+            title="Configure Payments"
+            module="Bluem_Integration"
+            sortOrder="10"
+            action="adminhtml/system_config/edit/section/payment"
+            resource="Magento_Payment::payment"
             parent="Bluem_Integration::menu"/>
-    
-
     </menu>
 </config>
