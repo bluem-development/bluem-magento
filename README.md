@@ -200,6 +200,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
+0.5.0   Cleared out some artefact code calls, Improved code stability, added versatile product filters
 0.4.7   Documentation updated
 0.4.6   Working payment method - ready for first deployment and testing of use cases
 0.3.4   Initial release (Identity functions) to first participant testing.
@@ -211,5 +212,3 @@ I referred quite often to [MagePlaza](https://www.mageplaza.com/magento-2-module
 <!-- 
 # note to self, deployment:
 zip -r bluem-integration-0.4.0.zip . -x '.git/*' -->
-
- 
