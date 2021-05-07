@@ -166,6 +166,12 @@ https://myawesome.shop/bluem/identity/request
 3. Afterwards, the user gets redirected back to the website, and the identification status is shown. 
 4. The user can click a button to return to the original page (step 1).
 
+## Ensure some products are set to require identity/age verification
+
+Set a new product attribute at the products that require an age check to `1`. The key of this product attribute is set in the settings. If unchanged, the default key is `agecheck_required`.
+
+Note: In a future version, this attribute will be added with this module programmatically.
+
 ### Important notes on identity verification:
 
 _Instructions on how to include the Identify button will follow soon_ 
@@ -200,7 +206,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
-0.5.0   Cleared out some artefact code calls, Improved code stability, added versatile product filters
+0.5.1   Cleared out some artefact code calls, Improved code stability, added versatile product filters
 0.4.7   Documentation updated
 0.4.6   Working payment method - ready for first deployment and testing of use cases
 0.3.4   Initial release (Identity functions) to first participant testing.

@@ -6,7 +6,7 @@
         "daanrijpkema/bluem-php": "^1.0"
     },
     "type": "magento2-module",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "authors": [{
         "name": "Daan Rijpkema",
         "email": "d.rijpkema@bluem.nl",
