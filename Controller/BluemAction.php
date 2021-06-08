@@ -16,7 +16,7 @@ use \Magento\Framework\Controller\ResultFactory;
 
 use Bluem\Integration\Helper\Data as DataHelper;
 use stdClass;
-use Bluem\BluemPHP\Integration;
+use Bluem\BluemPHP\Bluem as Bluem;
 use Exception;
 
 class BluemAction extends Action
@@ -96,7 +96,7 @@ class BluemAction extends Action
         $bluem_config->expectedReturnStatus = "success";
         // legacy: will be changed to be just expectedReturnStatus from 1.1.2 version of `bluem-php`
 
-        $this->_bluem = new Integration($bluem_config);
+        $this->_bluem = new Bluem($bluem_config);
         $this->_bluem_environment = $bluem_config->environment;
 
         return parent::__construct(
