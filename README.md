@@ -206,6 +206,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
+0.5.2   Updating Bluem dependencies to most recent version
 0.5.1   Cleared out some artefact code calls, Improved code stability, added versatile product filters
 0.4.7   Documentation updated
 0.4.6   Working payment method - ready for first deployment and testing of use cases
