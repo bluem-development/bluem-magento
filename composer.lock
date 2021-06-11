@@ -4,29 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03d488780a6d01e24255bfc8d14e8d86",
+    "content-hash": "f50f33057cab413f30279aa1d5a42e44",
     "packages": [
         {
             "name": "daanrijpkema/bluem-php",
-            "version": "2.0.2",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DaanRijpkema/bluem-php.git",
-                "reference": "2e8d88766cb76855c6152804c9a70653ae6ff027"
+                "reference": "0cb7f1091783a3cfcb882e1cf58b7aca09e3129e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DaanRijpkema/bluem-php/zipball/2e8d88766cb76855c6152804c9a70653ae6ff027",
-                "reference": "2e8d88766cb76855c6152804c9a70653ae6ff027",
+                "url": "https://api.github.com/repos/DaanRijpkema/bluem-php/zipball/0cb7f1091783a3cfcb882e1cf58b7aca09e3129e",
+                "reference": "0cb7f1091783a3cfcb882e1cf58b7aca09e3129e",
                 "shasum": ""
             },
             "require": {
-                "ext-dom": "*",
-                "ext-libxml": "*",
-                "ext-simplexml": "*",
                 "nesbot/carbon": "^2.31",
                 "pear/http_request2": "v2.4.2",
-                "php": ">=7.0",
+                "php": ">=5.4",
                 "selective/xmldsig": "^1.0"
             },
             "type": "package",
@@ -60,22 +57,22 @@
             ],
             "support": {
                 "issues": "https://github.com/daanrijpkema/bluem-php",
-                "source": "https://github.com/DaanRijpkema/bluem-php/tree/2.0.2"
+                "source": "https://github.com/DaanRijpkema/bluem-php/tree/1.1.1"
             },
-            "time": "2021-05-31T12:49:20+00:00"
+            "time": "2021-03-11T15:58:49+00:00"
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.48.1",
+            "version": "2.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16"
+                "reference": "93d9db91c0235c486875d22f1e08b50bdf3e6eee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8d1f50f1436fb4b05e7127360483dd9c6e73da16",
-                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/93d9db91c0235c486875d22f1e08b50bdf3e6eee",
+                "reference": "93d9db91c0235c486875d22f1e08b50bdf3e6eee",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +152,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-26T22:08:38+00:00"
+            "time": "2021-06-02T07:31:40+00:00"
         },
         {
             "name": "pear/http_request2",
