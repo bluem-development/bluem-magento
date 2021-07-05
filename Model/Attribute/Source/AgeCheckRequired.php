@@ -1,5 +1,3 @@
-	
-
 <?php
 /**
  * Copyright © 2016 Magento. All rights reserved.
