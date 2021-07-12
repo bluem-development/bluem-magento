@@ -27,7 +27,7 @@ class AgeCheckRequired extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstr
 
     /*
         The backend model may have beforeSave, afterSave, and afterLoad methods that allow the execution of some code at the moment an attribute is saved or loaded. The backend model is what makes attribute management a really powerful method of customization.
-        Note that we hardcoded attributeSetId here for the sake of time. In other cases, it could be different. 
-        Make sure to check the eav_attribute_set table for the right ID. 
+        Note that we hardcoded attributeSetId here for the sake of time. In other cases, it could be different.
+        Make sure to check the eav_attribute_set table for the right ID.
     */
 }

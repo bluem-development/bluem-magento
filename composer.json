@@ -3,10 +3,10 @@
     "description": "Bluem integration with payment gateway and identity verification",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0|~7.2|~7.1|~7.3|~7.4",
-        "daanrijpkema/bluem-php": "^1.1.1"
+        "daanrijpkema/bluem-php": "^2.0"
     },
     "type": "magento2-module",
-    "version": "0.5.3",
+    "version": "0.5.5",
     "authors": [{
         "name": "Daan Rijpkema",
         "email": "d.rijpkema@bluem.nl",

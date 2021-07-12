@@ -1,4 +1,11 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 namespace Bluem\Integration\Block;
 
 use \Magento\Framework\View\Element\Template\Context;
@@ -7,15 +14,11 @@ use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ResourceConnection;
 use \Magento\Framework\App\ObjectManager;
 use \Magento\Backend\Helper\Data as BackendHelper;
+use \Magento\Framework\View\Element\Template;
 
 use Bluem\Integration\Helper\Data as DataHelper;
-use stdClass;
 
-// for now only defined here
-// define("BLUEM_DEBUG",false);
-
-
-class Display extends \Magento\Framework\View\Element\Template
+class Display extends Template
 {
     protected $_identityFactory;
 
@@ -64,7 +67,8 @@ class Display extends \Magento\Framework\View\Element\Template
 
     public function showBluemIdentityButton()
     {
-        return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification..</a>";
+        
+        return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification procedure..</a>";
     }
 
     public function getUserLoggedIn()
@@ -90,33 +94,97 @@ class Display extends \Magento\Framework\View\Element\Template
 
     public function showProductWarning()
     {
-        $validated_identity = $this->_dataHelper->getIdentityValid();
+        // copied from ProductFilter.php@afterIsSaleable
+        $filter_debug = false;
+        // $product = $this->getProduct();
+        $identity_block_mode = $this->_dataHelper
+            ->getIdentityConfig('identity_block_mode');
+        
+        if ($filter_debug) {
+            echo "Initiating product filter";
+            var_dump($identity_block_mode);
+        }
+        $check_necessary = false;
+        if (is_null($identity_block_mode)
+            || (!is_null($identity_block_mode)
+            && $identity_block_mode =="all_products")
+        ) {
+            $check_necessary = true;
+        }
+        if (!is_null($identity_block_mode)
+            && $identity_block_mode =="product_attribute"
+        ) {
+            // $identity_product_agecheck_attribute = $this->_dataHelper
+            //             ->getIdentityConfig('identity_product_agecheck_attribute');
+            // // fallback
+            // if (is_null($identity_product_agecheck_attribute)) {
+            //     $identity_product_agecheck_attribute = "agecheck_required";
+            // }
+            // try {
+            //     $attr = $product->getData($identity_product_agecheck_attribute);
+            //     // var_dump($attr);
+            //             // die();
+            // } catch (Throwable $th) {
+            //     if ($filter_debug) {
+            //         echo "ERROR in productfilter";
+            //     }
+                // error in retrieving the data? then just allow the checkout for now
+                $check_necessary = true;
+            // }
+            // if (is_null($attr)) {
+            //     if ($filter_debug) {
+            //         echo "Emtpy in productfilter";
+            //     }
+            //     // attribute is not set? then just allow the checkout for now
+            //     $check_necessary = false;
+            // } else {
+            //     if ($attr == "1"
+            //         || $attr == "true"
+            //         || $attr == true
+            //     ) {
+            //         $check_necessary = true;
+            //     }
+            // }
+            // echo "Success in productfilter";
+        }
+        
+        if ($filter_debug) {
+            echo "Check necessary? " . ($check_necessary?"Yes":"No");
+        }
+        // no check? then just say s'all good
+        if ($check_necessary == false) {
+            return '';
+        }
 
-        if (!$validated_identity->valid) {
-            $html='';
-            $html .='<div role="alert" class="messages">
+
+        if ($check_necessary) {
+            // $identity_valid = $this->_dataHelper->getIdentityValid();
+            // if ($filter_debug) {
+            //     echo "Identity valid? " . ($identity_valid->valid?"Yes":"No");
+            //     var_dump($identity_valid);
+            // }
+            $validated_identity = $this->_dataHelper->getIdentityValid();
+
+            if (!$validated_identity->valid) {
+                $html='';
+                $html .='<div role="alert" class="messages">
             <div class="message-warning warning message">
             <div>';
-            $html.=__($validated_identity->invalid_message);
-            $html.='
+                $html.=__($validated_identity->invalid_message);
+                $html.='
             </div>
             </div>
             </div>';
-            return $html;
+                return $html;
+            }
+            return '';
         }
-        return '';
     }
 
     public function getRequestsTableHTML($type_filter = false)
     {
-        // $_key = $this->getRequest()->getParam('key');
-
-        // @todo: added replace to get base url, instead of admin route. Should be done more elegantly later
-        // $_admin_url = str_replace("admin/admin","admin", $this->_backendHelper->getHomePageUrl());
-
         $html = "";
         $requests = $this->getBluemRequests();
-
 
         if (count($requests)>0) {
             $headers = [];
@@ -144,10 +212,10 @@ class Display extends \Magento\Framework\View\Element\Template
                 }
                 $hs = ucfirst(
                     str_replace(
-                    ["_","id"],
-                    [" ","ID"],
-                    $h
-                )
+                        ["_","id"],
+                        [" ","ID"],
+                        $h
+                    )
                 );
                 $html.="<th style='text-align:center'>$hs</th>";
             }
@@ -176,11 +244,13 @@ class Display extends \Magento\Framework\View\Element\Template
                         foreach ($v_obj as $k=>$v) {
                             $pl_obj->$k = $v;
                         }
-                        $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>";
+                        $html .= "<pre style='font-size:8pt; max-height:200px; 
+                        overflow-y:auto; width:400px;'>";
                         $html.=print_r($pl_obj, true);
                         $html.=" </pre>" ;
                     } elseif ($k == "transaction_url") {
-                        $html .= "<a href='$v' target='_self' class='action secondary'>Open URL</a>";
+                        $html .= "<a href='$v' target='_self' 
+                        class='action secondary'>Open URL</a>";
                     } else {
                         $html.= $v;
                     }
@@ -195,10 +265,16 @@ class Display extends \Magento\Framework\View\Element\Template
         }
         return "<p>No requests yet.</p>";
     }
+
+
+    public function getAdditionalIdinInfo() {
+        $idin_additional_description = $this->_dataHelper
+            ->getIdentityConfig('idin_additional_description');
+        return nl2br($idin_additional_description);
+    }
 }
 
 // starting to make use of elegant classes, here:
-class RequestPayload extends stdClass
+class RequestPayload 
 {
 }
-// @todo: move to its own file, of course

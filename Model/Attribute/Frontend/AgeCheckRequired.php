@@ -6,8 +6,7 @@ class AgeCheckRequired extends \Magento\Eav\Model\Entity\Attribute\Frontend\Abst
     public function getValue(\Magento\Framework\DataObject $object)
     {
         $value = $object->getData($this->getAttribute()->getAttributeCode());
-        if($value ==1) {
-
+        if ($value ==1) {
             return "<b>Identy verification possibly required</b>";
         } else {
             return "<b>Identy verification not required</b>";

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ *
+ */
 
 namespace Bluem\Integration\Controller\Identity;
 
@@ -8,5 +16,4 @@ use Bluem\Integration\Controller\BluemWebhookAction;
 
 class Webhook extends BluemWebhookAction
 {
-
 }

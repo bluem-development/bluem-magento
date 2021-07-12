@@ -15,7 +15,7 @@
                     <label>Enable the Bluem module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="environment" translate="label" 
+                <field id="environment" translate="label"
                 type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Environment</label>
                     <comment>Type in test or prod, if you want to use testing mode or production mode respectively.</comment>
@@ -58,12 +58,12 @@
                     <comment>Fill in the minimum age requirement as a whole number.</comment>
                 </field>
 
-                <field id="identity_scenario" 
-                    translate="label" 
-                    type="select" 
-                    sortOrder="2" 
-                    showInDefault="1" 
-                    showInWebsite="0" 
+                <field id="identity_scenario"
+                    translate="label"
+                    type="select"
+                    sortOrder="2"
+                    showInDefault="1"
+                    showInWebsite="0"
                     showInStore="0">
                     <label>Identification scenario</label>
                     <source_model>Bluem\Integration\Model\Config\Source\IdentityScenario</source_model>
@@ -105,19 +105,40 @@
                     <comment>Do you want to retrieve the user's email address from the bank in the identity request?</comment>
                 </field>
 
-                  <field id="identity_product_agecheck_attribute" translate="label" type="text" 
+                  <field id="identity_product_agecheck_attribute" translate="label" type="text"
                   sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1"
                   >
                     <label>What product attribute do you want to use to activate the identity filter (given the scenario). </label>
                     <comment>If a product has this attribute set to "1" or "true", an identity is required in the checkout.</comment>
                 </field>
 
-            
+                    <field id="identity_block_mode"
+                    translate="label"
+                    type="select"
+                    sortOrder="2"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Identity required for all or specific Products?</label>
+                    <comment>Check identity scenario for all products or just for those with the product attribute</comment>
+                    <source_model>Bluem\Integration\Model\Config\Source\IdentityBlockMode</source_model>
+                </field>
 
+                <field
+                    id="idin_additional_description"
+                    translate="label"
+                    type="textarea"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Additional information on iDIN/Identity</label>
+                    <comment>This will be shown on the page where visitors or users are redirected when they click on "What is this?" or when they visit your site<code>/bluem/identity/information</code></comment>
+                </field>
             </group>
             <group id="payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Payments</label>
-                
+
                 <field id="payments_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>ePayments (iDEAL) Brand ID</label>
                     <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (iDEAL) service. It usually contains your company name and "Payments".</comment>
@@ -160,7 +181,7 @@
                 <field id="model"></field>
             </group>
         </section>
-        
+
     </system>
 </config>
 

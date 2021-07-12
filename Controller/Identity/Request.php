@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ *
+ */
 
 namespace Bluem\Integration\Controller\Identity;
 
@@ -47,18 +55,18 @@ class Request extends BluemAction
             ];
             
             // description is shown to customer
-            $description = "Verificatie $name (klantnummer $id)"; 
+            $description = "Verificatie $name (klantnummer $id)";
             // client reference/number
-            $debtorReference = "$id"; 
+            $debtorReference = "$id";
 
-            // @todo Create settings for the description and debtorReference template/pointer
-
+        
         } else {
             // guest user payload
 
             $payload['userdata'] = [];
             $description = "Verificatie identiteit";
-            $debtorReference = "";
+            
+            $debtorReference = "Gastidentificatie";
         }
 
         $request_data = [
@@ -84,6 +92,11 @@ class Request extends BluemAction
             $returnURL
         );
 
+        $bluem_env = $this->_dataHelper->getGeneralConfig('environment');
+        if ($bluem_env === "test") {
+            $request->enableStatusGUI();
+        }
+        
         $response = $this->_bluem->PerformRequest($request);
 
         if ($response->ReceivedResponse()) {
@@ -109,10 +122,11 @@ class Request extends BluemAction
             // direct the user to this place
             header("Location: ".$transactionURL);
             exit;
-
         } else {
             // no proper response received, tell the user:
             echo " Invalid response received, please contact your webshop administrator";
+            echo "<br> More details: <br>";
+            var_dump($response);
             exit;
         }
         exit;

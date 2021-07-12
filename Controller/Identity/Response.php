@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ *
+ */
 
 namespace Bluem\Integration\Controller\Identity;
 
@@ -6,19 +14,16 @@ use Bluem\Integration\Controller\BluemAction;
 
 require_once __DIR__ . '/../BluemAction.php';
 
+/**
+ * Identity response controller function
+ */
 class Response extends BluemAction
 {
     public function execute()
     {
         $debug = false;
-        // parse the callback functionality here. THis is done in one file for simplicity's sake. It is recommended to do this in a separate file
-
 
         // get Transaction ID from get params;
-
-        // retrieve user ID and saved session information in database
-
-        //in a controller
         $requestId = (int) $this->getRequest()->getParam('requestId');
         if ($debug) {
             echo " ALLE GET REQ PARAMS: <BR>";
@@ -43,15 +48,11 @@ class Response extends BluemAction
             var_dump($request_db_obj->getData());
             echo "<HR>";
         }
-        // exit;
 
         $transactionId = $request_db_obj->getTransactionId();
         $entranceCode = $request_db_obj->getEntranceCode();
 
-        // validate if transaction ID is present in identity table
-
         // perform status request
-
         $statusResponse = $this->_bluem->IdentityStatus(
             $transactionId,
             $entranceCode
@@ -72,8 +73,6 @@ class Response extends BluemAction
 
             switch ($statusCode) {
             case 'Success':
-                // echo "do what you need to do in case of success!";
-
                 // retrieve a report that contains the information based on the request type:
                 $identityReport = $statusResponse->GetIdentityReport();
 
@@ -88,42 +87,90 @@ class Response extends BluemAction
 
                 $this->_updateRequest(
                     $requestId,
-                    ['Payload'=>$payloadString]
+                    [
+                        'Payload' => $payloadString
+                    ]
                 );
 
                 // store that information and process it.
                 if ($debug) {
                     echo "<HR>";
                 }
-                $home_url = $this->_baseURL."";
                 // You can for example use the BirthDateResponse to determine the age of the user and act accordingly
-                echo "<p>Thanks for verifying your identity. You can now go back and proceed to other areas of our shop: <a href='".$home_url."'>$home_url</a>";
+                $this->_showMiniPrompt(
+                    "&#10003; Thanks for confirming your identity",
+                    "<p>We have stored the relevant details.
+                    You can now go back to our website.</p>"
+                );
                 // header("Location: $home_url ");
                 break;
             case 'Processing':
             case 'Pending':
-                echo "do something when the request is still processing (for example tell the user to come back later to this page)";
+                $this->_showMiniPrompt(
+                    "The request is still processing",
+                    "Please come back later"
+                );
                 break;
             case 'Cancelled':
-                echo "You have cancelled the procedure. <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>.";
+                $this->_showMiniPrompt(
+                    "You have cancelled the procedure.",
+                    " <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>."
+                );
                 break;
             case 'Open':
-                // do something when the request has not yet been completed by the user, redirecting to the transactionURL again";
-                //@todo  get cur transaction url
-                echo "Your request is still in progress. Please complete it on this page:";
+                // do something when the request has not
+                // yet been completed by the user,
+                // redirecting to the transactionURL again";
+                $this->_showMiniPrompt(
+                    "Your request is still in progress",
+                    "Please complete it on the previous page."
+                );
                 break;
             case 'Expired':
-                echo "Your request has expired. <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>.";
+                $this->_showMiniPrompt(
+                    "Your request has expired",
+                    "<a href='{$this->_baseURL}bluem/identity/request'>
+                        Please try again
+                    </a>."
+                );
                 break;
             default:
-                echo "Your request has encountered an unexpected status. <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>.";
+                $this->_showMiniPrompt(
+                    "Your request has encountered an unexpected status",
+                    "<a href='{$this->_baseURL}bluem/identity/request'>
+                        Please try again
+                    </a>."
+                );
                 break;
             }
         } else {
             // no proper response received, tell the user
-            echo " No response from Bluem.
-            Please contact webshop support";
+            $this->_showMiniPrompt(
+                "No valid response from Bluem service",
+                "Please contact the webshop support"
+            );
         }
         exit;
+    }
+
+    /**
+     * Rendering an intermediate page
+     *
+     * @param string $h Header text
+     * @param string $b Body text
+     *
+     * @return void
+     */
+    private function _showMiniPrompt(string $h, string $b)
+    {
+        $home_url = $this->_baseURL."";
+        echo "
+    <html><body style='font-family:Arial, sans-serif;'>
+    <div style='max-width:500px; margin:0 auto;
+    padding:15pt; display:block;'>
+    <h2>{$h}</h2>
+    <div class='bluem-content'>{$b}</div>
+    <p><a href='".$home_url."' class='bluem-button' target='_self'>Go back to $home_url</a></p>
+    </div></body></html>";
     }
 }

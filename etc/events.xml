@@ -9,4 +9,12 @@
     <event name="sales_order_payment_save_before">
         <observer name="Bluem_offline_payments_before_save_order_payment" instance="Bluem\Integration\Observer\SalesOrderPaymentBeforeSavedObserver"/>
     </event>
+
+    
+     <event name="customer_register_success">
+        <observer name="update_customer_referal_code" instance="Bluem\Integration\Observer\UpdateUserBluemMeta" />
+    </event>
+    <event name="customer_login">
+        <observer name="customer_login_observer" instance="Bluem\Integration\Observer\UpdateUserBluemMeta" />
+    </event>
 </config>

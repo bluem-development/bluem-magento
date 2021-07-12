@@ -20,6 +20,8 @@
                 <identity_request_telephone>1</identity_request_telephone>
                 <identity_request_email>1</identity_request_email>
                 <identity_product_agecheck_attribute>agecheck_required</identity_product_agecheck_attribute>
+                <identity_block_mode>all_products</identity_block_mode>
+                <idin_additional_description>Just like iDeal. It takes no more than one minute and the result is stored for future transactions when you are logged in as a regular customer.</idin_additional_description>
             </identity>
             <payments>
                 <payments_brand_id>ExamplePayments</payments_brand_id>

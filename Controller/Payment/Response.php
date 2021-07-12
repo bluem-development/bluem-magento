@@ -1,4 +1,11 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 
 namespace Bluem\Integration\Controller\Payment;
 
@@ -13,7 +20,6 @@ use \Magento\Framework\Controller\ResultFactory;
 
 use Bluem\Integration\Controller\BluemAction;
 use Bluem\Integration\Helper\Data as DataHelper;
-
 
 class Response extends BluemAction
 {
@@ -137,7 +143,7 @@ class Response extends BluemAction
 
             $curPayload =(object) json_decode($request_db->getPayload());
             // potentially add to the payload
-            // @todo: makea function for this
+            
             $payloadString = json_encode($curPayload);
 
             $this->_updateRequest(
@@ -172,7 +178,6 @@ class Response extends BluemAction
             break;
         case 'Open':
             // do something when the request has not yet been completed by the user, redirecting to the transactionURL again";
-            //@todo  get cur transaction url
             $msg = "Your request is still in progress. Please complete it on this page:";
             $msg .= $request_db->getTransactionUrl();
             $this->_messageManager->addErrorMessage($msg);

@@ -1,9 +1,17 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 
 namespace Bluem\Integration\Model;
 
 use Magento\Cron\Exception;
 use Magento\Framework\Model\AbstractModel;
+
 /**
  * Reference: https://www.pierrefay.com/magento2-training/create-magento2-model-database.html
  * Structure:
@@ -43,5 +51,4 @@ class Request extends AbstractModel
     {
         $this->_init(\Bluem\Integration\Model\ResourceModel\Request::class);
     }
-    
 }

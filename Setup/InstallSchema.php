@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
+
 namespace Bluem\Integration\Setup;
 
 use \Magento\Framework\Setup\InstallSchemaInterface;
@@ -7,18 +15,17 @@ use \Magento\Framework\Setup\ModuleContextInterface ;
 use \Magento\Framework\DB\Ddl\Table;
 use \Magento\Framework\DB\Adapter\AdapterInterface;
 
-
 class InstallSchema implements InstallSchemaInterface
 {
-
     public function install(
-        SchemaSetupInterface $setup, ModuleContextInterface $context
-    )
-    {
+        SchemaSetupInterface $setup,
+        ModuleContextInterface $context
+    ) {
         $setup->startSetup();
         if (!$setup->tableExists('bluem_integration_request')) {
             $table = $setup->getConnection()->newTable(
-                $setup->getTable('bluem_integration_request'))
+                $setup->getTable('bluem_integration_request')
+            )
                 ->addColumn(
                     'request_id',
                     Table::TYPE_INTEGER,
@@ -130,7 +137,8 @@ class InstallSchema implements InstallSchemaInterface
                     Table::TYPE_TIMESTAMP,
                     null,
                     ['nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE],
-                    'Updated At')
+                    'Updated At'
+                )
                 ->setComment('Requests Table for Bluem');
             $setup->getConnection()->createTable($table);
 

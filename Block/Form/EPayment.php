@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 namespace Bluem\Integration\Block\Form;
 
 class EPayment extends \Magento\Payment\Block\Form

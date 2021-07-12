@@ -2,7 +2,7 @@
 
 namespace Bluem\Integration\Model\Config\Source;
 
-class Environment implements \Magento\Framework\Option\ArrayInterface
+class IdentityBlockMode implements \Magento\Framework\Option\ArrayInterface
 {
     /**
      * Return array of options as value-label pairs, eg. value => label
@@ -12,8 +12,8 @@ class Environment implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         return [
-            'test' => 'Test environment',
-            'prod' => 'Production environment (live transactions)',
+            'all_products' => 'All products (default)',
+            'product_attribute' => 'Based on specified product attribute set to 1',
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace Bluem\Integration\Model\Config\Source;
 
 class IdentityScenario implements \Magento\Framework\Option\ArrayInterface
-{ 
+{
     /**
      * Return array of options as value-label pairs, eg. value => label
      *

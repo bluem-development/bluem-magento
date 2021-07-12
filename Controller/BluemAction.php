@@ -1,8 +1,13 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 
 namespace Bluem\Integration\Controller;
-
-// require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\View\Result\PageFactory;
@@ -14,10 +19,11 @@ use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ResourceConnection;
 use \Magento\Framework\Controller\ResultFactory;
 
-use Bluem\Integration\Helper\Data as DataHelper;
 use stdClass;
-use Bluem\BluemPHP\Integration as Integration;
 use Exception;
+
+use Bluem\Integration\Helper\Data as DataHelper;
+use Bluem\BluemPHP\Bluem as Bluem;
 
 class BluemAction extends Action
 {
@@ -50,8 +56,7 @@ class BluemAction extends Action
         Session $customerSession,
         ResourceConnection $resourceConnection,
         ResultFactory $resultFactory
-        )
-    {
+    ) {
         $this->_pageFactory = $pageFactory;
         $this->_dataHelper = $dataHelper;
         $this->_customerSession = $customerSession;
@@ -76,15 +81,7 @@ class BluemAction extends Action
         // What's your BrandID? Set at Bluem
         $bluem_config->brandID = $this->_dataHelper->getIdentityConfig('identity_brand_id'); //"DRIdentity";
         // for now, use a single brandID
-        // @todo: make a separate setting for this
         $bluem_config->IDINbrandID = $bluem_config->brandID;
-
-        // Mandate specific; 
-        // @todo: add in Mandate context later
-        // the PRODUCTION merchant ID, to be  found on the contract you
-        // have with the bank for receiving direct debit mandates.
-        // NOTE that MerchantID for test environment is set automatically to a valid test value
-        $bluem_config->merchantID = "" ;
 
         $bluem_config->merchantReturnURLBase = $this->_baseURL;  // URL to return to after finishing the process
 
@@ -94,7 +91,7 @@ class BluemAction extends Action
         $bluem_config->expectedReturnStatus = "success";
         // legacy: will be changed to be just expectedReturnStatus from 1.1.2 version of `bluem-php`
 
-        $this->_bluem = new Integration($bluem_config);
+        $this->_bluem = new Bluem($bluem_config);
         $this->_bluem_environment = $bluem_config->environment;
 
         return parent::__construct(
@@ -109,8 +106,9 @@ class BluemAction extends Action
     }
 
 
-    protected function _setRequestData($obj,$data) {
-        foreach($data as $k=>$v) {
+    protected function _setRequestData($obj, $data)
+    {
+        foreach ($data as $k=>$v) {
             $fn = "set{$k}";
             $obj->$fn($v);
         }
@@ -118,10 +116,10 @@ class BluemAction extends Action
         return $obj;
     }
 
-    protected function _updateRequest($request_id,$data) {
-
+    protected function _updateRequest($request_id, $data)
+    {
         $obj = $this->_getRequestByRequestId($request_id);
-        $updated_obj = $this->_setRequestData($obj,$data);
+        $updated_obj = $this->_setRequestData($obj, $data);
         return $updated_obj;
     }
 
@@ -129,8 +127,6 @@ class BluemAction extends Action
     protected function _createRequest($request_obj)
     {
         $request = $this->_objectManager->create('Bluem\Integration\Model\Request');
-
-        // @todo: make this a loop
 
         // validating input data
         $data = [];
@@ -194,50 +190,62 @@ class BluemAction extends Action
         }
 
         $user_id = $this->_customerSession->getCustomer()->getId();
-        if(!is_null($user_id)) {
+        if (!is_null($user_id)) {
             $data['UserId'] = $user_id;
         } else {
-            $data['UserId'] = 0; // @todo: public users (to implement later)
+            $data['UserId'] = "";
+            
+            $remote = ObjectManager::getInstance()->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
+            $ip = $remote->getRemoteAddress();
+            $data['OrderId'] = str_replace('.', '', $ip);
         }
 
         $data['Environment'] = $this->_bluem_environment;
-        $request = $this->_setRequestData($request,$data);
+        $request = $this->_setRequestData($request, $data);
         return $request->getRequestId();
     }
 
-    protected function _getRequests() {
+    protected function _getRequests()
+    {
         $requestModel = $this->_objectManager->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection();
         return $collection;
     }
 
-    protected function _getRequestByRequestId($request_id) {
+    protected function _getRequestByRequestId($request_id)
+    {
         return $this->_getRequestByField($request_id, "request_id");
     }
 
-    protected function _getRequestByTransactionId($request_id) {
+    protected function _getRequestByTransactionId($request_id)
+    {
         return $this->_getRequestByField($request_id, "transaction_id");
     }
 
-    protected function _getRequestByOrderId($request_id) {
+    protected function _getRequestByOrderId($request_id)
+    {
         return $this->_getRequestByField($request_id, "order_id");
     }
 
-    // @todo: improve filtering by searching for selection of items here directly, for admin display
-
-    private function _getRequestByField($request_id,$field) {
-
+    /**
+     * searching for selection of items here directly, for admin display
+     *
+     * @param [type] $request_id
+     * @param [type] $field
+     * @return void
+     */
+    private function _getRequestByField($request_id, $field)
+    {
         $requestModel = $this->_objectManager->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection()->addFieldToFilter(
             $field,
             array('eq'=> $request_id)
         );
-        if($collection->count()==0) {
+        if ($collection->count()==0) {
             return false;
         }
 
         $obj = $collection->getFirstItem();
         return $obj;
     }
-
 }

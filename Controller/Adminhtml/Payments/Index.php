@@ -17,7 +17,7 @@ class Index extends \Magento\Backend\App\Action
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Bluem_Integration::menu');
         $resultPage->getConfig()->getTitle()->prepend(
-                __('Bluem &middot; Payments')
+            __('Bluem &middot; Payments')
         );
         return $resultPage;
     }

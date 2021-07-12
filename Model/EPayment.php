@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
+
 /* Based on  php-cuong/magento-offline-payments  */
 
 namespace Bluem\Integration\Model;

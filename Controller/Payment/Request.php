@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 namespace Bluem\Integration\Controller\Payment;
 
 use Bluem\Integration\Controller\BluemAction;
@@ -23,8 +29,6 @@ class Request extends BluemAction
     {
         $debug = false;
 
-        // @todo: eventually, only execute via AJAX & POST
-
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
@@ -32,8 +36,6 @@ class Request extends BluemAction
         $orderId = (int) $order->getEntityId();
         $orderIncrementId =  $order->getIncrementId();
 
-        // @todo: check status
-        // if order is not paid yet
 
         // :: Float
         $amount = $order->getGrandTotal();
@@ -52,13 +54,13 @@ class Request extends BluemAction
             // client reference/number
             $debtorReference = "{$orderId}";
 
-            // @todo: also create setting to template these fields.
+        
         } else {
             // guest order
-            $description = "Order {$orderIncrementId} (gastbestelling)"; // @todo Localize this to the store locale
+            $description = "Order {$orderIncrementId} (gastbestelling)"; 
             $debtorReference = "{$orderId}";
         }
-        
+
         $returnURL = $this->_baseURL
             . "/bluem/payment/response/order_id/"
             . $orderId;

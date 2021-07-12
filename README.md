@@ -206,6 +206,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
+0.5.4   Code standardization, minor stability fixes
 0.5.3   Minor changes
 0.5.2   Updating Bluem dependencies to most recent version
 0.5.1   Cleared out some artefact code calls, Improved code stability, added versatile product filters

@@ -5,13 +5,16 @@
  *
  * @category Module
  * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ *
  */
 
 namespace Bluem\Integration\Controller\Identity;
 
 use Bluem\Integration\Controller\BluemAction;
 
-class Index extends BluemAction
+// require __DIR__ . '/../BluemAction.php';
+
+class Information extends BluemAction
 {
     /**
      * Prints the Identity from informed order id
@@ -23,4 +26,3 @@ class Index extends BluemAction
         return $this->_pageFactory->create();
     }
 }
-

@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Bluem Integration - Magento2 Module
+ * (C) Bluem 2021
+ *
+ * @category Module
+ * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ */
 namespace Bluem\Integration\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -45,14 +51,17 @@ class Data extends AbstractHelper
         );
     }
 
+
     public function getGeneralConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("general", $code, $storeId);
     }
+
     public function getIdentityConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("identity", $code, $storeId);
     }
+
     public function getPaymentsConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("payments", $code, $storeId);
@@ -67,61 +76,112 @@ class Data extends AbstractHelper
         $min_age = (int) $this->getIdentityConfig('identity_min_age');
 
         if ($debug) {
-            $html="";
-            $html.="<br/>identity_scenario: " .print_r($identity_scenario, true);
-            $html.="<br/>block_if_not_min_age: " .print_r($this->getIdentityConfig('block_if_not_min_age'), true);
-            $html.="<br/>identity_min_age: " .print_r($this->getIdentityConfig('identity_min_age'), true);
-            $html.="<br/>identity_request_name: " .print_r($this->getIdentityConfig('identity_request_name'), true);
-            $html.="<br/>identity_request_address: " .print_r($this->getIdentityConfig('identity_request_address'), true);
-            $html.="<br/>identity_request_birthdate: " .print_r($this->getIdentityConfig('identity_request_birthdate'), true);
-            $html.="<br/>identity_request_agecheck: " .print_r($this->getIdentityConfig('identity_request_agecheck'), true);
-            $html.="<br/>identity_request_gender: " .print_r($this->getIdentityConfig('identity_request_gender'), true);
-            $html.="<br/>identity_request_telephone: " .print_r($this->getIdentityConfig('identity_request_telephone'), true);
-            $html.="<br/>identity_request_email: " .print_r($this->getIdentityConfig('identity_request_email'), true);
-            $html.="<br/>identity_requests_parsed: " .print_r($this->getIdentityRequestCategories(), true);
+            echo "";
+            echo "<br/>identity_scenario: " .
+                print_r(
+                    $identity_scenario,
+                    true
+                );
+            echo "<br/>block_if_not_min_age: " .
+                print_r(
+                    $this->getIdentityConfig('block_if_not_min_age'),
+                    true
+                );
+            echo "<br/>identity_min_age: " .
+                print_r(
+                    $this->getIdentityConfig('identity_min_age'),
+                    true
+                );
+            echo "<br/>identity_request_name: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_name'),
+                    true
+                );
+            echo "<br/>identity_request_address: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_address'),
+                    true
+                );
+            echo "<br/>identity_request_birthdate: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_birthdate'),
+                    true
+                );
+            echo "<br/>identity_request_agecheck: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_agecheck'),
+                    true
+                );
+            echo "<br/>identity_request_gender: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_gender'),
+                    true
+                );
+            echo "<br/>identity_request_telephone: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_telephone'),
+                    true
+                );
+            echo "<br/>identity_request_email: " .
+                print_r(
+                    $this->getIdentityConfig('identity_request_email'),
+                    true
+                );
+            echo "<br/>identity_requests_parsed: " .
+                print_r(
+                    $this->getIdentityRequestCategories(),
+                    true
+                );
         }
 
-        $valid =true;
+        $valid = true; // valid until proven otherwise
         $invalid_message = "";
-        if (!$this->_customerSession->isLoggedIn()) {
-            return (object)[
-                'valid' => true,
-                'invalid_message' => ''
-            ];
-        }
 
+        $requestURL = "{$this->_baseURL}bluem/identity/request?goto=shop";
 
-        // require an identity check at all
+        // require any identity check?
         if ($identity_scenario >= 1) {
-            $identity_checked = $this->getBluemIdentified();
+            $identity_checked = $this->_customerSession->isLoggedIn() ?
+                    $this->getBluemUserIdentified():
+                    $this->getBluemGuestIdentified();
+
             if ($identity_checked->status == false) {
                 $valid = false;
                 $invalid_message = "<a
-                href='{$this->_baseURL}bluem/identity/request?goto=shop'
-                target='_self'>You must first identify yourself</a>
-                before you can add products to the cart.";
+                    href='{$requestURL}'
+                    target='_self'>You must first identify yourself</a>
+                    before you can add products to the cart.";
             }
             if ($identity_scenario == 1) {
                 // also require an age check
-
                 if ($debug) {
-                    $html.=" CUR REPORT: ".print_r($identity_checked->report);
+                    echo " CUR REPORT: ";
+                    var_dump($identity_checked->report);
                 }
 
-                if (isset($identity_checked->report->AgeCheckResponse)
-                    && ($identity_checked->report->AgeCheckResponse."")=="1"
-                ) {
-                    $valid = true;
+                if (isset($identity_checked->report->AgeCheckResponse)) {
+                    if ($identity_checked->report->AgeCheckResponse."" == "true"
+                        || $identity_checked->report->AgeCheckResponse."" == "1"
+                    ) {
+                        $valid = true;
+                    } else {
+                        $valid = false;
+                        $invalid_message = "The reported age from your
+                            identification is not sufficient.
+                            <a href='{$requestURL}'
+                            target='_self'>Please identify again</a> or contact us.";
+                    }
                 } else {
                     $valid = false;
-                    $invalid_message = "The reported age from your
-                    identification is not sufficient.
-                    <a href='{$this->_baseURL}bluem/identity/request?goto=shop'
-                    target='_self'>Please identify again</a> or contact us";
+                    $invalid_message = "You will have to verify your 
+                        age for some products in the store. <a href='{$requestURL}'
+                        target='_self'>Please verify your age by identifying</a>. 
+                        It takes no more than one minute and
+                        the result is stored for future transactions 
+                        when you are logged in as a regular customer.";
                 }
             }
             // definitely require any identification already
-
             if ($identity_scenario == 3) {
                 // also require age check
                 if (isset($identity_checked->report->BirthDateResponse)
@@ -137,39 +197,43 @@ class Data extends AbstractHelper
 
                     $age_in_years = round($diff_sec / 60 / 60/ 24 / 365, 0);
 
-                    /* if($debug) {
+                    if ($debug) {
                         // print_r($identity_checked->report);
-                    // var_dump($identity_checked->report->BirthDateResponse."");
+                        // var_dump($identity_checked->report->BirthDateResponse."");
 
-                    // echo "<br>now_time = {$now_time}";
-                    // echo "<br>then_time = {$then_time}";
-                    // echo "<br>diff_sec = {$diff_sec}";
-                    // echo "<br>age_in_years = {$age_in_years}";
-                     } */
+                        // echo "<br>now_time = {$now_time}";
+                        // echo "<br>then_time = {$then_time}";
+                        // echo "<br>diff_sec = {$diff_sec}";
+                        // echo "<br>age_in_years = {$age_in_years}";
+                    }
 
                     if ($age_in_years < $min_age) {
                         $valid = false;
                         $invalid_message = "Your age appears to be insufficient.
-                        The minimum age of {$min_age} years is required.
-                        Contact us if you have any questions";
+                        The minimum age of <strong>{$min_age} years</strong>
+                        is required. Contact us if you have any questions.";
                     } else {
                         $valid = true;
                     }
                 } else {
                     $valid = false;
                     $invalid_message = "We could not verify your age.
-                    <a href='{$this->_baseURL}bluem/identity/request?goto=shop'
+                    <a href='{$requestURL}'
                     target='_self'>Please identify again</a>
                     or contact us if you have any questions";
                 }
             }
         }
+
+        $explanation_html = "<br><small>
+        <a href='{$this->_baseURL}bluem/identity/information' target='_blank'>
+        What is this?</a></small>";
+
         return (object)[
             'valid'=>$valid,
-            'invalid_message'=>$invalid_message
+            'invalid_message'=>$invalid_message . $explanation_html
         ];
     }
-
 
     public function getIdentityRequestCategories()
     {
@@ -179,31 +243,44 @@ class Data extends AbstractHelper
             return ["AgeCheckRequest"];
         }
 
+        // always add this when checking generic identity
         $requestCategories = [
             "CustomerIDRequest"
         ];
 
-        $identity_request_name = $this->getIdentityConfig('identity_request_name');
+        $identity_request_name = $this->getIdentityConfig(
+            'identity_request_name'
+        );
         if ($identity_request_name=="1") {
             $requestCategories[] = "NameRequest";
         }
-        $identity_request_address = $this->getIdentityConfig('identity_request_address');
+        $identity_request_address = $this->getIdentityConfig(
+            'identity_request_address'
+        );
         if ($identity_request_address=="1") {
             $requestCategories[] = "AddressRequest";
         }
-        $identity_request_birthdate = $this->getIdentityConfig('identity_request_birthdate');
+        $identity_request_birthdate = $this->getIdentityConfig(
+            'identity_request_birthdate'
+        );
         if ($identity_request_birthdate=="1") {
             $requestCategories[] = "BirthDateRequest";
         }
-        $identity_request_gender = $this->getIdentityConfig('identity_request_gender');
+        $identity_request_gender = $this->getIdentityConfig(
+            'identity_request_gender'
+        );
         if ($identity_request_gender=="1") {
             $requestCategories[] = "GenderRequest";
         }
-        $identity_request_telephone = $this->getIdentityConfig('identity_request_telephone');
+        $identity_request_telephone = $this->getIdentityConfig(
+            'identity_request_telephone'
+        );
         if ($identity_request_telephone=="1") {
             $requestCategories[] = "TelephoneRequest";
         }
-        $identity_request_email = $this->getIdentityConfig('identity_request_email');
+        $identity_request_email = $this->getIdentityConfig(
+            'identity_request_email'
+        );
         if ($identity_request_email=="1") {
             $requestCategories[] = "EmailRequest";
         }
@@ -217,10 +294,75 @@ class Data extends AbstractHelper
         return $requestCategories;
     }
 
-    public function getBluemIdentified()
+
+    // retrieve something to identify the guest based on the session data
+    // ip?
+    private function _getGuestId()
+    {
+        $remote = ObjectManager::getInstance()->get(
+            'Magento\Framework\HTTP\PhpEnvironment\RemoteAddress'
+        );
+        $ip = $remote->getRemoteAddress();
+        return $ip;
+    }
+    private function _getUserId()
     {
         $userId = $this->_customerSession->getCustomer()->getId();
+        return $userId;
+    }
+    public function getBluemGuestIdentified()
+    {
+        $requestModel = ObjectManager::getInstance()->create(
+            'Bluem\Integration\Model\Request'
+        );
+        $userId = $this->_getGuestId();
+        $collection = $requestModel->getCollection();
+        $rq = null;
+        $identified = false;
+        foreach ($collection as $c) {
+            if ($identified) {
+                continue;
+            }
 
+            $d = $c->getData();
+            $pl = json_decode($d['payload']);
+            if (isset($pl->ip)) {
+                $ip = $pl->ip;
+            } else {
+                continue;
+            }
+
+            if ($ip===$userId) {
+                if ($d['status']==="response_success") {
+                    $identified = true;
+                    $rq = $d;
+                }
+            }
+        }
+
+        $identity = new stdClass;
+        $identity->status = $identified;
+        $identity->report = null;
+        if ($identified === false) {
+            $identity->result = "No valid request found.";
+            return $identity;
+        } else {
+            $identity->result = "Verified" ;
+            $pl = json_decode($rq['payload']);
+            if (isset($pl->report)) {
+                $identity->report = $pl->report;
+            } else {
+                $identity->report = [];
+            }
+            $identity->request = $rq;
+        }
+
+        return $identity;
+    }
+
+    public function getBluemUserIdentified()
+    {
+        $userId = $this->_getUserId();
         $requestModel = ObjectManager::getInstance()->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection();
         $rq = null;
@@ -238,9 +380,7 @@ class Data extends AbstractHelper
             }
         }
 
-        // var_dump($rqs);
-        // exit;
-        $identity =new stdClass;
+        $identity = new stdClass;
         $identity->status = $identified;
         $identity->report = null;
         if ($identified === false) {

@@ -5,34 +5,29 @@
  */
 
 
- if($block->getUserLoggedIn()) {
-
-     
+ if ($block->getUserLoggedIn()) {
      $identified = $block->getBluemIdentified();
 
-    if($block->debugMode())
-    {
-        var_dump($identified);
-    }
+     if ($block->debugMode()) {
+         var_dump($identified);
+     }
 
-     if ($identified->status)
-     {
-         
+     if ($identified->status) {
          echo "<p>Identity verifed. Thank you.</p><br><pre>" ;
          var_dump($identified->report);
          echo "</pre>" ;
-         
-        } else {
-            echo " <p>Identity not verfied yet.</p><br>";
-            echo $block->showBluemIdentityButton();
-        }
+     } else {
+         echo " <p>Identity not verfied yet.</p><br>";
+            
+         echo $block->showBluemIdentityButton();
+         echo "<br><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>What is this?</a></small>";
+     }
     
-        if ($block->debugMode()) {
-            echo "<hr>User data:<br><pre>";
-            var_dump($block->getUserData());
-            echo "</pre>";
-        }
-} else {
-    echo "<p>You need to log in before you can peruse the Identification procedure</p>";
-}
-
+     if ($block->debugMode()) {
+         echo "<hr>User data:<br><pre>";
+         var_dump($block->getUserData());
+         echo "</pre>";
+     }
+ } else {
+     echo "<p>You need to log in before you can peruse the Identification procedure</p>";
+ }
