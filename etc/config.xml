@@ -11,6 +11,7 @@
             </general>
             <identity>
                 <identity_brand_id>ExampleIdentity</identity_brand_id>
+                <identity_domain_whitelist>*</identity_domain_whitelist>
                 <identity_scenario>0</identity_scenario>
                 <identity_min_age>18</identity_min_age>
                 <identity_request_name>1</identity_request_name>

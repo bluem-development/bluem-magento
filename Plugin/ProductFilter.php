@@ -43,13 +43,57 @@ class ProductFilter
         $this->_bluemHelper = $bluemHelper;
     }
 
+
+
     public function afterIsSaleable(\Magento\Catalog\Model\Product $product)
     {
         $filter_debug = false;
 
+
+        /**
+         * Check if domain whitelisting is setup
+         * (config setting is not set to * or empty)
+         * and if the current server name matches any
+         * of the given domains matches
+         */
+        $domain_whitelist = $this->_dataHelper
+            ->getIdentityConfig('identity_domain_whitelist');
+        if (isset($domain_whitelist)
+            && $domain_whitelist !=="*"
+            && $domain_whitelist !==""
+        ) {
+            $current_domain =  $_SERVER['SERVER_NAME'];
+
+            $domain_is_whitelisted = false;
+            $domains = explode(',', $domain_whitelist);
+
+            if (count($domains)>0) {
+                foreach ($domains as $domain) {
+                    if ($domain=="") {
+                        continue;
+                    }
+                    $domain_parts = explode("?", $domain, 2);
+                    $domain_sanitized = strtolower(
+                        trim(
+                            str_replace(
+                                ["https://","http://"],
+                                '',
+                                $domain_parts[0]
+                            )
+                        )
+                    );
+                    // always allow this product if domain is whitelisted
+                    if ($current_domain === $domain_sanitized) {
+                        return true;
+                    }
+                }
+            }
+            // else continue like we expected
+        }
+
+
         $identity_block_mode = $this->_dataHelper
             ->getIdentityConfig('identity_block_mode');
-        
         if ($filter_debug) {
             echo "Initiating product filter";
             var_dump($identity_block_mode);
@@ -97,7 +141,7 @@ class ProductFilter
             }
             // echo "Success in productfilter";
         }
-        
+
         if ($filter_debug) {
             echo "Check necessary? " . ($check_necessary?"Yes":"No");
         }
