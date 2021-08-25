@@ -37,7 +37,7 @@
                     <comment>Fill in the Production access token which is provided by Bluem. This setting is stored securely.</comment>
                 </field>
 
-                
+
             </group>
             <group id="identity" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Identity</label>
@@ -46,21 +46,19 @@
                     <label>Identity Brand ID</label>
                     <comment>Fill in the Brand ID which is provided by Bluem for the Identity service. It usually contains your company name and "Identity".</comment>
                 </field>
-                <!-- <field id="block_if_not_identified" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Block the shopping procedure if the user is not identified</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="block_if_not_min_age" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Block the shopping procedure if the user age requirement is not met</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field> -->
-
-<field id="identity_domain_whitelist" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+            
+                <field id="identity_domain_whitelist"
+                    translate="label"
+                    type="text"
+                    sortOrder="1"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0"
+                    canRestore="1"
+                >
                     <label>Domain whitelisting</label>
-                    <comment>Fill in <code>*</code> to use this plugin on any domain, or input a comma-separated list of domain names (without <code>http://</code> or <code>https://</code>) to ONLY allow checking of identity verification on those domains.</comment>
+                    <comment>Fill in * to use this plugin on any domain, or input a comma-separated list of domain names (without http:// or https://) to ONLY allow checking of identity verification on those domains.</comment>
                 </field>
-
-
 
 
                 <field id="identity_min_age" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">

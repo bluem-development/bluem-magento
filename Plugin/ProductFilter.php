@@ -58,6 +58,7 @@ class ProductFilter
          */
         $domain_whitelist = $this->_dataHelper
             ->getIdentityConfig('identity_domain_whitelist');
+
         if (isset($domain_whitelist)
             && $domain_whitelist !=="*"
             && $domain_whitelist !==""
@@ -82,8 +83,14 @@ class ProductFilter
                             )
                         )
                     );
-                    // always allow this product if domain is whitelisted
+                    // always allow this product if domain is not whitelisted 
+                    // - the filter is not used when not on the whitelisted domain
                     if ($current_domain === $domain_sanitized) {
+                        if ($filter_debug) {
+                            echo "Whitelisted";
+                        }
+                        continue;
+                    } else {
                         return true;
                     }
                 }
