@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd">
-    <module name="Bluem_Integration" setup_version="0.5.8">
+    <module name="Bluem_Integration" setup_version="0.5.9">
         <sequence>
             <module name="Magento_Sales"/>
             <module name="Magento_Payment"/>
