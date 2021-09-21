@@ -58,8 +58,6 @@ class Request extends BluemAction
             $description = "Verificatie $name (klantnummer $id)";
             // client reference/number
             $debtorReference = "$id";
-
-        
         } else {
             // guest user payload
 
@@ -96,7 +94,13 @@ class Request extends BluemAction
         if ($bluem_env === "test") {
             $request->enableStatusGUI();
         }
-        
+
+        if ($debug) {
+            var_dump("Request", $request);
+            var_dump("Request URL", $request->HttpRequestURL());
+            var_dump("Request XML", $request->XmlString());
+        }
+
         $response = $this->_bluem->PerformRequest($request);
 
         if ($response->ReceivedResponse()) {
@@ -107,6 +111,9 @@ class Request extends BluemAction
             if ($debug) {
                 echo "entranceCode: {$entranceCode}<br>";
                 echo "transactionID: {$transactionID}<br>";
+                echo "<HR>RESPONSE:";
+                var_dump($response);
+             
             }
             // todo: add ageverify type
             // save this somewhere in your data store
@@ -118,7 +125,9 @@ class Request extends BluemAction
                 'Status'=>"requested"
             ];
             $this->_updateRequest($request_db_id, $update_data);
-
+            if ($debug) {
+                die();
+            }
             // direct the user to this place
             header("Location: ".$transactionURL);
             exit;
