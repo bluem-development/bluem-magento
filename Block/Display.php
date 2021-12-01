@@ -75,9 +75,9 @@ class Display extends Template
         return ($this->_customerSession->isLoggedIn());
     }
 
-    public function getIdentityValid()
+    public function getIdentityValid($not_on_status_page = true)
     {
-        return $this->_dataHelper->getIdentityValid();
+        return $this->_dataHelper->getIdentityValid($not_on_status_page);
     }
 
     public function getUserData()

@@ -1,16 +1,17 @@
 <?php
-
-if($block->getIdentityValid()) {
+$validated_identity = $block->getIdentityValid(false);
+if($validated_identity->valid) {
+    echo 'Identity is received and valid. Thanks!';
     
-    echo 'Identity is valid';
-
 } else {
-
-    echo 'Identity is not yet validated or not valid.';
+    echo $validated_identity->invalid_message;
+    // echo "<hr>";
+    //     echo 'Identity is not yet validated or not valid.';
     $url = $block->getBaseUrl()."bluem/identity/request";
     echo "<p class='bluem-p'>
-        <a href='$url' target='_blank' class='bluem-button button action primary'>
-            You can validate your identity here
-        </a>
+    <a href='$url' target='_blank' class='bluem-button button action primary'>
+    You can validate your identity here
+    </a>
     </p>";
 }
+// var_dump($validated_identity->age_data);

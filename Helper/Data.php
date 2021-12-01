@@ -67,7 +67,7 @@ class Data extends AbstractHelper
         return $this->getConfigForSection("payments", $code, $storeId);
     }
 
-    public function getIdentityValid()
+    public function getIdentityValid($not_on_status_page = true)
     {
         $debug = false;
 
@@ -214,7 +214,9 @@ class Data extends AbstractHelper
                         $valid = false;
                         $invalid_message = "Your age appears to be insufficient.
                         The minimum age of <strong>{$min_age} years</strong>
-                        is required. Contact us if you have any questions.";
+                        is required. ".
+                        ($not_on_status_page?"<a href='{$this->_baseURL}bluem/identity/status' target='_blank'>View the status of your identification here</a> or contact":"Contact").
+                        " us if you have any questions.";
                     } else {
                         $valid = true;
                     }
@@ -237,7 +239,11 @@ class Data extends AbstractHelper
 
         return (object)[
             'valid'=>$valid,
-            'invalid_message'=>$invalid_message . $explanation_html
+            'invalid_message'=>$invalid_message . $explanation_html,
+            'age_data'=>[
+                'age_in_years'=>isset($age_in_years)?$age_in_years:"",
+                'min_age'=>isset($min_age)?$min_age:"",
+            ]
         ];
     }
 
