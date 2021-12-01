@@ -253,4 +253,57 @@ class BluemAction extends Action
         $obj = $collection->getFirstItem();
         return $obj;
     }
+
+
+
+
+    // Helper functions for layout
+        
+    private function _wrapSimplePage($mixed_content) {
+        
+        $home_url = $this->_baseURL."";
+        
+        return "<html><body style='font-family:Arial, sans-serif;'>
+            <div style='max-width:500px; margin:0 auto;
+            padding:15pt; display:block;'>
+            {$mixed_content}
+            <br>
+            <p><a href='".$home_url."' class='bluem-button' target='_self'>Go back to {$home_url}</a></p>
+            </div></body></html>";
+        // @todo localize
+    }
+
+        /**
+     * Get generic Error message HTML promipt
+     *
+     * @param [type] $error_message
+     * @return void
+     */
+    protected function _getErrorMessageHtml(
+        $error_details,
+        $error_header="Invalid response received", 
+        $include_cta=true
+    ) : String {
+        $error_message_html = "";
+        $error_message_html .= "<h2>{$error_header}</h2>";
+        if ($include_cta) {
+            $error_message_html .= "<p>Please contact your webshop administrator. More information about the response: </p>";
+        }
+        $error_message_html .= "<p>{$error_details}</p>";
+        // @todo add a go back link
+        return $this->_wrapSimplePage($error_message_html);
+        
+    }
+       /**
+     * Rendering an intermediate page
+     *
+     * @param string $h Header text
+     * @param string $b Body text
+     *
+     * @return void
+     */
+    protected function _showMiniPrompt(string $h, string $b)
+    {
+        echo $this->_wrapSimplePage("<h2>{$h}</h2><div class='bluem-content'>{$b}</div>");
+    }
 }

@@ -10,6 +10,8 @@
 
 namespace Bluem\Integration\Controller\Identity;
 
+use \Magento\Framework\App\ObjectManager;
+
 use Bluem\Integration\Controller\BluemAction;
 
 require_once __DIR__ . '/../BluemAction.php';
@@ -31,7 +33,7 @@ class Request extends BluemAction
         // provide a link here to the callback function; either in this script or another script
         $returnURL = $this->_baseURL . "/bluem/identity/response/";
 
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager = ObjectManager::getInstance();
         $remote = $objectManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
         $ip = $remote->getRemoteAddress();
 
@@ -55,9 +57,9 @@ class Request extends BluemAction
             ];
 
             // description is shown to customer
-            $description = "Verificatie $name (klantnummer $id)";
+            $description = "Verificatie {$name} (klantnummer {$id})";
             // client reference/number
-            $debtorReference = "$id";
+            $debtorReference = "{$id}";
         } else {
             // guest user payload
 
@@ -68,12 +70,12 @@ class Request extends BluemAction
         }
 
         $request_data = [
-            'Type'=>"identity",
-            'Description'=>$description,
-            'DebtorReference'=>$debtorReference,
-            'ReturnUrl'=>$returnURL,
-            'Payload'=>json_encode($payload),
-            'Status'=>"created"
+            'Type' => "identity",
+            'Description' => $description,
+            'DebtorReference' => $debtorReference,
+            'ReturnUrl' => $returnURL,
+            'Payload' => json_encode($payload),
+            'Status' => "created"
         ];
 
         $request_db_id = parent::_createRequest(
@@ -104,6 +106,14 @@ class Request extends BluemAction
         $response = $this->_bluem->PerformRequest($request);
 
         if ($response->ReceivedResponse()) {
+
+            if (isset($response->IdentityTransactionResponse->Error)) {
+                echo $this->_getErrorMessageHtml(
+                    $response->IdentityTransactionResponse->Error->ErrorMessage
+                );
+                exit;
+            }
+
             $entranceCode = $response->getEntranceCode();
             $transactionID = $response->getTransactionID();
             $transactionURL = $response->getTransactionURL();
@@ -131,12 +141,14 @@ class Request extends BluemAction
             header("Location: ".$transactionURL);
             exit;
         } else {
-            // no proper response received, tell the user:
-            echo " Invalid response received, please contact your webshop administrator";
-            echo "<br> More details: <br>";
-            var_dump($response);
+            echo $this->_getErrorMessageHtml($response);
             exit;
         }
         exit;
     }
+
+
+    
+
+    
 }

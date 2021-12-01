@@ -75,9 +75,9 @@ class Display extends Template
         return ($this->_customerSession->isLoggedIn());
     }
 
-    public function getBluemIdentified()
+    public function getIdentityValid()
     {
-        return $this->_dataHelper->getBluemIdentified();
+        return $this->_dataHelper->getIdentityValid();
     }
 
     public function getUserData()

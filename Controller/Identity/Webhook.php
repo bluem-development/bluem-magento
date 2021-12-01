@@ -16,4 +16,14 @@ use Bluem\Integration\Controller\BluemWebhookAction;
 
 class Webhook extends BluemWebhookAction
 {
+    // public function execute()
+    // {
+    //     $this->_logger->info('Webhook request received');
+    //     $this->_logger->info(print_r($this->getRequest()->getParams(), true));
+
+    //     $this->_logger->info('Webhook request processing');
+
+    //     $this->_logger->info('Webhook request processed');
+    //     $this->_logger->info('Webhook request completed');
+    // }
 }
