@@ -67,7 +67,6 @@ class Display extends Template
 
     public function showBluemIdentityButton()
     {
-        
         return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification procedure..</a>";
     }
 
@@ -128,8 +127,8 @@ class Display extends Template
             //     if ($filter_debug) {
             //         echo "ERROR in productfilter";
             //     }
-                // error in retrieving the data? then just allow the checkout for now
-                $check_necessary = true;
+            // error in retrieving the data? then just allow the checkout for now
+            $check_necessary = true;
             // }
             // if (is_null($attr)) {
             //     if ($filter_debug) {
@@ -267,7 +266,8 @@ class Display extends Template
     }
 
 
-    public function getAdditionalIdinInfo() {
+    public function getAdditionalIdinInfo()
+    {
         $idin_additional_description = $this->_dataHelper
             ->getIdentityConfig('idin_additional_description');
         return nl2br($idin_additional_description);
@@ -275,6 +275,6 @@ class Display extends Template
 }
 
 // starting to make use of elegant classes, here:
-class RequestPayload 
+class RequestPayload
 {
 }

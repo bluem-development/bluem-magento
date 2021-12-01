@@ -206,6 +206,12 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
+See also https://github.com/DaanRijpkema/bluem-magento/releases
+
+0.5.10  Major updated to dependency libraries; improving blocking of products through checkout filter
+0.5.9   Updated composer dependencies, fixing minor bugs
+0.5.8   Domain whitelisting for iDIN
+0.5.5   Improved identification service including robust guest identification and flow when registering or logging in
 0.5.4   Code standardization, minor stability fixes
 0.5.3   Minor changes
 0.5.2   Updating Bluem dependencies to most recent version

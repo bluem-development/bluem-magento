@@ -101,11 +101,17 @@ class BluemAction extends Action
 
     public function execute()
     {
-        // This function is overridden in all children
+        // This function is overridden in all children, so it is not necessary here.
         throw new Exception("Not implemented!");
     }
 
-
+    /**
+     * Set the request object data
+     *
+     * @param [type] $obj
+     * @param [type] $data
+     * @return void
+     */
     protected function _setRequestData($obj, $data)
     {
         foreach ($data as $k=>$v) {
@@ -122,7 +128,6 @@ class BluemAction extends Action
         $updated_obj = $this->_setRequestData($obj, $data);
         return $updated_obj;
     }
-
 
     protected function _createRequest($request_obj)
     {

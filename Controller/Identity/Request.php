@@ -53,7 +53,7 @@ class Request extends BluemAction
                 'name'=> $name,
                 'id'  => $id
             ];
-            
+
             // description is shown to customer
             $description = "Verificatie $name (klantnummer $id)";
             // client reference/number
@@ -63,7 +63,7 @@ class Request extends BluemAction
 
             $payload['userdata'] = [];
             $description = "Verificatie identiteit";
-            
+
             $debtorReference = "Gastidentificatie";
         }
 
@@ -113,7 +113,6 @@ class Request extends BluemAction
                 echo "transactionID: {$transactionID}<br>";
                 echo "<HR>RESPONSE:";
                 var_dump($response);
-             
             }
             // todo: add ageverify type
             // save this somewhere in your data store
