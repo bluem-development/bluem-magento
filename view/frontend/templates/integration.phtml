@@ -6,7 +6,7 @@
 
 
  if ($block->getUserLoggedIn()) {
-     $identified = $block->getBluemIdentified();
+     $identified = $block->getIdentityValid();
 
      if ($block->debugMode()) {
          var_dump($identified);

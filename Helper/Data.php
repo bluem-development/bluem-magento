@@ -71,7 +71,6 @@ class Data extends AbstractHelper
     {
         $debug = false;
 
-
         $identity_scenario = (int) $this->getIdentityConfig('identity_scenario');
         $min_age = (int) $this->getIdentityConfig('identity_min_age');
 
@@ -82,47 +81,42 @@ class Data extends AbstractHelper
                     $identity_scenario,
                     true
                 );
-            echo "<br/>block_if_not_min_age: " .
-                print_r(
-                    $this->getIdentityConfig('block_if_not_min_age'),
-                    true
-                );
             echo "<br/>identity_min_age: " .
                 print_r(
                     $this->getIdentityConfig('identity_min_age'),
                     true
                 );
-            echo "<br/>identity_request_name: " .
+            echo "<br/>retrieving name? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_name'),
                     true
                 );
-            echo "<br/>identity_request_address: " .
+            echo "<br/>retrieving address? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_address'),
                     true
                 );
-            echo "<br/>identity_request_birthdate: " .
+            echo "<br/>retrieving birthdate? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_birthdate'),
                     true
                 );
-            echo "<br/>identity_request_agecheck: " .
+            echo "<br/>retrieving agecheck? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_agecheck'),
                     true
                 );
-            echo "<br/>identity_request_gender: " .
+            echo "<br/>retrieving gender? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_gender'),
                     true
                 );
-            echo "<br/>identity_request_telephone: " .
+            echo "<br/>retrieving telephone? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_telephone'),
                     true
                 );
-            echo "<br/>identity_request_email: " .
+            echo "<br/>retrieving email? " .
                 print_r(
                     $this->getIdentityConfig('identity_request_email'),
                     true
@@ -141,6 +135,13 @@ class Data extends AbstractHelper
 
         // require any identity check?
         if ($identity_scenario >= 1) {
+            if ($debug) {
+                echo " There is some form of identity check required. Scenario: ";
+                var_dump($identity_scenario);
+
+                echo " - is customer logged in? ";
+                echo ($this->_customerSession->isLoggedIn()?"yes":"no");
+            }
             $identity_checked = $this->_customerSession->isLoggedIn() ?
                     $this->getBluemUserIdentified():
                     $this->getBluemGuestIdentified();
@@ -191,7 +192,9 @@ class Data extends AbstractHelper
                     // calculate difference
                     $now_time = strtotime("now");
 
-                    $then_time = strtotime($identity_checked->report->BirthDateResponse."");
+                    $then_time = strtotime(
+                        $identity_checked->report->BirthDateResponse.""
+                    );
 
                     $diff_sec = $now_time - $then_time;
 
@@ -204,7 +207,7 @@ class Data extends AbstractHelper
                         // echo "<br>now_time = {$now_time}";
                         // echo "<br>then_time = {$then_time}";
                         // echo "<br>diff_sec = {$diff_sec}";
-                        // echo "<br>age_in_years = {$age_in_years}";
+                        echo "<br>age_in_years = {$age_in_years}";
                     }
 
                     if ($age_in_years < $min_age) {
@@ -225,9 +228,12 @@ class Data extends AbstractHelper
             }
         }
 
-        $explanation_html = "<br><small>
-        <a href='{$this->_baseURL}bluem/identity/information' target='_blank'>
-        What is this?</a></small>";
+        $explanation_html = "";
+        if (!$valid) {
+            $explanation_html = "<br><small>
+            <a href='{$this->_baseURL}bluem/identity/information' target='_blank' title='Learn more about iDIN - identity validation'>
+            What is this?</a></small>";
+        }
 
         return (object)[
             'valid'=>$valid,
@@ -317,6 +323,8 @@ class Data extends AbstractHelper
         );
         $userId = $this->_getGuestId();
         $collection = $requestModel->getCollection();
+        $collection->setOrder('created_at', 'DESC');
+
         $rq = null;
         $identified = false;
         foreach ($collection as $c) {

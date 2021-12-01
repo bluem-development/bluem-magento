@@ -1,0 +1,16 @@
+<?php
+
+if($block->getIdentityValid()) {
+    
+    echo 'Identity is valid';
+
+} else {
+
+    echo 'Identity is not yet validated or not valid.';
+    $url = $block->getBaseUrl()."bluem/identity/request";
+    echo "<p class='bluem-p'>
+        <a href='$url' target='_blank' class='bluem-button button action primary'>
+            You can validate your identity here
+        </a>
+    </p>";
+}

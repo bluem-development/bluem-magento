@@ -13,7 +13,6 @@ use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\ObjectManager;
 use stdClass;
 use Bluem\Integration\Helper\Data as DataHelper;
-use Bluem\Integration\Helper\Bluem as BluemHelper;
 use \Magento\Catalog\Model\Product ;
 use \Magento\Catalog\Model\ProductRepository;
 use Throwable;
@@ -33,14 +32,12 @@ class ProductFilter
     public function __construct(
         Session $customerSession,
         DataHelper $dataHelper,
-        BluemHelper $bluemHelper,
         ProductRepository $productRepository
     ) {
         $this->_customerSession = $customerSession;
 
         $this->productRepository = $productRepository;
         $this->_dataHelper = $dataHelper;
-        $this->_bluemHelper = $bluemHelper;
     }
 
 

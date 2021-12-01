@@ -33,13 +33,13 @@ class Response extends BluemAction
         }
 
         if ($requestId=="" ||!is_numeric($requestId)) {
-            echo " Request ID niet goed teruggekregen;";
+            echo $this->_getErrorMessageHtml(" Request ID niet goed teruggekregen","Kon verzoek niet aanmaken",true);
             exit;
         }
 
         $request_db_obj = $this->_getRequestByRequestId($requestId);
         if ($request_db_obj === false) {
-            echo " NO DB ITEM FOUND with ID {$requestId}";
+            echo $this->_getErrorMessageHtml(" NO DB ITEM FOUND with ID {$requestId}","Kon verzoek niet aanmaken",true);
             exit;
         }
 
@@ -153,24 +153,5 @@ class Response extends BluemAction
         exit;
     }
 
-    /**
-     * Rendering an intermediate page
-     *
-     * @param string $h Header text
-     * @param string $b Body text
-     *
-     * @return void
-     */
-    private function _showMiniPrompt(string $h, string $b)
-    {
-        $home_url = $this->_baseURL."";
-        echo "
-    <html><body style='font-family:Arial, sans-serif;'>
-    <div style='max-width:500px; margin:0 auto;
-    padding:15pt; display:block;'>
-    <h2>{$h}</h2>
-    <div class='bluem-content'>{$b}</div>
-    <p><a href='".$home_url."' class='bluem-button' target='_self'>Go back to $home_url</a></p>
-    </div></body></html>";
-    }
+ 
 }
