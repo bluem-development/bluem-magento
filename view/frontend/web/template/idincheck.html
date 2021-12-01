@@ -1,0 +1,29 @@
+<!--The 'step_idincheck' value from the .js file should be used-->
+<li id="step_idincheck" data-bind="fadeVisible: isVisible">
+    <div class="step-title" data-bind="i18n: 'Identificatie'" data-role="title"></div>
+    <div id="checkout-step-title"
+         class="step-content"
+         data-role="content">
+
+        <p>
+            You must confirm your identity in order to complete the checkout.
+        </p>
+<script>
+    console.log("Loaded vanilla JS");
+</script>
+
+        <p>
+            Do this here: and then return to the checkout procedure.
+        </p>
+
+        <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button data-role="opc-continue" type="submit" class="button action continue primary">
+                        <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</li>
