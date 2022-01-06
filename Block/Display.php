@@ -8,13 +8,13 @@
  */
 namespace Bluem\Integration\Block;
 
-use \Magento\Framework\View\Element\Template\Context;
+use Magento\Framework\View\Element\Template\Context;
 
-use \Magento\Customer\Model\Session;
-use \Magento\Framework\App\ResourceConnection;
-use \Magento\Framework\App\ObjectManager;
-use \Magento\Backend\Helper\Data as BackendHelper;
-use \Magento\Framework\View\Element\Template;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\App\ObjectManager;
+use Magento\Backend\Helper\Data as BackendHelper;
+use Magento\Framework\View\Element\Template;
 
 use Bluem\Integration\Helper\Data as DataHelper;
 
@@ -55,22 +55,22 @@ class Display extends Template
         return $collection;
     }
 
-    public function debugMode()
+    public function debugMode(): bool
     {
         return false;//BLUEM_DEBUG;
     }
 
-    public function getBaseUrl()
+    public function getBaseUrl() : string
     {
         return $this->_baseURL;
     }
 
-    public function showBluemIdentityButton()
+    public function showBluemIdentityButton() : string
     {
         return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification procedure..</a>";
     }
 
-    public function getUserLoggedIn()
+    public function getUserLoggedIn() : bool
     {
         return ($this->_customerSession->isLoggedIn());
     }
@@ -80,7 +80,10 @@ class Display extends Template
         return $this->_dataHelper->getIdentityValid($not_on_status_page);
     }
 
-    public function getUserData()
+    /**
+     * @return array
+     */
+    public function getUserData(): array
     {
         return [
             'email'=>$this->_customerSession->getCustomer()->getEmail(),
@@ -165,8 +168,7 @@ class Display extends Template
             $validated_identity = $this->_dataHelper->getIdentityValid();
 
             if (!$validated_identity->valid) {
-                $html='';
-                $html .='<div role="alert" class="messages">
+                $html='<div role="alert" class="messages">
             <div class="message-warning warning message">
             <div>';
                 $html.=__($validated_identity->invalid_message);
@@ -198,15 +200,15 @@ class Display extends Template
                     $headers[] = $k;
                 }
             }
-            // var_dump($block->getRequests());
+
             $html.= "<div style='width:100%; height:auto;
         padding:10pt; overflow-y: auto;
-        overflow-x:none; margin-top:10pt;
+        overflow-x:hidden; margin-top:10pt;
         margin-bottom:10pt;'>
         <table class='data-grid'>";
             $html.= "<thead><tr>";
             foreach ($headers as $h) {
-                if ($k == "type") {
+                if ($h == "type") {
                     continue;
                 }
                 $hs = ucfirst(
@@ -240,8 +242,8 @@ class Display extends Template
                     } elseif ($k == "payload") {
                         $v_obj = json_decode($v);
                         $pl_obj = new RequestPayload();
-                        foreach ($v_obj as $k=>$v) {
-                            $pl_obj->$k = $v;
+                        foreach ($v_obj as $kk=>$vv) {
+                            $pl_obj->$kk = $vv;
                         }
                         $html .= "<pre style='font-size:8pt; max-height:200px; 
                         overflow-y:auto; width:400px;'>";
@@ -255,7 +257,6 @@ class Display extends Template
                     }
                     $html.= "</td>";
                 }
-                // $html.= "</td>";
                 $html.= "</tr>";
             }
             $html.=" </tbody>";
@@ -266,7 +267,7 @@ class Display extends Template
     }
 
 
-    public function getAdditionalIdinInfo()
+    public function getAdditionalIdinInfo() : string
     {
         $idin_additional_description = $this->_dataHelper
             ->getIdentityConfig('idin_additional_description');

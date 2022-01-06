@@ -10,9 +10,9 @@
 namespace Bluem\Integration\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-use \Magento\Customer\Api\CustomerRepositoryInterface;
-use \Magento\Framework\Event\Observer;
-use \Magento\Framework\App\ObjectManager;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\App\ObjectManager;
 
 // https://magento.stackexchange.com/questions/178873/magento-2-get-customer-data-after-login-with-observer
 

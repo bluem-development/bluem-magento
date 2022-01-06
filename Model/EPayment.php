@@ -11,9 +11,10 @@
 
 namespace Bluem\Integration\Model;
 
+use Magento\Payment\Model\Method\AbstractMethod;
 use Magento\Quote\Api\Data\PaymentInterface;
 
-class EPayment extends \Magento\Payment\Model\Method\AbstractMethod
+class EPayment extends AbstractMethod
 {
     const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment';
 

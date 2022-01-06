@@ -9,20 +9,28 @@
 
 namespace Bluem\Integration\Controller\Payment;
 
-use \Magento\Framework\App\ObjectManager;
-use \Magento\Sales\Model\Order;
-use \Magento\Framework\Message\ManagerInterface;
-use \Magento\Framework\View\Result\PageFactory;
-use \Magento\Framework\App\Action\Context;
-use \Magento\Customer\Model\Session;
-use \Magento\Framework\App\ResourceConnection;
-use \Magento\Framework\Controller\ResultFactory;
+use Exception;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Sales\Model\Order;
+use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Framework\App\Action\Context;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Controller\ResultFactory;
 
 use Bluem\Integration\Controller\BluemAction;
 use Bluem\Integration\Helper\Data as DataHelper;
+use Throwable;
 
 class Response extends BluemAction
 {
+    /**
+     * @var ManagerInterface
+     */
+    private $_messageManager;
+
     public function __construct(
         Context $context,
         PageFactory $pageFactory,
@@ -46,7 +54,8 @@ class Response extends BluemAction
     /**
      * Execute view action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
+     * @throws Exception
      */
     public function execute()
     {
@@ -70,7 +79,7 @@ class Response extends BluemAction
         
         try {
             $order = $orderRepository->get($order_id);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             echo "Fout bij opvragen bestelling: ".$th->getMessage();
             exit;
         }
@@ -81,7 +90,7 @@ class Response extends BluemAction
         // var_dump($request_db);
         // validate if transaction ID is present in requests table
         if ($request_db === false) {
-            echo " No request found with order ID {$order_id}; you might need to reinitiate the request.";
+            echo " No request found with order ID {$order_id}; you might need to initiate the request.";
             exit;
         }
 
@@ -113,13 +122,13 @@ class Response extends BluemAction
         
         
         if (!$statusResponse->ReceivedResponse()) {
-            echo "No response received; please try again:<br> ";
+            echo "No response received; please retry:<br> ";
             echo $request_db->getTransactionUrl();
             exit;
         }
         
         if (!isset($statusResponse->PaymentStatusUpdate->Status)) {
-            echo "Invalid / no status received; please try again:<br> ";
+            echo "Invalid or no status received; please retry:<br> ";
             echo $request_db->getTransactionUrl();
             exit;
         }
@@ -134,12 +143,12 @@ class Response extends BluemAction
         }
 
         $redirect = $this->resultFactory->create(
-            \Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT
+            ResultFactory::TYPE_REDIRECT
         );
 
         switch ($statusCode) {
         case 'Success':
-            // echo "do what you need to do in case of success!";
+            // do what you need to do if successful
 
             $curPayload =(object) json_decode($request_db->getPayload());
             // potentially add to the payload
@@ -158,15 +167,15 @@ class Response extends BluemAction
             $order->save();
 
             $redirect->setUrl($this->_baseURL.'/checkout/onepage/success');
-            return $redirect;
             // echo "<p>Thanks for verifying your identity. You can now go back and proceed to other areas of our shop: <a href='".$home_url."'>$home_url</a>";
             // header("Location: $home_url ");
-            break;
+            return $redirect;
         case 'New':
             // what to do with NEW?
         case 'Processing':
         case 'Pending':
             echo "do something when the request is still processing (for example tell the user to come back later to this page)";
+            // @todo do something when the request is still processing (for example tell the user to come back later to this page)
             break;
         case 'Cancelled':
             $msg = "You have cancelled the procedure. Please try again or contact support.";
@@ -175,9 +184,9 @@ class Response extends BluemAction
                 $this->_baseURL.'/checkout/onepage/failure'
             );
             return $redirect;
-            break;
-        case 'Open':
-            // do something when the request has not yet been completed by the user, redirecting to the transactionURL again";
+            case 'Open':
+            // What to do when the request is not yet completed by the user
+            // e.g.: redirect to the transactionURL.
             $msg = "Your request is still in progress. Please complete it on this page:";
             $msg .= $request_db->getTransactionUrl();
             $this->_messageManager->addErrorMessage($msg);
@@ -185,7 +194,6 @@ class Response extends BluemAction
                 $this->_baseURL.'/checkout/onepage/failure'
             );
             return $redirect;
-            break;
         case 'Expired':
             $msg = "Your request has expired. Please try again or contact support.";
             $this->_messageManager->addErrorMessage($msg);
@@ -193,16 +201,13 @@ class Response extends BluemAction
                 $this->_baseURL.'/checkout/onepage/failure'
             );
             return $redirect;
-            break;
-        default:
-            $msg = "Your request has encountered an unexpected status. Please try again or contact support.";
-            $this->_messageManager->addErrorMessage($msg);
-            $redirect->setUrl(
-                $this->_baseURL.'/checkout/onepage/failure'
-            );
-            return $redirect;
-            break;
         }
+        $msg = "Your request has encountered an unexpected status. Please try again or contact support.";
+        $this->_messageManager->addErrorMessage($msg);
+        $redirect->setUrl(
+            $this->_baseURL.'/checkout/onepage/failure'
+        );
+        return $redirect;
     }
 
     // private function _success()
@@ -239,7 +244,7 @@ class Response extends BluemAction
 // https://meetanshi.com/blog/get-order-information-by-order-id-in-magento-2/
 
 //     $custLastName= $orders->getCustomerLastname();
-//     $custFirsrName= $orders->getCustomerFirstname();
+//     $custFirstName= $orders->getCustomerFirstname();
 //     $ipaddress=$order->getRemoteIp();
 //     $customer_email=$order->getCustomerEmail();
 //     $customerid=$order->getCustomerId();

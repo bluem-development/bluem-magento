@@ -11,6 +11,7 @@ namespace Bluem\Integration\Model;
 
 use Magento\Cron\Exception;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Stdlib\DateTime;
 
 /**
  * Reference: https://www.pierrefay.com/magento2-training/create-magento2-model-database.html
@@ -40,7 +41,7 @@ use Magento\Framework\Model\AbstractModel;
 class Request extends AbstractModel
 {
     /**
-     * @var \Magento\Framework\Stdlib\DateTime
+     * @var DateTime
      */
     protected $_dateTime;
 
@@ -49,6 +50,6 @@ class Request extends AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(\Bluem\Integration\Model\ResourceModel\Request::class);
+        $this->_init(ResourceModel\Request::class);
     }
 }

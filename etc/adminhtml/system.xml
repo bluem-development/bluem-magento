@@ -57,7 +57,7 @@
                     canRestore="1"
                 >
                     <label>Domain whitelisting</label>
-                    <comment>Fill in * to use this plugin on any domain, or input a comma-separated list of domain names (without http:// or https://) to ONLY allow checking of identity verification on those domains.</comment>
+                    <comment>Fill in * to use this plugin on any domain, or input a comma-separated list of domain names (without http(s):// prefix) to ONLY allow checking of identity verification on those domains.</comment>
                 </field>
 
 

@@ -31,6 +31,7 @@ class BluemWebhookAction extends BluemAction
      */
     public function __construct()
     {
+        parent::__construct();
         switch (get_class($this)) {
             case 'Bluem\Integration\Controller\Payment\Webhook\Interceptor':
                 $this->_bluem_service = "Payments";

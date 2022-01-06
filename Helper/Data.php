@@ -10,9 +10,9 @@ namespace Bluem\Integration\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
-use \Magento\Customer\Model\Session;
-use \Magento\Framework\App\Helper\Context;
-use \Magento\Framework\App\ObjectManager;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\App\ObjectManager;
 
 use stdClass;
 
@@ -353,7 +353,11 @@ class Data extends AbstractHelper
                 }
             }
         }
+        return $this->_getIdentity($identified,$rq);
+    }
 
+    private function _getIdentity($identified,$rq)
+    {
         $identity = new stdClass;
         $identity->status = $identified;
         $identity->report = null;
@@ -393,24 +397,6 @@ class Data extends AbstractHelper
                 }
             }
         }
-
-        $identity = new stdClass;
-        $identity->status = $identified;
-        $identity->report = null;
-        if ($identified === false) {
-            $identity->result = "No valid request found.";
-            return $identity;
-        } else {
-            $identity->result = "Verified" ;
-            $pl = json_decode($rq['payload']);
-            if (isset($pl->report)) {
-                $identity->report = $pl->report;
-            } else {
-                $identity->report = [];
-            }
-            $identity->request = $rq;
-        }
-
-        return $identity;
+        return $this->_getIdentity($identified,$rq);
     }
 }

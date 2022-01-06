@@ -11,11 +11,13 @@
 
 namespace Bluem\Integration\Observer;
 
-use \Magento\Webapi\Controller\Rest\InputParamsResolver;
-use \Magento\Framework\App;
-use \Magento\Framework\App\RequestInterface;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
+use Magento\Webapi\Controller\Rest\InputParamsResolver;
+use Magento\Framework\App;
+use Magento\Framework\App\RequestInterface;
 
-class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\ObserverInterface
+class SalesOrderPaymentBeforeSavedObserver implements ObserverInterface
 {
     /**
      * @var InputParamsResolver
@@ -40,10 +42,10 @@ class SalesOrderPaymentBeforeSavedObserver implements \Magento\Framework\Event\O
     }
 
     /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return $this
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         return $this;
         

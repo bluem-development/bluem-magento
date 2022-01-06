@@ -8,7 +8,9 @@
  */
 namespace Bluem\Integration\Block\Form;
 
-class EPayment extends \Magento\Payment\Block\Form
+use Magento\Payment\Block\Form;
+
+class EPayment extends Form
 {
     /**
      * EPayment template

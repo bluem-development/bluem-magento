@@ -9,7 +9,9 @@
 /* Based on  php-cuong/magento-offline-payments  */
 namespace Bluem\Integration\Block\Info;
 
-class EPayment extends \Magento\Payment\Block\Info
+use Magento\Payment\Block\Info;
+
+class EPayment extends Info
 {
     /**
      * @var string

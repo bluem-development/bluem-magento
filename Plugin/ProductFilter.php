@@ -9,23 +9,23 @@
 
 namespace Bluem\Integration\Plugin;
 
-use \Magento\Customer\Model\Session;
-use \Magento\Framework\App\ObjectManager;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\ObjectManager;
 use stdClass;
 use Bluem\Integration\Helper\Data as DataHelper;
-use \Magento\Catalog\Model\Product ;
-use \Magento\Catalog\Model\ProductRepository;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ProductRepository;
 use Throwable;
 
 class ProductFilter
 {
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var Session
      */
     protected $_customerSession;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
+     * @var ProductRepository
      */
     protected $productRepository;
 
@@ -42,7 +42,7 @@ class ProductFilter
 
 
 
-    public function afterIsSaleable(\Magento\Catalog\Model\Product $product)
+    public function afterIsSaleable(Product $product)
     {
         $filter_debug = false;
 

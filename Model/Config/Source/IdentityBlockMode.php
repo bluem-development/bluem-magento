@@ -2,7 +2,9 @@
 
 namespace Bluem\Integration\Model\Config\Source;
 
-class IdentityBlockMode implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Option\ArrayInterface;
+
+class IdentityBlockMode implements ArrayInterface
 {
     /**
      * Return array of options as value-label pairs, eg. value => label

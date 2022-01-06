@@ -1,9 +1,12 @@
 <?php
 namespace Bluem\Integration\Model\Attribute\Frontend;
 
-class AgeCheckRequired extends \Magento\Eav\Model\Entity\Attribute\Frontend\AbstractFrontend
+use Magento\Eav\Model\Entity\Attribute\Frontend\AbstractFrontend;
+use Magento\Framework\DataObject;
+
+class AgeCheckRequired extends AbstractFrontend
 {
-    public function getValue(\Magento\Framework\DataObject $object)
+    public function getValue(DataObject $object): string
     {
         $value = $object->getData($this->getAttribute()->getAttributeCode());
         if ($value ==1) {

@@ -14,8 +14,8 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Gallery;
 use Magento\Catalog\Model\Product\Attribute\Backend\Media\ImageEntryConverter;
-use \Magento\Framework\DB\Ddl\Table;
-use \Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\DB\Ddl\Table;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * Upgrade the Catalog module DB scheme
@@ -160,7 +160,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $tableName,
                     'order_id',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                        'type' => Table::TYPE_INTEGER,
                         'nullable' => true,
                         'default' => null,
                         'comment' => 'Added by Bluem for the ePayment method',

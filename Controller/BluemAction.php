@@ -9,15 +9,15 @@
 
 namespace Bluem\Integration\Controller;
 
-use \Magento\Framework\App\Action\Action;
-use \Magento\Framework\View\Result\PageFactory;
-use \Magento\Framework\View\Result\Page;
-use \Magento\Framework\App\Action\Context;
-use \Magento\Framework\Exception\LocalizedException;
-use \Magento\Framework\App\ObjectManager;
-use \Magento\Customer\Model\Session;
-use \Magento\Framework\App\ResourceConnection;
-use \Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Framework\View\Result\Page;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\App\ObjectManager;
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Controller\ResultFactory;
 
 use stdClass;
 use Exception;
@@ -108,9 +108,9 @@ class BluemAction extends Action
     /**
      * Set the request object data
      *
-     * @param [type] $obj
-     * @param [type] $data
-     * @return void
+     * @param object $obj
+     * @param $data
+     * @return object
      */
     protected function _setRequestData($obj, $data)
     {
@@ -125,8 +125,7 @@ class BluemAction extends Action
     protected function _updateRequest($request_id, $data)
     {
         $obj = $this->_getRequestByRequestId($request_id);
-        $updated_obj = $this->_setRequestData($obj, $data);
-        return $updated_obj;
+        return $this->_setRequestData($obj, $data);
     }
 
     protected function _createRequest($request_obj)
@@ -237,7 +236,7 @@ class BluemAction extends Action
      *
      * @param [type] $request_id
      * @param [type] $field
-     * @return void
+     * @return object|boolean
      */
     private function _getRequestByField($request_id, $field)
     {
@@ -246,12 +245,11 @@ class BluemAction extends Action
             $field,
             array('eq'=> $request_id)
         );
-        if ($collection->count()==0) {
+        if ($collection->count() == 0) {
             return false;
         }
 
-        $obj = $collection->getFirstItem();
-        return $obj;
+        return $collection->getFirstItem();
     }
 
 
@@ -263,7 +261,7 @@ class BluemAction extends Action
         
         $home_url = $this->_baseURL."";
         
-        return "<html><body style='font-family:Arial, sans-serif;'>
+        return "<html lang='en'><body style='font-family:Arial, sans-serif;'>
             <div style='max-width:500px; margin:0 auto;
             padding:15pt; display:block;'>
             {$mixed_content}
@@ -284,12 +282,11 @@ class BluemAction extends Action
         $error_header="Invalid response received", 
         $include_cta=true
     ) : String {
-        $error_message_html = "";
-        $error_message_html .= "<h2>{$error_header}</h2>";
+        $error_message_html = "<h2>$error_header</h2>";
         if ($include_cta) {
             $error_message_html .= "<p>Please contact your webshop administrator. More information about the response: </p>";
         }
-        $error_message_html .= "<p>{$error_details}</p>";
+        $error_message_html .= "<p>$error_details</p>";
         // @todo add a go back link
         return $this->_wrapSimplePage($error_message_html);
         

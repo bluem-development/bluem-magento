@@ -10,7 +10,7 @@
 
 namespace Bluem\Integration\Controller\Identity;
 
-use \Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ObjectManager;
 
 use Bluem\Integration\Controller\BluemAction;
 

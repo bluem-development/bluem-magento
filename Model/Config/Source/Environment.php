@@ -2,14 +2,16 @@
 
 namespace Bluem\Integration\Model\Config\Source;
 
-class Environment implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Option\ArrayInterface;
+
+class Environment implements ArrayInterface
 {
     /**
      * Return array of options as value-label pairs, eg. value => label
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray() : array
     {
         return [
             'test' => 'Test environment',

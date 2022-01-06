@@ -9,11 +9,11 @@
 
 namespace Bluem\Integration\Setup;
 
-use \Magento\Framework\Setup\InstallSchemaInterface;
-use \Magento\Framework\Setup\SchemaSetupInterface ;
-use \Magento\Framework\Setup\ModuleContextInterface ;
-use \Magento\Framework\DB\Ddl\Table;
-use \Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Setup\InstallSchemaInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\DB\Ddl\Table;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class InstallSchema implements InstallSchemaInterface
 {
@@ -165,7 +165,7 @@ class InstallSchema implements InstallSchemaInterface
                     $tableName,
                     'assistant_id',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'default' => null,
                         'comment' => 'Added by Bluem for the ePayment method',
@@ -184,7 +184,7 @@ class InstallSchema implements InstallSchemaInterface
                     $tableName,
                     'assistant_id',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'default' => null,
                         'comment' => 'Added by Bluem for the ePayment method',

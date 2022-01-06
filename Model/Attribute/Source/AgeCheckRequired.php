@@ -6,7 +6,9 @@
 
 namespace Bluem\Integration\Model\Attribute\Source;
 
-class AgeCheckRequired extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
+use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
+
+class AgeCheckRequired extends AbstractSource
 {
     /**
      * Get all options

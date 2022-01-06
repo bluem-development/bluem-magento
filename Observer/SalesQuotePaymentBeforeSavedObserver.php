@@ -11,10 +11,11 @@
 
 namespace Bluem\Integration\Observer;
 
+use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Api\Data\PaymentInterface;
-use \Magento\Framework\Event\Observer;
+use Magento\Framework\Event\Observer;
 
-class SalesQuotePaymentBeforeSavedObserver implements \Magento\Framework\Event\ObserverInterface
+class SalesQuotePaymentBeforeSavedObserver implements ObserverInterface
 {
     /**
      * @param Observer $observer

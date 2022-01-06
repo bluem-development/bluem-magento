@@ -12,8 +12,10 @@ use Bluem\Integration\Controller\BluemAction;
 
 use Carbon\Carbon;
 
-use \Magento\Sales\Model\OrderFactory;
-use \Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ObjectManager;
+use Magento\Sales\Model\OrderFactory;
+use Magento\Framework\App\RequestInterface;
+use Throwable;
 
 require_once __DIR__ . '/../BluemAction.php';
 
@@ -30,7 +32,7 @@ class Request extends BluemAction
         $debug = false;
 
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager = ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
         $order = $checkout_session->getLastRealOrder();
         $orderId = (int) $order->getEntityId();
@@ -132,7 +134,7 @@ class Request extends BluemAction
             );
 
             $response = $this->_bluem->PerformRequest($request);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             $result = [
                 'error' => true,
                 'message' => 'Could not create the Payment Request, more details: '.
