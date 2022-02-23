@@ -4,7 +4,7 @@
         <referenceBlock name="customer_account_navigation">
             <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-custom">
                 <arguments>
-                    <argument name="path" xsi:type="string">bluem/customer/verification</argument>
+                    <argument name="path" xsi:type="string">bluem/identity/index</argument>
                     <argument name="label" xsi:type="string">Account verification</argument>
                 </arguments>
             </block>
