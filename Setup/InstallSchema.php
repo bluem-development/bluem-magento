@@ -5,6 +5,7 @@
  *
  * @category Module
  * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ * @author   Peter Meester <p.meester@bluem.nl>
  */
 
 namespace Bluem\Integration\Setup;
@@ -22,6 +23,10 @@ class InstallSchema implements InstallSchemaInterface
         ModuleContextInterface $context
     ) {
         $setup->startSetup();
+        
+        /**
+         * Create table bluem_integration_request for reference.
+         */
         if (!$setup->tableExists('bluem_integration_request')) {
             $table = $setup->getConnection()->newTable(
                 $setup->getTable('bluem_integration_request')
@@ -154,9 +159,9 @@ class InstallSchema implements InstallSchemaInterface
             // );
         }
 
-
-
-
+        /**
+         * Add table column assistant_id to table quote_payment for reference.
+         */
         if ($setup->tableExists('quote_payment')) {
             $tableName = $setup->getTable('quote_payment');
             $connection = $setup->getConnection();
@@ -176,6 +181,9 @@ class InstallSchema implements InstallSchemaInterface
             }
         }
 
+        /**
+         * Add table column assistant_id to table sales_order_payment for reference.
+         */
         if ($setup->tableExists('sales_order_payment')) {
             $tableName = $setup->getTable('sales_order_payment');
             $connection = $setup->getConnection();
