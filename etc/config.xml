@@ -27,10 +27,8 @@
             <payments>
                 <payments_brand_id>ExamplePayments</payments_brand_id>
             </payments>
-
         </integration>
-
-         <payment>
+        <payment>
             <epayment>
                 <active>0</active>
                 <model>Bluem\Integration\Model\EPayment</model>
