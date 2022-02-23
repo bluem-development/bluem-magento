@@ -89,6 +89,7 @@ class Request extends BluemAction
             $requestCategories,
             $description,
             $debtorReference,
+            "",
             $returnURL
         );
 
