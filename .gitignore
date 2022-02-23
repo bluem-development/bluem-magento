@@ -1,4 +1,6 @@
 .composer
+.DS_Store
+_notes
 
 vendor
 
@@ -46,4 +48,3 @@ vendor
 !/var/package
 /var/package/*
 !/var/package/*.xml
-
