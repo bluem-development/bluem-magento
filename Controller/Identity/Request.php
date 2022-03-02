@@ -10,9 +10,8 @@
 
 namespace Bluem\Integration\Controller\Identity;
 
-use Magento\Framework\App\ObjectManager;
-
 use Bluem\Integration\Controller\BluemAction;
+use Magento\Framework\App\ObjectManager;
 
 require_once __DIR__ . '/../BluemAction.php';
 
@@ -38,10 +37,10 @@ class Request extends BluemAction
         $ip = $remote->getRemoteAddress();
 
         $payload = [
-            'usecase'=>$scenario,
-            'categories'=>$requestCategories,
-            'ip'=>$ip,
-            'userdata'=>[]
+            'usecase' => $scenario,
+            'categories' => $requestCategories,
+            'ip' => $ip,
+            'userdata' => []
         ];
 
 
@@ -51,9 +50,9 @@ class Request extends BluemAction
             $id = $this->_customerSession->getCustomer()->getId();
 
             $payload['userdata'] = [
-                'email'=> $email,
-                'name'=> $name,
-                'id'  => $id
+                'email' => $email,
+                'name' => $name,
+                'id' => $id
             ];
 
             // description is shown to customer
@@ -63,7 +62,9 @@ class Request extends BluemAction
         } else {
             // guest user payload
 
-            $payload['userdata'] = [];
+            $payload['userdata'] = [
+                'ip'=> $ip." (guest)"
+            ]; // @todo: add guest user data such as IP
             $description = "Verificatie identiteit";
 
             $debtorReference = "Gastidentificatie";
@@ -85,10 +86,15 @@ class Request extends BluemAction
         // append created requestID to the URL to return to
         $returnURL .= "requestId/{$request_db_id}";
 
+        $entranceCode = "";
+        // @todo: uniquely generated ENTRANCECODE
+
+
         $request = $this->_bluem->CreateIdentityRequest(
             $requestCategories,
             $description,
             $debtorReference,
+            $entranceCode,
             $returnURL
         );
 
@@ -127,18 +133,18 @@ class Request extends BluemAction
             // todo: add ageverify type
             // save this somewhere in your data store
             $update_data = [
-                'EntranceCode'=>$entranceCode,
-                'TransactionId'=>$transactionID,
-                'TransactionUrl'=>$transactionURL,
-                'ReturnUrl'=>$returnURL, // also updated this
-                'Status'=>"requested"
+                'EntranceCode' => $entranceCode,
+                'TransactionId' => $transactionID,
+                'TransactionUrl' => $transactionURL,
+                'ReturnUrl' => $returnURL, // also updated this
+                'Status' => "requested"
             ];
             $this->_updateRequest($request_db_id, $update_data);
             if ($debug) {
                 die();
             }
             // direct the user to this place
-            header("Location: ".$transactionURL);
+            header("Location: " . $transactionURL);
             exit;
         } else {
             echo $this->_getErrorMessageHtml($response);
@@ -148,7 +154,4 @@ class Request extends BluemAction
     }
 
 
-    
-
-    
 }
