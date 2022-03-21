@@ -14,6 +14,8 @@ use Magento\Customer\Model\Session;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\ObjectManager;
 
+use \Carbon\Carbon;
+
 use stdClass;
 
 class Data extends AbstractHelper
@@ -128,10 +130,15 @@ class Data extends AbstractHelper
                 );
         }
 
-        $valid = true; // valid until proven otherwise
+        $valid = false;
+        
+        $explanation_html = "";
+        
         $invalid_message = "";
 
         $requestURL = "{$this->_baseURL}bluem/identity/request?goto=shop";
+        
+        $report = "";
 
         // require any identity check?
         if ($identity_scenario >= 1) {
@@ -142,17 +149,32 @@ class Data extends AbstractHelper
                 echo " - is customer logged in? ";
                 echo ($this->_customerSession->isLoggedIn()?"yes":"no");
             }
+            
             $identity_checked = $this->_customerSession->isLoggedIn() ?
                     $this->getBluemUserIdentified():
                     $this->getBluemGuestIdentified();
-
-            if ($identity_checked->status == false) {
+            
+            if ($identity_checked->status === true) {
+                $valid = true;
+                
+                $report = $identity_checked->report;
+            } else {
                 $valid = false;
-                $invalid_message = "<a
-                    href='{$requestURL}'
-                    target='_self'>You must first identify yourself</a>
-                    before you can add products to the cart.";
+                
+                $invalid_message = "<a href='{$requestURL}' target='_self'>You must first identify yourself</a> before you can add products to the cart.";
             }
+            
+            // get birthdate and define age in years
+            if (!empty($identity_checked->report->BirthDateResponse))
+            {
+                try {
+                    $age_in_years = Carbon::parse($identity_checked->report->BirthDateResponse)
+                        ->diffInYears(Carbon::now());
+                } catch (Exception $e) {
+                    //
+                }
+            }
+            
             if ($identity_scenario == 1) {
                 // also require an age check
                 if ($debug) {
@@ -160,7 +182,7 @@ class Data extends AbstractHelper
                     var_dump($identity_checked->report);
                 }
 
-                if (isset($identity_checked->report->AgeCheckResponse)) {
+                if (!empty($identity_checked->report->AgeCheckResponse)) {
                     if ($identity_checked->report->AgeCheckResponse."" == "true"
                         || $identity_checked->report->AgeCheckResponse."" == "1"
                     ) {
@@ -172,8 +194,11 @@ class Data extends AbstractHelper
                             <a href='{$requestURL}'
                             target='_self'>Please identify again</a> or contact us.";
                     }
+                } elseif (!empty($identity_checked->report->BirthDateResponse)) {
+                    $valid = true;
                 } else {
                     $valid = false;
+                    
                     $invalid_message = "You will have to verify your 
                         age for some products in the store. <a href='{$requestURL}'
                         target='_self'>Please verify your age by identifying</a>. 
@@ -185,21 +210,7 @@ class Data extends AbstractHelper
             // definitely require any identification already
             if ($identity_scenario == 3) {
                 // also require age check
-                if (isset($identity_checked->report->BirthDateResponse)
-                && ($identity_checked->report->BirthDateResponse."")!==""
-                ) {
-
-                    // calculate difference
-                    $now_time = strtotime("now");
-
-                    $then_time = strtotime(
-                        $identity_checked->report->BirthDateResponse.""
-                    );
-
-                    $diff_sec = $now_time - $then_time;
-
-                    $age_in_years = round($diff_sec / 60 / 60/ 24 / 365, 0);
-
+                if (!empty($identity_checked->report->BirthDateResponse)) {
                     if ($debug) {
                         // print_r($identity_checked->report);
                         // var_dump($identity_checked->report->BirthDateResponse."");
@@ -208,20 +219,22 @@ class Data extends AbstractHelper
                         // echo "<br>then_time = {$then_time}";
                         // echo "<br>diff_sec = {$diff_sec}";
                         echo "<br>age_in_years = {$age_in_years}";
-                    }
+                    } die;
 
-                    if ($age_in_years < $min_age) {
+                    if ($age_in_years >= $min_age) {
+                        $valid = true;
+                    } else {
                         $valid = false;
+                        
                         $invalid_message = "Your age appears to be insufficient.
                         The minimum age of <strong>{$min_age} years</strong>
                         is required. ".
                         ($not_on_status_page?"<a href='{$this->_baseURL}bluem/identity/status' target='_blank'>View the status of your identification here</a> or contact":"Contact").
                         " us if you have any questions.";
-                    } else {
-                        $valid = true;
                     }
                 } else {
                     $valid = false;
+                    
                     $invalid_message = "We could not verify your age.
                     <a href='{$requestURL}'
                     target='_self'>Please identify again</a>
@@ -230,21 +243,23 @@ class Data extends AbstractHelper
             }
         }
 
-        $explanation_html = "";
         if (!$valid) {
             $explanation_html = "<br><small>
             <a href='{$this->_baseURL}bluem/identity/information' target='_blank' title='Learn more about iDIN - identity validation'>
             What is this?</a></small>";
         }
-
-        return (object)[
-            'valid'=>$valid,
-            'invalid_message'=>$invalid_message . $explanation_html,
-            'age_data'=>[
-                'age_in_years'=>isset($age_in_years)?$age_in_years:"",
-                'min_age'=>isset($min_age)?$min_age:"",
+        
+        $data = (object) [
+            'valid' => $valid,
+            'invalid_message' => $invalid_message . $explanation_html,
+            'report' => $report,
+            'age_data' => [
+                'age_in_years' => !empty($age_in_years) ? $age_in_years : "",
+                'min_age' => !empty($min_age) ? $min_age : "",
             ]
         ];
+
+        return $data;
     }
 
     public function getIdentityRequestCategories()
