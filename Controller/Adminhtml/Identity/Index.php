@@ -9,6 +9,7 @@ use Magento\Framework\View\Result\PageFactory;
 class Index extends Action
 {
     protected $resultPageFactory = false;
+    
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory
@@ -16,6 +17,7 @@ class Index extends Action
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
+    
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
@@ -25,6 +27,7 @@ class Index extends Action
         );
         return $resultPage;
     }
+    
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Bluem_Integration::menu');

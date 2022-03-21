@@ -37,6 +37,8 @@ class Display extends Template
         DataHelper $dataHelper,
         BackendHelper $backendHelper
     ) {
+        parent::__construct($context);
+        
         $this->_resourceConnection = $resourceConnection;
         $this->_customerSession = $customerSession;
         $this->_dataHelper = $dataHelper;
@@ -44,8 +46,6 @@ class Display extends Template
 
         $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
-
-        parent::__construct($context);
     }
 
     public function getBluemRequests()
@@ -91,8 +91,6 @@ class Display extends Template
             'id' => $this->_customerSession->getCustomer()->getId()
         ];
     }
-
-
 
     public function showProductWarning()
     {
@@ -265,7 +263,6 @@ class Display extends Template
         }
         return "<p>No requests yet.</p>";
     }
-
 
     public function getAdditionalIdinInfo() : string
     {
