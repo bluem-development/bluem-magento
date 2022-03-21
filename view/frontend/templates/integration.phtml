@@ -1,33 +1,36 @@
 <?php
 
-/**
- * @var \Bluem\Integration\Block\Display $block
- */
+echo "<h2 class='bluem-h2'>Account verification</h2>";
 
+if ($block->getUserLoggedIn())
+{
+    $identified = $block->getIdentityValid();
 
- if ($block->getUserLoggedIn()) {
-     $identified = $block->getIdentityValid();
+    if ($block->debugMode()) {
+        var_dump($identified);
+    }
 
-     if ($block->debugMode()) {
-         var_dump($identified);
-     }
-
-     if ($identified->status) {
-         echo "<p>Identity verifed. Thank you.</p><br><pre>" ;
-         var_dump($identified->report);
-         echo "</pre>" ;
-     } else {
-         echo " <p>Identity not verfied yet.</p><br>";
+    if (!empty($identified->valid)) {
+        echo "<p>Identity verifed. Thank you.</p>";
+        //echo "<p>If you want, you can do it again.</p>";
+        //echo $block->showBluemIdentityButton();
+        /*
+        echo "<br><pre>";
+        var_dump($identified->report);
+        echo "</pre>";
+        */
+    } else {
+        echo "<p>Identity not verfied yet.</p><br>";
             
-         echo $block->showBluemIdentityButton();
-         echo "<br><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>What is this?</a></small>";
-     }
+        echo $block->showBluemIdentityButton();
+        echo "<br><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>What is this?</a></small>";
+    }
     
-     if ($block->debugMode()) {
-         echo "<hr>User data:<br><pre>";
-         var_dump($block->getUserData());
-         echo "</pre>";
-     }
- } else {
-     echo "<p>You need to log in before you can peruse the Identification procedure</p>";
- }
+    if ($block->debugMode()) {
+        echo "<hr>User data:<br><pre>";
+        var_dump($block->getUserData());
+        echo "</pre>";
+    }
+} else {
+    echo "<p>You need to log in before you can peruse the Identification procedure.</p>";
+}
