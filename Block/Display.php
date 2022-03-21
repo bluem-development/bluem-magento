@@ -248,7 +248,7 @@ class Display extends Template
                         $html.=print_r($pl_obj, true);
                         $html.=" </pre>" ;
                     } elseif ($k == "transaction_url") {
-                        $html .= "<a href='$v' target='_self' 
+                        $html .= "<a href='$v' target='_blank' 
                         class='action secondary'>Open URL</a>";
                     } else {
                         $html.= $v;
