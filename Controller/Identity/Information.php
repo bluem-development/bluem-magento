@@ -12,8 +12,6 @@ namespace Bluem\Integration\Controller\Identity;
 
 use Bluem\Integration\Controller\BluemAction;
 
-// require __DIR__ . '/../BluemAction.php';
-
 class Information extends BluemAction
 {
     /**
