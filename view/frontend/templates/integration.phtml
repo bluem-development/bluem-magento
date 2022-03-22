@@ -9,7 +9,11 @@ if ($block->getUserLoggedIn())
     }
 
     if (!empty($identified->valid)) {
-        echo "<p>Identity verifed. Thank you.</p>";
+        if (!empty($identified->report)) {
+            echo "<p>You have verified your identity on " . \Carbon\Carbon::parse($identified->report->DateTime)->format('Y-m-d') . " at " . \Carbon\Carbon::parse($identified->report->DateTime)->format('H:i') . ". Thank you.</p>";
+        } else {
+            echo "<p>Your identity has been verifed. Thank you.</p>";
+        }
         //echo "<p>If you want, you can do it again.</p>";
         //echo $block->showBluemIdentityButton();
         /*
