@@ -89,6 +89,9 @@ class Request extends BluemAction
         $entranceCode = "";
         // @todo: uniquely generated ENTRANCECODE
 
+        if (!empty($_GET['returnurl'])) {
+            $returnURL = $_GET['returnurl'];
+        }
 
         $request = $this->_bluem->CreateIdentityRequest(
             $requestCategories,

@@ -75,6 +75,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                         'Transaction URL'
                     )
                     ->addColumn(
+                        'return_url',
+                        Table::TYPE_TEXT,
+                        255,
+                        ['nullable => true'],
+                        'Return URL'
+                    )
+                    ->addColumn(
                         'description',
                         Table::TYPE_TEXT,
                         255,
@@ -82,7 +89,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                             'nullable' => false,
                             'default' => null
                         ],
-                        'Transaction URL'
+                        'Description'
                     )
                     ->addColumn(
                         'debtor_reference',
@@ -92,7 +99,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                             'nullable' => false,
                             'default' => null
                         ],
-                        'Transaction URL'
+                        'Debtor reference'
                     )
                     ->addColumn(
                         'type',
@@ -154,6 +161,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             if ($setup->tableExists('bluem_integration_request')) {
                 $tableName = $setup->getTable('bluem_integration_request');
                 $connection = $setup->getConnection();
+                
                 if (!$connection->tableColumnExists($tableName, 'order_id')) {
                     $connection->addColumn(
                         $tableName,
@@ -165,6 +173,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
                             'comment' => 'Added by Bluem for the ePayment method',
                             'after' => 'entrance_code',
                             'length' => 11
+                        ]
+                    );
+                }
+                if (!$connection->tableColumnExists($tableName, 'return_url')) {
+                    $connection->addColumn(
+                        $tableName,
+                        'return_url',
+                        [
+                            'type' => Table::TYPE_TEXT,
+                            'nullable' => true,
+                            'default' => null,
+                            'comment' => 'Return URL',
+                            'after' => 'transaction_url',
+                            'length' => 255
                         ]
                     );
                 }

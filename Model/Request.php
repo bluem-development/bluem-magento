@@ -24,6 +24,7 @@ use Magento\Framework\Stdlib\DateTime;
  * | transaction_id   | varchar(255)     | YES  |     | NULL                |                               |
  * | entrance_code    | varchar(255)     | YES  |     | NULL                |                               |
  * | transaction_url  | varchar(255)     | YES  |     | NULL                |                               |
+ * | return_url       | varchar(255)     | YES  |     | NULL                |                               |
  * | description      | varchar(255)     | YES  |     | NULL                |                               |
  * | debtor_reference | varchar(255)     | YES  |     | NULL                |                               |
  * | type             | varchar(32)      | YES  |     | identity            |                               |
