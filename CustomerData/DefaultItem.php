@@ -12,7 +12,7 @@ namespace Bluem\Integration\CustomerData;
 use Magento\Customer\CustomerData\SectionSourceInterface;
 
 /**
- * Example data source
+ * DefaultItem data source
  */
 class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements SectionSourceInterface
 {
@@ -29,15 +29,15 @@ class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements 
      */
     protected function doGetItemData()
     {
-        /**
-         * TODO; Check age verification for product.
-         */
         $age_verification_required = false;
         
-        if ($this->item->getProduct()->getProductAttribute('agecheck_required') !== null) {
-            if ($this->item->getProduct()->getProductAttribute('agecheck_required') == '1') {
-                $age_verification_required = true;
-            }
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productId = $this->item->getProduct()->getId();
+        
+        $product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+        
+        if ($product->getData('agecheck_required') === '1') {
+            $age_verification_required = true;
         }
         
         $imageHelper = $this->imageHelper->init($this->getProductForThumbnail(), 'mini_cart_product_thumbnail');
