@@ -10,9 +10,9 @@ class AgeCheckRequired extends AbstractFrontend
     {
         $value = $object->getData($this->getAttribute()->getAttributeCode());
         if ($value ==1) {
-            return "<b>Identy verification possibly required</b>";
+            return "<b>Identity verification possibly required</b>";
         } else {
-            return "<b>Identy verification not required</b>";
+            return "<b>Identity verification not required</b>";
         }
     }
 }
