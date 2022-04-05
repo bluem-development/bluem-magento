@@ -5,7 +5,8 @@ define([
     'Magento_Checkout/js/model/step-navigator',
     'Magento_Customer/js/model/customer',
     'Magento_Customer/js/customer-data',
-], function (ko, Component, _, stepNavigator, customer, customerData) {
+    'Magento_Checkout/js/checkout-data',
+], function (ko, Component, _, stepNavigator, customer, customerData, checkoutData) {
     'use strict';
 
     /**
@@ -17,7 +18,7 @@ define([
             template: 'Bluem_Integration/idincheck'
         },
 
-        isVisible: ko.observable(true),
+        isVisible: ko.observable(false),
         
         isLogedIn: customer.isLoggedIn(),
         
@@ -43,6 +44,18 @@ define([
             }
             return false;
         },
+        
+        /**
+         * Check if verification is done.
+         */
+        verificationDone: function () {
+            let customer_details = customerData.get('customer')();
+            
+            if (customer_details.identity_valid == true) {
+                return true;
+            }
+            return false;
+        },
 
         /**
          * @returns {*}
@@ -51,12 +64,10 @@ define([
             this._super();
             
             let cart_details = customerData.get('cart')();
-            console.log(cart_details);
             
-            console.log(customer);
-            console.log(customerData.get('customer')());
-            
+            // Check if age verification is enabled
             if (cart_details.age_verification_enabled == 'yes') {
+                // Check if the check is required by conditions
                 if (this.requireVerification() == true) {
                     stepNavigator.registerStep(
                         this.stepCode,
@@ -82,7 +93,6 @@ define([
             } else {
                 stepNavigator.next();
             }
-
             return this;
         },
 
@@ -95,7 +105,9 @@ define([
         navigate: function () {
             let cart_details = customerData.get('cart')();
             
+            // Check if age verification is enabled
             if (cart_details.age_verification_enabled == 'yes') {
+                // Check if the check is required by conditions
                 if (this.requireVerification() == true) {
                     this.isVisible(true);
                 } else {
@@ -119,15 +131,14 @@ define([
         navigateToNextStep: function () {
             let cart_details = customerData.get('cart')();
             
-            /**
-             * TODO; Check if verification is done.
-             */
+            // Check if age verification is enabled
             if (cart_details.age_verification_enabled == 'yes') {
+                // Check if the check is required by conditions
                 if (this.requireVerification() == true) {
-                    if (confirm('Verification done?')) {
+                    // Check if the verification is done and valid
+                    if (this.verificationDone() == true) {
                         stepNavigator.next();
                     } else {
-                        alert('Your identity isn\'t verified yet. You will be redirected to continue.');
                         this.startVerification();
                     }
                 } else {

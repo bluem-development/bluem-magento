@@ -9,6 +9,8 @@
 
 namespace Bluem\Integration\CustomerData;
 
+use Bluem\Integration\Helper\Data as DataHelper;
+
 use Magento\Customer\Helper\Session\CurrentCustomer;
 use Magento\Customer\Helper\View;
 
@@ -28,6 +30,8 @@ class Customer extends \Magento\Customer\CustomerData\Customer implements Sectio
      * @var View
      */
     private $customerViewHelper;
+    
+    private $_dataHelper;
 
     /**
      * @param CurrentCustomer $currentCustomer
@@ -35,10 +39,13 @@ class Customer extends \Magento\Customer\CustomerData\Customer implements Sectio
      */
     public function __construct(
         CurrentCustomer $currentCustomer,
-        View $customerViewHelper
+        View $customerViewHelper,
+        DataHelper $dataHelper
     ) {
         $this->currentCustomer = $currentCustomer;
         $this->customerViewHelper = $customerViewHelper;
+        
+        $this->_dataHelper = $dataHelper;
     }
     
     /**
@@ -50,7 +57,9 @@ class Customer extends \Magento\Customer\CustomerData\Customer implements Sectio
             return [];
         }
         $customer = $this->currentCustomer->getCustomer();
+        $identity_valid = $this->_dataHelper->getIdentityValid();
         return [
+            'identity_valid' => $identity_valid->valid ? true : false,
             'fullname' => $this->customerViewHelper->getCustomerName($customer),
             'firstname' => $customer->getFirstname(),
         ];
