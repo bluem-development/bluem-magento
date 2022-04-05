@@ -24,7 +24,7 @@ if ($block->getUserLoggedIn())
     } else {
         echo "<p>Your identity isn't verified yet.</p><br>";
             
-        echo $block->showBluemIdentityButton();
+        echo $block->showBluemAccountVerificationButton();
         echo "<br><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>What is this?</a></small>";
     }
     
