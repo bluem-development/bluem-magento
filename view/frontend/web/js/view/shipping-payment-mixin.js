@@ -4,7 +4,6 @@ define([
     'use strict';
 
     var mixin = {
-
         initialize: function () {
             // set visible to be initially false to have your step show first
             this.visible = ko.observable(false);
