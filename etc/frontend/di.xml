@@ -3,6 +3,6 @@
     <preference for="Magento\Checkout\CustomerData\Cart" type="Bluem\Integration\CustomerData\Cart" />
     
     <preference for="Magento\Checkout\CustomerData\DefaultItem" type="Bluem\Integration\CustomerData\DefaultItem" />
-    <!--
-    <preference for="Magento\Customer\CustomerData\Customer" type="Bluem\Integration\CustomerData\Customer" />-->
+    
+    <preference for="Magento\Customer\CustomerData\Customer" type="Bluem\Integration\CustomerData\Customer" />
 </config>
