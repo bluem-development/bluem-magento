@@ -24,6 +24,14 @@ class Request extends BluemAction
 
         $scenario = $this->_dataHelper->getIdentityConfig('identity_scenario');
         $requestCategories = $this->_dataHelper->getIdentityRequestCategories();
+        
+        if (isset($_GET['verify'])) {
+            if ($_GET['verify'] === 'account') {
+                $scenario = 'account';
+            }
+        }
+        
+        if ($debug) var_dump('Scenario: ', $scenario);
 
         // validate:
         // mandatory: if user is logged in (constraint for now)
