@@ -18,6 +18,8 @@ class IdentityScenario implements ArrayInterface
             '1' => 'Block the shopping procedure based on minimum age and require an minimum age Check request',
             '2' => 'Require a regular identification before allowing shopping, but do not check on minimum age',
             '3' => 'Require a regular identification before allowing shopping AND check on minimum age',
+            '4' => 'Require a regular identification in checkout AND check on minimum age',
+            '5' => 'Require a regular identification in checkout AND DO NOT check on minimum age',
         ];
     }
 }
