@@ -11,10 +11,10 @@ namespace Bluem\Integration\Plugin;
 
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\ObjectManager;
-use stdClass;
 use Bluem\Integration\Helper\Data as DataHelper;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductRepository;
+use stdClass;
 use Throwable;
 
 class ProductFilter
@@ -40,12 +40,9 @@ class ProductFilter
         $this->_dataHelper = $dataHelper;
     }
 
-
-
     public function afterIsSaleable(Product $product)
     {
         $filter_debug = false;
-
 
         /**
          * Check if domain whitelisting is setup
@@ -77,8 +74,8 @@ class ProductFilter
                             )
                         )
                     );
-                    // always allow this product if domain is not whitelisted 
-                    // - the filter is not used when not on the whitelisted domain
+                    // Always allow this product if domain is not whitelisted 
+                    // - The filter is not used when not on the whitelisted domain
                     if ($current_domain === $domain_sanitized) {
                         if ($filter_debug) {
                             echo "Whitelisted";
@@ -111,27 +108,29 @@ class ProductFilter
             && $identity_block_mode =="product_attribute"
         ) {
             $identity_product_agecheck_attribute = $this->_dataHelper
-                        ->getIdentityConfig('identity_product_agecheck_attribute');
-            // fallback
+                ->getIdentityConfig('identity_product_agecheck_attribute');
+            
+            // Fallback to default attribute
             if (is_null($identity_product_agecheck_attribute)) {
                 $identity_product_agecheck_attribute = "agecheck_required";
             }
             try {
                 $attr = $product->getData($identity_product_agecheck_attribute);
-                // var_dump($attr);
-                        // die();
+                if ($filter_debug) {
+                    var_dump($attr);
+                }
             } catch (Throwable $th) {
                 if ($filter_debug) {
                     echo "ERROR in productfilter";
                 }
-                // error in retrieving the data? then just allow the checkout for now
+                // Error in retrieving the data? Then just allow the checkout for now
                 $check_necessary = false;
             }
             if (is_null($attr)) {
                 if ($filter_debug) {
                     echo "Emtpy in productfilter";
                 }
-                // attribute is not set? then just allow the checkout for now
+                // Attribute is not set? Then just allow the checkout for now
                 $check_necessary = false;
             } else {
                 if ($attr == "1"
@@ -147,7 +146,7 @@ class ProductFilter
         if ($filter_debug) {
             echo "Check necessary? " . ($check_necessary?"Yes":"No");
         }
-        // no check? then just say s'all good
+        // No check? Then just say s'all good
         if ($check_necessary == false) {
             return true;
         }
