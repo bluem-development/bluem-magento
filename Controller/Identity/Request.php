@@ -72,7 +72,7 @@ class Request extends BluemAction
             // @todo: add guest user data such as IP
             $payload['userdata'] = [
                 'ip' => $ip." (guest)"
-            ]; 
+            ];
             
             // description is shown to customer
             $description = "Verificatie identiteit";
@@ -94,7 +94,7 @@ class Request extends BluemAction
             $request_data
         );
 
-        // append created requestID to the URL to return to
+        // Append created requestID to the URL to return to
         $returnURL .= "requestId/{$request_db_id}";
 
         $entranceCode = "";
@@ -148,8 +148,7 @@ class Request extends BluemAction
                 echo "<HR>RESPONSE:";
                 var_dump($response);
             }
-            // todo: add ageverify type
-            // save this somewhere in your data store
+            
             $update_data = [
                 'EntranceCode' => $entranceCode,
                 'TransactionId' => $transactionID,
@@ -162,7 +161,7 @@ class Request extends BluemAction
             if ($debug) {
                 die();
             }
-            // direct the user to this place
+            // Redirect to transaction URL
             header("Location: " . $transactionURL);
             exit;
         } else {
