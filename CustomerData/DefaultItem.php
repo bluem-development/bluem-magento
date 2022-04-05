@@ -15,7 +15,7 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
  * DefaultItem data source
  */
 class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements SectionSourceInterface
-{
+{   
     /**
      * {@inheritdoc}
      */
@@ -31,9 +31,9 @@ class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements 
     {
         $age_verification_required = false;
         
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $productId = $this->item->getProduct()->getId();
         
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
         
         if ($product->getData('agecheck_required') === '1') {

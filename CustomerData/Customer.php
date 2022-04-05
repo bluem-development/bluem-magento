@@ -22,6 +22,11 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
 class Customer extends \Magento\Customer\CustomerData\Customer implements SectionSourceInterface
 {
     /**
+     * @var \Bluem\Integration\Helper\Data
+     */
+    protected $_dataHelper;
+    
+    /**
      * @var CurrentCustomer
      */
     protected $currentCustomer;
@@ -29,9 +34,7 @@ class Customer extends \Magento\Customer\CustomerData\Customer implements Sectio
     /**
      * @var View
      */
-    private $customerViewHelper;
-    
-    private $_dataHelper;
+    protected $customerViewHelper;
 
     /**
      * @param CurrentCustomer $currentCustomer
