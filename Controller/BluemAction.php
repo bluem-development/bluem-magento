@@ -35,8 +35,8 @@ class BluemAction extends Action
     protected $_identityFactory;
     protected $_dataHelper;
 
-
     protected $_bluem_environment = "test";
+    
     /**
     * @var Bluem
     */
@@ -65,7 +65,6 @@ class BluemAction extends Action
 
         $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
-
 
         $bluem_config = new stdClass;
 
@@ -134,62 +133,40 @@ class BluemAction extends Action
 
         // validating input data
         $data = [];
-        if (isset($request_obj['Type'])
-        && $request_obj['Type']!==""
-        ) {
+        if (!empty($request_obj['Type'])) {
             $data['Type'] = $request_obj['Type'];
         }
-        if (isset($request_obj['Description'])
-        && $request_obj['Description'] !== ""
-        ) {
+        if (!empty($request_obj['Description'])) {
             $data['Description'] = $request_obj['Description'];
         }
-        if (isset($request_obj['TransactionId'])
-        && $request_obj['TransactionId'] !== ""
-        ) {
+        if (!empty($request_obj['TransactionId'])) {
             $data['TransactionId'] = $request_obj['TransactionId'];
         }
-        if (isset($request_obj['OrderId'])
-        && $request_obj['OrderId'] !== ""
-        ) {
+        if (!empty($request_obj['OrderId'])) {
             $data['OrderId'] = $request_obj['OrderId'];
         }
-        if (isset($request_obj['DebtorReference'])
-        && $request_obj['DebtorReference'] !== ""
-        ) {
+        if (!empty($request_obj['DebtorReference'])) {
             $data['DebtorReference'] = $request_obj['DebtorReference'];
         }
-        if (isset($request_obj['ReturnUrl'])
-        && $request_obj['ReturnUrl'] !== ""
-        ) {
+        if (!empty($request_obj['ReturnUrl'])) {
             $data['ReturnUrl'] = $request_obj['ReturnUrl'];
         }
 
-        if (isset($request_obj['EntranceCode'])
-        && $request_obj['EntranceCode'] !== ""
-        ) {
+        if (!empty($request_obj['EntranceCode'])) {
             $data['EntranceCode'] = $request_obj['EntranceCode'];
         }
-        if (isset($request_obj['TransactionID'])
-        && $request_obj['TransactionID'] !== ""
-        ) {
+        if (!empty($request_obj['TransactionID'])) {
             $data['TransactionId'] = $request_obj['TransactionID'];
         }
-        if (isset($request_obj['TransactionUrl'])
-        && $request_obj['TransactionUrl'] !== ""
-        ) {
+        if (!empty($request_obj['TransactionUrl'])) {
             $data['TransactionUrl'] = $request_obj['TransactionUrl'];
         }
-
-        if (isset($request_obj['Payload'])
-        && $request_obj['Payload'] !== ""
-        ) {
+        
+        if (!empty($request_obj['Payload'])) {
             $data['Payload'] = $request_obj['Payload'];
         }
 
-        if (isset($request_obj['Status'])
-        && $request_obj['Status'] !== ""
-        ) {
+        if (!empty($request_obj['Status'])) {
             $data['Status'] = $request_obj['Status'];
         }
 
@@ -252,13 +229,8 @@ class BluemAction extends Action
         return $collection->getFirstItem();
     }
 
-
-
-
-    // Helper functions for layout
-        
+    // Helper functions for layout   
     private function _wrapSimplePage($mixed_content) {
-        
         $home_url = $this->_baseURL."";
         
         return "<html lang='en'><body style='font-family:Arial, sans-serif;'>
@@ -271,7 +243,7 @@ class BluemAction extends Action
         // @todo localize
     }
 
-        /**
+    /**
      * Get generic Error message HTML promipt
      *
      * @param [type] $error_message
@@ -291,7 +263,8 @@ class BluemAction extends Action
         return $this->_wrapSimplePage($error_message_html);
         
     }
-       /**
+    
+    /**
      * Rendering an intermediate page
      *
      * @param string $h Header text
