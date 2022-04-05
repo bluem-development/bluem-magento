@@ -83,6 +83,13 @@ class InstallSchema implements InstallSchemaInterface
                     'Transaction URL'
                 )
                 ->addColumn(
+                    'response_url',
+                    Table::TYPE_TEXT,
+                    255,
+                    ['nullable => true'],
+                    'Response URL'
+                )
+                ->addColumn(
                     'return_url',
                     Table::TYPE_TEXT,
                     255,

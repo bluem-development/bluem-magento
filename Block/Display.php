@@ -69,6 +69,11 @@ class Display extends Template
     {
         return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification procedure..</a>";
     }
+    
+    public function showBluemAccountVerificationButton() : string
+    {
+        return "<a href='{$this->_baseURL}bluem/identity/request?verify=account&returnurl={$this->_baseURL}bluem/identity/index' class='action primary' >Start identification procedure..</a>";
+    }
 
     public function getUserLoggedIn() : bool
     {

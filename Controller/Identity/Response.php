@@ -51,6 +51,8 @@ class Response extends BluemAction
 
         $transactionId = $request_db_obj->getTransactionId();
         $entranceCode = $request_db_obj->getEntranceCode();
+        $responseUrl = $request_db_obj->getResponseUrl();
+        $returnUrl = $request_db_obj->getReturnUrl();
 
         // perform status request
         $statusResponse = $this->_bluem->IdentityStatus(
@@ -80,7 +82,7 @@ class Response extends BluemAction
                 if ($debug) {
                     var_dump($identityReport);
                 }
-                $curPayload =(object) json_decode($request_db_obj->getPayload());
+                $curPayload = (object) json_decode($request_db_obj->getPayload());
                 $curPayload->report = $identityReport;
 
                 $payloadString = json_encode($curPayload);
@@ -96,13 +98,18 @@ class Response extends BluemAction
                 if ($debug) {
                     echo "<HR>";
                 }
-                // You can for example use the BirthDateResponse to determine the age of the user and act accordingly
-                $this->_showMiniPrompt(
-                    "&#10003; Thanks for confirming your identity",
-                    "<p>We have stored the relevant details.
-                    You can now go back to our website.</p>"
-                );
-                // header("Location: $home_url ");
+                    
+                if (!$debug && $returnUrl !== $responseUrl) {
+                    // Redirect to return URL
+                    header("Location: {$returnUrl}");
+                } else {
+                    // You can for example use the BirthDateResponse to determine the age of the user and act accordingly
+                    $this->_showMiniPrompt(
+                        "&#10003; Thanks for confirming your identity",
+                        "<p>We have stored the relevant details.
+                        You can now go back to our website.</p>"
+                    );
+                }
                 break;
             case 'Processing':
             case 'Pending':
@@ -152,6 +159,4 @@ class Response extends BluemAction
         }
         exit;
     }
-
- 
 }

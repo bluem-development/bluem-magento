@@ -75,6 +75,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                         'Transaction URL'
                     )
                     ->addColumn(
+                        'response_url',
+                        Table::TYPE_TEXT,
+                        255,
+                        ['nullable => false'],
+                        'Response URL'
+                    )
+                    ->addColumn(
                         'return_url',
                         Table::TYPE_TEXT,
                         255,
@@ -176,6 +183,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
                         ]
                     );
                 }
+                if (!$connection->tableColumnExists($tableName, 'response_url')) {
+                    $connection->addColumn(
+                        $tableName,
+                        'response_url',
+                        [
+                            'type' => Table::TYPE_TEXT,
+                            'nullable' => true,
+                            'default' => null,
+                            'comment' => 'Response URL',
+                            'after' => 'transaction_url',
+                            'length' => 255
+                        ]
+                    );
+                }
                 if (!$connection->tableColumnExists($tableName, 'return_url')) {
                     $connection->addColumn(
                         $tableName,
@@ -185,7 +206,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                             'nullable' => true,
                             'default' => null,
                             'comment' => 'Return URL',
-                            'after' => 'transaction_url',
+                            'after' => 'response_url',
                             'length' => 255
                         ]
                     );

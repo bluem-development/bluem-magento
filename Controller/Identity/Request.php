@@ -5,6 +5,7 @@
  *
  * @category Module
  * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
+ * @author   Peter Meester <p.meester@bluem.nl>
  *
  */
 
@@ -43,7 +44,6 @@ class Request extends BluemAction
             'userdata' => []
         ];
 
-
         if ($this->_customerSession->isLoggedIn()) {
             $email = $this->_customerSession->getCustomer()->getEmail();
             $name = $this->_customerSession->getCustomer()->getName();
@@ -61,12 +61,14 @@ class Request extends BluemAction
             $debtorReference = "{$id}";
         } else {
             // guest user payload
-
+            // @todo: add guest user data such as IP
             $payload['userdata'] = [
-                'ip'=> $ip." (guest)"
-            ]; // @todo: add guest user data such as IP
+                'ip' => $ip." (guest)"
+            ]; 
+            
+            // description is shown to customer
             $description = "Verificatie identiteit";
-
+            // client reference/number
             $debtorReference = "Gastidentificatie";
         }
 
@@ -74,6 +76,7 @@ class Request extends BluemAction
             'Type' => "identity",
             'Description' => $description,
             'DebtorReference' => $debtorReference,
+            'ResponseUrl' => $returnURL,
             'ReturnUrl' => $returnURL,
             'Payload' => json_encode($payload),
             'Status' => "created"
@@ -88,6 +91,11 @@ class Request extends BluemAction
 
         $entranceCode = "";
         // @todo: uniquely generated ENTRANCECODE
+        
+        // Add return URL as response URL
+        // After that, user will be redirected to return URL
+        // Return URL can be edited later to go to specific page after processing
+        $responseURL = $returnURL;
 
         if (!empty($_GET['returnurl'])) {
             $returnURL = $_GET['returnurl'];
@@ -98,7 +106,7 @@ class Request extends BluemAction
             $description,
             $debtorReference,
             $entranceCode,
-            $returnURL
+            $responseURL
         );
 
         $bluem_env = $this->_dataHelper->getGeneralConfig('environment');
@@ -115,7 +123,6 @@ class Request extends BluemAction
         $response = $this->_bluem->PerformRequest($request);
 
         if ($response->ReceivedResponse()) {
-
             if (isset($response->IdentityTransactionResponse->Error)) {
                 echo $this->_getErrorMessageHtml(
                     $response->IdentityTransactionResponse->Error->ErrorMessage
@@ -139,7 +146,8 @@ class Request extends BluemAction
                 'EntranceCode' => $entranceCode,
                 'TransactionId' => $transactionID,
                 'TransactionUrl' => $transactionURL,
-                'ReturnUrl' => $returnURL, // also updated this
+                'ResponseUrl' => $responseURL,
+                'ReturnUrl' => $returnURL,
                 'Status' => "requested"
             ];
             $this->_updateRequest($request_db_id, $update_data);
@@ -155,6 +163,4 @@ class Request extends BluemAction
         }
         exit;
     }
-
-
 }
