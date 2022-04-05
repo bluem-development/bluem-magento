@@ -29,8 +29,10 @@ class Cart extends \Magento\Checkout\CustomerData\Cart implements SectionSourceI
         
         $age_verification_enabled = false;
         
+        // Check if Bluem module is enabled
         if ($bluem_module_enabled == '1') {
-            if ($bluem_identity_scenario != '0') {
+            // Check if checkout identification scenario is active
+            if ($bluem_identity_scenario == '4' || $bluem_identity_scenario == '5') {
                 $age_verification_enabled = true;
             }
         }
