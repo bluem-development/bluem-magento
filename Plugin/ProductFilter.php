@@ -56,18 +56,15 @@ class ProductFilter
         $domain_whitelist = $this->_dataHelper
             ->getIdentityConfig('identity_domain_whitelist');
 
-        if (isset($domain_whitelist)
-            && $domain_whitelist !=="*"
-            && $domain_whitelist !==""
-        ) {
-            $current_domain =  $_SERVER['SERVER_NAME'];
+        if (!empty($domain_whitelist) && $domain_whitelist !== "*") {
+            $current_domain = $_SERVER['SERVER_NAME'];
 
             $domain_is_whitelisted = false;
             $domains = explode(',', $domain_whitelist);
 
-            if (count($domains)>0) {
+            if (count($domains) > 0) {
                 foreach ($domains as $domain) {
-                    if ($domain=="") {
+                    if (empty($domain)) {
                         continue;
                     }
                     $domain_parts = explode("?", $domain, 2);
@@ -92,16 +89,16 @@ class ProductFilter
                     }
                 }
             }
-            // else continue like we expected
         }
-
 
         $identity_block_mode = $this->_dataHelper
             ->getIdentityConfig('identity_block_mode');
+        
         if ($filter_debug) {
             echo "Initiating product filter";
             var_dump($identity_block_mode);
         }
+        
         $check_necessary = false;
         if (is_null($identity_block_mode)
             || (!is_null($identity_block_mode)
@@ -109,6 +106,7 @@ class ProductFilter
         ) {
             $check_necessary = true;
         }
+        
         if (!is_null($identity_block_mode)
             && $identity_block_mode =="product_attribute"
         ) {
@@ -153,7 +151,6 @@ class ProductFilter
         if ($check_necessary == false) {
             return true;
         }
-
 
         if ($check_necessary) {
             $identity_valid = $this->_dataHelper->getIdentityValid();
