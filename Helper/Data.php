@@ -36,6 +36,11 @@ class Data extends AbstractHelper
     }
     const XML_BASE_PATH = 'integration';
 
+    /**
+     * Get config value.
+     *
+     * @public
+     */
     public function getConfigValue($field, $storeId = null)
     {
         return $this->scopeConfig->getValue(
@@ -45,6 +50,11 @@ class Data extends AbstractHelper
         );
     }
 
+    /**
+     * Get config for section.
+     *
+     * @public
+     */
     public function getConfigForSection($section, $code, $storeId = null)
     {
         return $this->getConfigValue(
@@ -53,22 +63,42 @@ class Data extends AbstractHelper
         );
     }
 
-
+    /**
+     * Get general config.
+     *
+     * @public
+     */
     public function getGeneralConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("general", $code, $storeId);
     }
 
+    /**
+     * Get identity config.
+     *
+     * @public
+     */
     public function getIdentityConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("identity", $code, $storeId);
     }
 
+    /**
+     * Get payments config.
+     *
+     * @public
+     */
     public function getPaymentsConfig($code, $storeId = null)
     {
         return $this->getConfigForSection("payments", $code, $storeId);
     }
 
+    /**
+     * Get identity valid.
+     * Conditions based on several scenarios.
+     *
+     * @public
+     */
     public function getIdentityValid($not_on_status_page = true)
     {
         $debug = false;
@@ -139,8 +169,17 @@ class Data extends AbstractHelper
         $requestURL = "{$this->_baseURL}bluem/identity/request?goto=shop";
         
         $report = "";
-
-        // require any identity check?
+        
+        /**
+         * Require any identity check?
+         *
+         * 0: Do not perform any automatic identification or check
+         * 1: Block the shopping procedure based on minimum age and require an minimum age Check request
+         * 2: Require a regular identification before allowing shopping, but do not check on minimum age
+         * 3: Require a regular identification before allowing shopping AND check on minimum age
+         * 4: Require a regular identification in checkout AND check on minimum age
+         * 5: Require a regular identification in checkout AND DO NOT check on minimum age
+         */
         if ($identity_scenario >= 1) {
             if ($debug) {
                 echo " There is some form of identity check required. Scenario: ";
@@ -164,7 +203,9 @@ class Data extends AbstractHelper
                 $invalid_message = "<a href='{$requestURL}' target='_self'>You must first identify yourself</a> before you can add products to the cart.";
             }
             
-            // get birthdate and define age in years
+            /**
+             * Get birthdate and define age in years.
+             */
             if (!empty($identity_checked->report->BirthDateResponse))
             {
                 try {
@@ -175,16 +216,20 @@ class Data extends AbstractHelper
                 }
             }
             
-            if ($identity_scenario == 1) {
-                // also require an age check
+            /**
+             * Scenario 1.
+             * Block the shopping procedure based on minimum age and require an minimum age Check request
+             */
+            if ($identity_scenario == 1)
+            {
                 if ($debug) {
                     echo " CUR REPORT: ";
                     var_dump($identity_checked->report);
                 }
 
                 if (!empty($identity_checked->report->AgeCheckResponse)) {
-                    if ($identity_checked->report->AgeCheckResponse."" == "true"
-                        || $identity_checked->report->AgeCheckResponse."" == "1"
+                    if ($identity_checked->report->AgeCheckResponse == "true"
+                        || $identity_checked->report->AgeCheckResponse == "1"
                     ) {
                         $valid = true;
                     } else {
@@ -207,9 +252,25 @@ class Data extends AbstractHelper
                         when you are logged in as a regular customer.";
                 }
             }
-            // definitely require any identification already
-            if ($identity_scenario == 3) {
-                // also require age check
+            
+            /**
+             * Scenario 2.
+             * Require a regular identification before allowing shopping, but do not check on minimum age
+             */
+            if ($identity_scenario == 2)
+            {
+                //
+            }
+            
+            /**
+             * Scenario 3.
+             * Require a regular identification before allowing shopping AND check on minimum age
+             */
+            if ($identity_scenario == 3)
+            {
+                /**
+                 * Check the age.
+                 */
                 if (!empty($identity_checked->report->BirthDateResponse)) {
                     if ($debug) {
                         // print_r($identity_checked->report);
@@ -219,7 +280,7 @@ class Data extends AbstractHelper
                         // echo "<br>then_time = {$then_time}";
                         // echo "<br>diff_sec = {$diff_sec}";
                         echo "<br>age_in_years = {$age_in_years}";
-                    } die;
+                    }
 
                     if ($age_in_years >= $min_age) {
                         $valid = true;
@@ -240,6 +301,56 @@ class Data extends AbstractHelper
                     target='_self'>Please identify again</a>
                     or contact us if you have any questions";
                 }
+            }
+            
+            /**
+             * Scenario 4.
+             * Require a regular identification in checkout AND check on minimum age
+             */
+            if ($identity_scenario == 4)
+            {
+                /**
+                 * Check the age.
+                 */
+                if (!empty($identity_checked->report->BirthDateResponse)) {
+                    if ($debug) {
+                        // print_r($identity_checked->report);
+                        // var_dump($identity_checked->report->BirthDateResponse."");
+
+                        // echo "<br>now_time = {$now_time}";
+                        // echo "<br>then_time = {$then_time}";
+                        // echo "<br>diff_sec = {$diff_sec}";
+                        echo "<br>age_in_years = {$age_in_years}";
+                    }
+
+                    if ($age_in_years >= $min_age) {
+                        $valid = true;
+                    } else {
+                        $valid = false;
+                        
+                        $invalid_message = "Your age appears to be insufficient.
+                        The minimum age of <strong>{$min_age} years</strong>
+                        is required. ".
+                        ($not_on_status_page?"<a href='{$this->_baseURL}bluem/identity/status' target='_blank'>View the status of your identification here</a> or contact":"Contact").
+                        " us if you have any questions.";
+                    }
+                } else {
+                    $valid = false;
+                    
+                    $invalid_message = "We could not verify your age.
+                    <a href='{$requestURL}'
+                    target='_self'>Please identify again</a>
+                    or contact us if you have any questions";
+                }
+            }
+            
+            /**
+             * Scenario 5.
+             * Require a regular identification in checkout AND DO NOT check on minimum age
+             */
+            if ($identity_scenario == 5)
+            {
+                //
             }
         }
 
@@ -262,6 +373,11 @@ class Data extends AbstractHelper
         return $data;
     }
 
+    /**
+     * Get identity request categories.
+     *
+     * @public
+     */
     public function getIdentityRequestCategories()
     {
         $scenario = (int) $this->getIdentityConfig('identity_scenario');
@@ -281,30 +397,35 @@ class Data extends AbstractHelper
         if ($identity_request_name=="1") {
             $requestCategories[] = "NameRequest";
         }
+        
         $identity_request_address = $this->getIdentityConfig(
             'identity_request_address'
         );
         if ($identity_request_address=="1") {
             $requestCategories[] = "AddressRequest";
         }
+        
         $identity_request_birthdate = $this->getIdentityConfig(
             'identity_request_birthdate'
         );
         if ($identity_request_birthdate=="1") {
             $requestCategories[] = "BirthDateRequest";
         }
+        
         $identity_request_gender = $this->getIdentityConfig(
             'identity_request_gender'
         );
         if ($identity_request_gender=="1") {
             $requestCategories[] = "GenderRequest";
         }
+        
         $identity_request_telephone = $this->getIdentityConfig(
             'identity_request_telephone'
         );
         if ($identity_request_telephone=="1") {
             $requestCategories[] = "TelephoneRequest";
         }
+        
         $identity_request_email = $this->getIdentityConfig(
             'identity_request_email'
         );
@@ -317,13 +438,15 @@ class Data extends AbstractHelper
         ) {
             $requestCategories[] = "BirthDateRequest";
         }
-
         return $requestCategories;
     }
 
 
-    // retrieve something to identify the guest based on the session data
-    // ip?
+    /**
+     * Get guest identifier.
+     *
+     * @private
+     */
     private function _getGuestId()
     {
         $remote = ObjectManager::getInstance()->get(
@@ -332,11 +455,25 @@ class Data extends AbstractHelper
         $ip = $remote->getRemoteAddress();
         return $ip;
     }
+    
+    /**
+     * Get user identifier.
+     *
+     * @private
+     */
     private function _getUserId()
     {
         $userId = $this->_customerSession->getCustomer()->getId();
         return $userId;
     }
+    
+    /**
+     * Get guest identification status.
+     *
+     * TODO; Add data to session instead by IP (think about shared computers).
+     *
+     * @private
+     */
     public function getBluemGuestIdentified()
     {
         $requestModel = ObjectManager::getInstance()->create(
@@ -346,8 +483,9 @@ class Data extends AbstractHelper
         $collection = $requestModel->getCollection();
         $collection->setOrder('created_at', 'DESC');
 
-        $rq = null;
         $identified = false;
+        $rq = null;
+        
         foreach ($collection as $c) {
             if ($identified) {
                 continue;
@@ -371,11 +509,17 @@ class Data extends AbstractHelper
         return $this->_getIdentity($identified,$rq);
     }
 
+    /**
+     * Get identity details.
+     *
+     * @private
+     */
     private function _getIdentity($identified,$rq)
     {
         $identity = new stdClass;
         $identity->status = $identified;
         $identity->report = null;
+        
         if ($identified === false) {
             $identity->result = "No valid request found.";
             return $identity;
@@ -389,17 +533,22 @@ class Data extends AbstractHelper
             }
             $identity->request = $rq;
         }
-
         return $identity;
     }
 
+    /**
+     * Get Bluem user identified.
+     *
+     * @public
+     */
     public function getBluemUserIdentified()
     {
         $userId = $this->_getUserId();
         $requestModel = ObjectManager::getInstance()->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection();
-        $rq = null;
         $identified = false;
+        $rq = null;
+        
         foreach ($collection as $c) {
             if ($identified) {
                 continue;

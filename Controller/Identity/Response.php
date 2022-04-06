@@ -32,7 +32,7 @@ class Response extends BluemAction
             var_dump($requestId);
         }
 
-        if ($requestId=="" ||!is_numeric($requestId)) {
+        if ($requestId == "" || !is_numeric($requestId)) {
             echo $this->_getErrorMessageHtml(" Request ID niet goed teruggekregen","Kon verzoek niet aanmaken",true);
             exit;
         }
@@ -70,7 +70,9 @@ class Response extends BluemAction
 
             $this->_updateRequest(
                 $requestId,
-                ['Status'=>'response_'.strtolower($statusCode)]
+                [
+                    'Status' => 'response_'.strtolower($statusCode)
+                ]
             );
 
             switch ($statusCode) {
