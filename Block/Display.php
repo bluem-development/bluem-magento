@@ -102,22 +102,43 @@ class Display extends Template
         ];
     }
 
+    /**
+     * Display product warning.
+     *
+     * @public
+     */
     public function showProductWarning()
     {
         $identity_block_mode = $this->_dataHelper
             ->getIdentityConfig('identity_block_mode');
         
+        $identity_product_warning = $this->_dataHelper
+            ->getIdentityConfig('identity_product_warning');
+        
+        $identity_scenario = $this->_dataHelper
+            ->getIdentityConfig('identity_scenario');
+        
         $check_necessary = false;
+        
         if (is_null($identity_block_mode)
             || (!is_null($identity_block_mode)
             && $identity_block_mode == "all_products")
         ) {
             $check_necessary = true;
         }
+        
         if (!is_null($identity_block_mode)
             && $identity_block_mode == "product_attribute"
         ) {
             $check_necessary = true;
+        }
+        
+        if ($identity_product_warning == "0") {
+            return '';
+        }
+        
+        if ($identity_scenario == "0") {
+            return '';
         }
         
         if ($check_necessary == false) {
@@ -128,7 +149,7 @@ class Display extends Template
             $validated_identity = $this->_dataHelper->getIdentityValid();
 
             if (!$validated_identity->valid) {
-                $html = '<div role="alert" class="messages"><div class="message-warning warning message"><div>' . __($validated_identity->invalid_message) . '</div></div></div>';
+                $html = '<div role="alert" class="messages"><div class="message-warning warning message"><div>' . __('Product warning') . '</div></div></div>';
                 return $html;
             }
             return '';
