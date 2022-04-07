@@ -1,35 +1,16 @@
-<p>
-Here you can see all the important data surrounding iDIN (Identification). 
-Also make sure the module is configured properly in the settings.
-<p>
-Refer to the readme at module for detailed instructions. If you have any questions or problems, contact the developers at <a 
+<p>Here you can see all the important data surrounding iDIN (Identification). Also make sure the module is configured properly in the settings.</p>
+<p>Refer to the readme at module for detailed instructions. If you have any questions or problems, contact the developers at <a 
 href="mailto:pluginsupport@bluem.nl?subject=Magento" target="_blank">pluginsupport@bluem.nl</a>.</p>
-<br>
-<h3>
-Usage
-</h3>
-<p>
-An Identity Request can be 
-<strong>by a logged in user</strong>
-request and view it via the page 
-<a href="<?php echo $block->getBaseUrl()."bluem/identity/index";?>" target="_blank" rel="noopener noreferrer">
-<?php echo $block->getBaseUrl()."bluem/identity/index";?>
-</a>. 
-</p>
-<p>Guest users cannot be identified at this moment: this will be rolled out in upcoming releases.</p>
+
+<h3>Usage</h3>
+<p>At default, when the module is enabled and the scenario is set-up, an age check will be required during checkout.<br />This behaviour can be changed to 'per product' in the settings. The module automatically created a new product attribute 'agecheck_required' which can changed in the catalog using the setting 'Age verification'. Only with certain products the age check will be required during checkout.</p>
+<p>The age check is available for guests and users.</p>
+
+<p>Logged in users can verify their account by visiting the 'Account verification' page, which is visible in the 'My Account' menu on the left side. The identification will be stored under the account.</p>
+
 <p>A request for identification can be initiated directly via the 
-<a href="<?php echo $block->getBaseUrl()."bluem/identity/request";?>" target="_blank" rel="noopener noreferrer">
-<?php echo $block->getBaseUrl()."bluem/identity/request";?>
-</a>, even if the user is already identified. In that case, a previous identification is overwritten.
-</p>
+<a href="<?php echo $block->getBaseUrl()."bluem/identity/request";?>" target="_blank" rel="noopener noreferrer"><?php echo $block->getBaseUrl()."bluem/identity/request";?></a>, even if the user is already identified. In that case, a previous identification is overwritten.</p>
 
-
-<h3>
-Identity Requests Overview
-</h3>
-<p>Below you see the details of all identity verifications performed so far. 
-The Payload column contains the information of the verification.
-</p>
-<?php
-echo $block->getRequestsTableHTML('identity');
-?>  
+<h3>Identity Requests Overview</h3>
+<p>Below you see the details of all identity verifications performed so far. The Payload column contains the information of the verification.</p>
+<?php echo $block->getRequestsTableHTML('identity'); ?>
