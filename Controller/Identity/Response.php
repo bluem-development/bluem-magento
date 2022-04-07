@@ -57,7 +57,6 @@ class Response extends BluemAction
 
             switch ($statusCode) {
                 case 'Success':
-                    // Retrieve a report that contains the information based on the request type:
                     $identityReport = $statusResponse->GetIdentityReport();
 
                     $curPayload = (object) json_decode($request_db_obj->getPayload());
@@ -81,10 +80,8 @@ class Response extends BluemAction
                     }
 
                     if ($returnUrl !== $responseUrl) {
-                        // Redirect to return URL
                         header("Location: {$returnUrl}");
                     } else {
-                        // You can for example use the BirthDateResponse to determine the age of the user and act accordingly
                         $this->_showMiniPrompt(
                             "&#10003; Thanks for confirming your identity",
                             "<p>We have stored the relevant details.
@@ -94,47 +91,68 @@ class Response extends BluemAction
                 break;
                 case 'Processing':
                 case 'Pending':
-                    $this->_showMiniPrompt(
-                        "The request is still processing",
-                        "Please come back later"
-                    );
+                    if ($returnUrl !== $responseUrl) {
+                        header("Location: {$returnUrl}");
+                    } else {
+                        $this->_showMiniPrompt(
+                            "The request is still processing",
+                            "Please come back later"
+                        );
+                    }
                 break;
                 case 'Cancelled':
-                    $this->_showMiniPrompt(
-                        "You have cancelled the procedure.",
-                        " <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>."
-                    );
+                    if ($returnUrl !== $responseUrl) {
+                        header("Location: {$returnUrl}");
+                    } else {
+                        $this->_showMiniPrompt(
+                            "You have cancelled the procedure.",
+                            " <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>."
+                        );
+                    }
                 break;
                 case 'Open':
-                    // do something when the request has not
-                    // yet been completed by the user,
-                    // redirecting to the transactionURL again";
-                    $this->_showMiniPrompt(
-                        "Your request is still in progress",
-                        "Please complete it on the previous page."
-                    );
+                    if ($returnUrl !== $responseUrl) {
+                        header("Location: {$returnUrl}");
+                    } else {
+                        $this->_showMiniPrompt(
+                            "Your request is still in progress",
+                            "Please complete it on the previous page."
+                        );
+                    }
                 break;
                 case 'Expired':
-                    $this->_showMiniPrompt(
-                        "Your request has expired",
-                        "<a href='{$this->_baseURL}bluem/identity/request'>
-                            Please try again
-                        </a>."
-                    );
+                    if ($returnUrl !== $responseUrl) {
+                        header("Location: {$returnUrl}");
+                    } else {
+                        $this->_showMiniPrompt(
+                            "Your request has expired",
+                            "<a href='{$this->_baseURL}bluem/identity/request'>
+                                Please try again
+                            </a>."
+                        );
+                    }
                 break;
                 default:
-                    $this->_showMiniPrompt(
-                        "Your request has encountered an unexpected status",
-                        "<a href='{$this->_baseURL}bluem/identity/request'>
-                            Please try again
-                        </a>."
-                    );
+                    if ($returnUrl !== $responseUrl) {
+                        header("Location: {$returnUrl}");
+                    } else {
+                        $this->_showMiniPrompt(
+                            "Your request has encountered an unexpected status",
+                            "<a href='{$this->_baseURL}bluem/identity/request'>
+                                Please try again
+                            </a>."
+                        );
+                    }
             }
         } else {
-            $this->_showMiniPrompt(
-                "No valid response from Bluem service",
-                "Please contact the webshop support"
-            );
+            if ($returnUrl !== $responseUrl) {
+                header("Location: {$returnUrl}");
+            } else {
+                $this->_showMiniPrompt(
+                    "No valid response from Bluem service",
+                    "Please contact the webshop support"
+                );
+            }
         }
         exit;
     }
