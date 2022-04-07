@@ -72,12 +72,17 @@ class Display extends Template
     
     public function showBluemAccountVerificationButton() : string
     {
-        return "<a href='{$this->_baseURL}bluem/identity/request?verify=account&returnurl={$this->_baseURL}bluem/identity/index' class='action primary' >Start identification procedure..</a>";
+        return "<a href='{$this->_baseURL}bluem/identity/request?verify=account&returnurl={$this->_baseURL}bluem/identity/index' class='action primary'>" . __('Start identification procedure') . "</a>";
     }
 
     public function getUserLoggedIn() : bool
     {
         return ($this->_customerSession->isLoggedIn());
+    }
+    
+    public function authenticateUser() : bool
+    {
+        return ($this->_customerSession->authenticate());
     }
 
     public function getIdentityValid($not_on_status_page = true)

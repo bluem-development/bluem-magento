@@ -1,38 +1,24 @@
 <?php
 
-if ($block->getUserLoggedIn())
-{
+if ($block->getUserLoggedIn()) {
     $identified = $block->getIdentityValid();
-
-    if ($block->debugMode()) {
-        var_dump($identified);
-    }
 
     if (!empty($identified->valid)) {
         if (!empty($identified->report)) {
-            echo "<p>You have verified your identity on " . \Carbon\Carbon::parse($identified->report->DateTime)->format('Y-m-d') . " at " . \Carbon\Carbon::parse($identified->report->DateTime)->format('H:i') . ". Thank you.</p>";
+            $date = \Carbon\Carbon::parse($identified->report->DateTime)->format('Y-m-d');
+            $time = \Carbon\Carbon::parse($identified->report->DateTime)->format('H:i');
+            
+            echo "<p>" . __('Your identity has been verified (details)', $date, $time) . "</p>";
         } else {
-            echo "<p>Your identity has been verified. Thank you.</p>";
+            echo "<p>" . __('Your identity has been verified') . "</p>";
         }
-        //echo "<p>If you want, you can do it again.</p>";
-        //echo $block->showBluemIdentityButton();
-        /*
-        echo "<br><pre>";
-        var_dump($identified->report);
-        echo "</pre>";
-        */
     } else {
-        echo "<p>Your identity isn't verified yet.</p><br>";
+        echo "<p>" . __('Your identity is not verified yet') . "</p>";
             
         echo $block->showBluemAccountVerificationButton();
-        echo "<br><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>What is this?</a></small>";
-    }
-    
-    if ($block->debugMode()) {
-        echo "<hr>User data:<br><pre>";
-        var_dump($block->getUserData());
-        echo "</pre>";
+        
+        echo "<br /><small><a href='".$block->getBaseUrl()."bluem/identity/information' target='_blank'>" . __('What is this?') . "</a></small>";
     }
 } else {
-    echo "<p>You need to log in before you can peruse the identification procedure.</p>";
+    $block->authenticateUser();
 }
