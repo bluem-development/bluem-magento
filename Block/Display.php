@@ -99,86 +99,31 @@ class Display extends Template
 
     public function showProductWarning()
     {
-        // copied from ProductFilter.php@afterIsSaleable
-        $filter_debug = false;
-        // $product = $this->getProduct();
         $identity_block_mode = $this->_dataHelper
             ->getIdentityConfig('identity_block_mode');
         
-        if ($filter_debug) {
-            echo "Initiating product filter";
-            var_dump($identity_block_mode);
-        }
         $check_necessary = false;
         if (is_null($identity_block_mode)
             || (!is_null($identity_block_mode)
-            && $identity_block_mode =="all_products")
+            && $identity_block_mode == "all_products")
         ) {
             $check_necessary = true;
         }
         if (!is_null($identity_block_mode)
-            && $identity_block_mode =="product_attribute"
+            && $identity_block_mode == "product_attribute"
         ) {
-            // $identity_product_agecheck_attribute = $this->_dataHelper
-            //             ->getIdentityConfig('identity_product_agecheck_attribute');
-            // // fallback
-            // if (is_null($identity_product_agecheck_attribute)) {
-            //     $identity_product_agecheck_attribute = "agecheck_required";
-            // }
-            // try {
-            //     $attr = $product->getData($identity_product_agecheck_attribute);
-            //     // var_dump($attr);
-            //             // die();
-            // } catch (Throwable $th) {
-            //     if ($filter_debug) {
-            //         echo "ERROR in productfilter";
-            //     }
-            // error in retrieving the data? then just allow the checkout for now
             $check_necessary = true;
-            // }
-            // if (is_null($attr)) {
-            //     if ($filter_debug) {
-            //         echo "Emtpy in productfilter";
-            //     }
-            //     // attribute is not set? then just allow the checkout for now
-            //     $check_necessary = false;
-            // } else {
-            //     if ($attr == "1"
-            //         || $attr == "true"
-            //         || $attr == true
-            //     ) {
-            //         $check_necessary = true;
-            //     }
-            // }
-            // echo "Success in productfilter";
         }
         
-        if ($filter_debug) {
-            echo "Check necessary? " . ($check_necessary?"Yes":"No");
-        }
-        // no check? then just say s'all good
         if ($check_necessary == false) {
             return '';
         }
 
-
         if ($check_necessary) {
-            // $identity_valid = $this->_dataHelper->getIdentityValid();
-            // if ($filter_debug) {
-            //     echo "Identity valid? " . ($identity_valid->valid?"Yes":"No");
-            //     var_dump($identity_valid);
-            // }
             $validated_identity = $this->_dataHelper->getIdentityValid();
 
             if (!$validated_identity->valid) {
-                $html='<div role="alert" class="messages">
-            <div class="message-warning warning message">
-            <div>';
-                $html.=__($validated_identity->invalid_message);
-                $html.='
-            </div>
-            </div>
-            </div>';
+                $html = '<div role="alert" class="messages"><div class="message-warning warning message"><div>' . __($validated_identity->invalid_message) . '</div></div></div>';
                 return $html;
             }
             return '';

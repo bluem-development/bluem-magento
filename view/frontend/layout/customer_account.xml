@@ -5,7 +5,7 @@
             <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-custom">
                 <arguments>
                     <argument name="path" xsi:type="string">bluem/identity/index</argument>
-                    <argument name="label" xsi:type="string"><!-- ko i18n: 'Account verification'--><!-- /ko --></argument>
+                    <argument name="label" xsi:type="string">Account verification</argument>
                 </arguments>
             </block>
         </referenceBlock>

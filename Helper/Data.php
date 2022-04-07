@@ -101,64 +101,9 @@ class Data extends AbstractHelper
      */
     public function getIdentityValid($not_on_status_page = true)
     {
-        $debug = false;
-
         $identity_scenario = (int) $this->getIdentityConfig('identity_scenario');
+        
         $min_age = (int) $this->getIdentityConfig('identity_min_age');
-
-        if ($debug) {
-            echo "";
-            echo "<br/>identity_scenario: " .
-                print_r(
-                    $identity_scenario,
-                    true
-                );
-            echo "<br/>identity_min_age: " .
-                print_r(
-                    $this->getIdentityConfig('identity_min_age'),
-                    true
-                );
-            echo "<br/>retrieving name? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_name'),
-                    true
-                );
-            echo "<br/>retrieving address? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_address'),
-                    true
-                );
-            echo "<br/>retrieving birthdate? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_birthdate'),
-                    true
-                );
-            echo "<br/>retrieving agecheck? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_agecheck'),
-                    true
-                );
-            echo "<br/>retrieving gender? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_gender'),
-                    true
-                );
-            echo "<br/>retrieving telephone? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_telephone'),
-                    true
-                );
-            echo "<br/>retrieving email? " .
-                print_r(
-                    $this->getIdentityConfig('identity_request_email'),
-                    true
-                );
-            echo "<br/>identity_requests_parsed: " .
-                print_r(
-                    $this->getIdentityRequestCategories(),
-                    true
-                );
-        }
 
         $valid = false;
         
@@ -180,14 +125,6 @@ class Data extends AbstractHelper
          */
         if ($identity_scenario >= 1)
         {
-            if ($debug) {
-                echo " There is some form of identity check required. Scenario: ";
-                var_dump($identity_scenario);
-
-                echo " - is customer logged in? ";
-                echo ($this->_customerSession->isLoggedIn()?"yes":"no");
-            }
-            
             $identity_checked = $this->_customerSession->isLoggedIn() ? 
                 $this->getBluemUserIdentified() : 
                 $this->getBluemGuestIdentified();
@@ -221,11 +158,6 @@ class Data extends AbstractHelper
              */
             if ($identity_scenario == 1)
             {
-                if ($debug) {
-                    echo " CUR REPORT: ";
-                    var_dump($identity_checked->report);
-                }
-
                 if (!empty($identity_checked->report->AgeCheckResponse)) {
                     if ($identity_checked->report->AgeCheckResponse == "true"
                         || $identity_checked->report->AgeCheckResponse == "1"
@@ -271,16 +203,6 @@ class Data extends AbstractHelper
                  * Check the age.
                  */
                 if (!empty($identity_checked->report->BirthDateResponse)) {
-                    if ($debug) {
-                        // print_r($identity_checked->report);
-                        // var_dump($identity_checked->report->BirthDateResponse."");
-
-                        // echo "<br>now_time = {$now_time}";
-                        // echo "<br>then_time = {$then_time}";
-                        // echo "<br>diff_sec = {$diff_sec}";
-                        echo "<br>age_in_years = {$age_in_years}";
-                    }
-
                     if ($age_in_years >= $min_age) {
                         $valid = true;
                     } else {
@@ -304,9 +226,7 @@ class Data extends AbstractHelper
         }
 
         if (!$valid) {
-            $explanation_html = "<br><small>
-            <a href='{$this->_baseURL}bluem/identity/information' target='_blank' title='Learn more about iDIN - identity validation'>
-            What is this?</a></small>";
+            $explanation_html = "<br><small><a href='{$this->_baseURL}bluem/identity/information' target='_blank' title='Learn more about iDIN - identity validation'>What is this?</a></small>";
         }
         
         $data = (object) [
