@@ -121,23 +121,19 @@ Payments work out of the box for logged-in and guest users. Payments work alongs
 
 # Identity 
 ## How Identity service Works
-This module enables a page that is used to verify **logged in user identities**. 
+This module enables identification during checkout and account verification.
 
 The Identity Requests page consists of an overview of the requests made so far, selectable from the Bluem menu in your website's admin side after activating the module. There is also an explanation of how to start the request procedure on the overview page.
 
-On the Settings page, you can now find several settings around the items Account, Identification and Payments. Mainly elaborated is now account settings and settings for identity. See also the scenarios as they are in the [WordPress and WooCommerce plug-in](https://wordpress.org/plugins/bluem/). All these scenarios are available and explained below. _Do note that the automatic checks are currently only possible for logged in users_. 
-
-In the next release, guest users will also be identifiable based on their IP address.
+On the Settings page, you can now find several settings around the items Account, Identification and Payments. Mainly elaborated is now account settings and settings for identity. See also the scenarios as they are in the [WordPress and WooCommerce plug-in](https://wordpress.org/plugins/bluem/). All these scenarios are available and explained below.
 
 You can indicate in the settings which parts of an IDIN request are requested. CustomerID (an identifier set by the bank) is always requested. All these settings are already in active use and can therefore are present in this version.
-
-If the Identity service checks for the users' minimum age or identity, this is also actively checked in the webshop. The check will deactivate the add-to-cart button in the shop if the identification is not completed or insufficient.
 
 - _Note:_ Please ensure the settings (see Configuration section) for the Identity service are correct. One important setting to focus on is the type of request you want to initiate: either an AgeCheck Request or a CustomerData Request.
 
 ## Choosing and enabling automatic identity-checking scenario's
 
-Enforce an identity check before **logged in** users can add products to the cart by selecting a desired scenario from the Bluem configuration page. Options are:
+Enforce an identity check during checkout by selecting a desired scenario from the Bluem configuration page. Options are:
 
 - Not performing an automatic identity-check
 - Requiring an age validation based on the minimum age requirement set up (default 18 years and up).
@@ -168,9 +164,7 @@ https://myawesome.shop/bluem/identity/request
 
 ## Ensure some products are set to require identity/age verification
 
-Set a new product attribute at the products that require an age check to `1`. The key of this product attribute is set in the settings. If unchanged, the default key is `agecheck_required`.
-
-Note: In a future version, this attribute will be added with this module programmatically.
+Set a new product attribute at the products that require an age check to `1`. The key of this product attribute is set in the settings. If unchanged, the default key is `agecheck_required`. This attribute will be added automatically during install or update.
 
 ### Important notes on identity verification:
 
@@ -208,6 +202,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/DaanRijpkema/bluem-magento/releases
 
+0.6.0   Improvements, identification service as step during checkout, account verification
 0.5.12  Fixing composer dependency issues
 0.5.11  Fixing composer dependency issues
 0.5.10  Major updated to dependency libraries; improving blocking of products through checkout filter
