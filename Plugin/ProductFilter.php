@@ -43,6 +43,18 @@ class ProductFilter
     public function afterIsSaleable(Product $product)
     {
         $filter_debug = false;
+        
+        $identity_product_warning = $this->_dataHelper
+            ->getIdentityConfig('identity_product_warning');
+        
+        $identity_scenario = $this->_dataHelper
+            ->getIdentityConfig('identity_scenario');
+        
+        if ($identity_product_warning === '0') {
+            return true;
+        } elseif ($identity_scenario === '0') {
+            return true;
+        }
 
         /**
          * Check if domain whitelisting is setup
