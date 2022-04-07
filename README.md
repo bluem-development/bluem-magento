@@ -8,15 +8,15 @@ This Magento2 module is an integration that connects your website to Bluem's eMa
 Concretely, the module delivers:
 
 - A custom plug and play page allows logged-in users to perform an iDIN Identity request and store it within the user profile metadata for further usage in third-party modules or functions within your webshop. 
--  An extensive settings page that allows for enabling/disabling and configuration of specific services
--  A payment gateway to accept eMandate transactions within a Magento2 checkout procedure (in development)
+- An extensive settings page that allows for enabling/disabling and configuration of specific services
+- A payment gateway to accept eMandate transactions within a Magento2 checkout procedure (in development)
 - A payment gateway to accept ePayment transactions within a Magento2 checkout procedure (in development)
 - A view allows logged-in users to perform an eMandate transaction request and record the response within the user profile metadata.
 - and more to come!
 
 ## Support
 
-If you have any questions concerning the module's installation or configuration or feature requests, please contact us at [d.rijpkema@bluem.nl](mailto:d.rijpkema@bluem.nl?subject=Bluem+Magento2+Question). 
+If you have any questions concerning the module's installation or configuration or feature requests, please contact us at [pluginsupport@bluem.nl](mailto:pluginsupport@bluem.nl?subject=Bluem+Magento2+Question).
 
 If you have any questions related to your account or your credentials, please refer to your Bluem account manager.
 
