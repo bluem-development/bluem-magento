@@ -34,9 +34,14 @@ class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements 
         $productId = $this->item->getProduct()->getId();
         
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        
         $product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
         
-        if ($product->getData('agecheck_required') === '1') {
+        $bluem_identity_block_mode = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('integration/identity/identity_block_mode');
+        
+        if ($bluem_identity_block_mode === 'all_products') {
+            $age_verification_required = true;
+        } elseif ($product->getData('agecheck_required') === '1') {
             $age_verification_required = true;
         }
         

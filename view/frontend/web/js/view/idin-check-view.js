@@ -20,7 +20,9 @@ define([
 
         isVisible: ko.observable(false),
         
-        isLogedIn: customer.isLoggedIn(),
+        isVerified: ko.observable(false),
+        
+        isLoggedIn: customer.isLoggedIn(),
         
         // Step code will be used as step content id in the component template
         stepCode: 'identification',
@@ -49,9 +51,17 @@ define([
          * Check if verification is done.
          */
         verificationDone: function () {
+            let sections = ['cart','customer'];
+            
+            customerData.invalidate(sections);
+            customerData.reload(sections, true);
+            
+            let cart_details = customerData.get('cart')();
             let customer_details = customerData.get('customer')();
             
             if (customer_details.identity_valid == true) {
+                return true;
+            } else if (cart_details.is_bluem_verified == 'yes') {
                 return true;
             }
             return false;
@@ -62,6 +72,11 @@ define([
          */
         initialize: function () {
             this._super();
+            
+            // Check if verification is previously done
+            if (this.verificationDone()) {
+                this.isVerified(true);
+            }
             
             let cart_details = customerData.get('cart')();
             
@@ -103,6 +118,8 @@ define([
          * When the user navigates to the custom step via url anchor or back button we_must show step manually here
          */
         navigate: function () {
+            customerData.reload(['cart'], true);
+            
             let cart_details = customerData.get('cart')();
             
             // Check if age verification is enabled
@@ -129,6 +146,8 @@ define([
          * @returns void
          */
         navigateToNextStep: function () {
+            customerData.reload(['cart'], true);
+            
             let cart_details = customerData.get('cart')();
             
             // Check if age verification is enabled

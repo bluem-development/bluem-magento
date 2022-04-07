@@ -14,12 +14,10 @@ class IdentityScenario implements ArrayInterface
     public function toOptionArray()
     {
         return [
-            '0' => 'Do not perform any automatic identification or check',
-            '1' => 'Block the shopping procedure based on minimum age and require an minimum age Check request',
-            '2' => 'Require a regular identification before allowing shopping, but do not check on minimum age',
-            '3' => 'Require a regular identification before allowing shopping AND check on minimum age',
-            '4' => 'Require a regular identification in checkout AND check on minimum age',
-            '5' => 'Require a regular identification in checkout AND DO NOT check on minimum age',
+            '0' => __('Do not perform any automatic identification or check'),
+            '1' => __('Require a minimum age check'),
+            '2' => __('Require a regular identification, but do not check on minimum age'),
+            '3' => __('Require a regular identification AND check on minimum age'),
         ];
     }
 }

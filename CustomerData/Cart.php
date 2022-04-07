@@ -32,7 +32,7 @@ class Cart extends \Magento\Checkout\CustomerData\Cart implements SectionSourceI
         // Check if Bluem module is enabled
         if ($bluem_module_enabled == '1') {
             // Check if checkout identification scenario is active
-            if ($bluem_identity_scenario == '4' || $bluem_identity_scenario == '5') {
+            if ($bluem_identity_scenario != '0') {
                 $age_verification_enabled = true;
             }
         }
@@ -41,6 +41,7 @@ class Cart extends \Magento\Checkout\CustomerData\Cart implements SectionSourceI
         $subtotalAmount = $totals['subtotal']->getValue();
         return [
             'age_verification_enabled' => $age_verification_enabled === true ? 'yes' : 'no',
+            'is_bluem_verified' => !empty($_SESSION['bluem_identification_done']) ? 'yes' : 'no',
             'summary_count' => $this->getSummaryCount(),
             'subtotalAmount' => $subtotalAmount,
             'subtotal' => isset($totals['subtotal'])

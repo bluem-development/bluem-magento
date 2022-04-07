@@ -20,25 +20,16 @@ class Request extends BluemAction
 {
     public function execute()
     {
-        $debug = false;
-
         $scenario = $this->_dataHelper->getIdentityConfig('identity_scenario');
+        
         $requestCategories = $this->_dataHelper->getIdentityRequestCategories();
         
         if (isset($_GET['verify'])) {
             if ($_GET['verify'] === 'account') {
-                $scenario = 'account';
+                $scenario = '9'; // Account verification
             }
         }
-        
-        if ($debug) var_dump('Scenario: ', $scenario);
 
-        // validate:
-        // mandatory: if user is logged in (constraint for now)
-        // optional: if user is not already verified?
-        // Make a mention they can return to the previous page, create a view?
-
-        // provide a link here to the callback function; either in this script or another script
         $returnURL = $this->_baseURL . "/bluem/identity/response/";
 
         $objectManager = ObjectManager::getInstance();
@@ -56,28 +47,24 @@ class Request extends BluemAction
             $email = $this->_customerSession->getCustomer()->getEmail();
             $name = $this->_customerSession->getCustomer()->getName();
             $id = $this->_customerSession->getCustomer()->getId();
+            
+            $description = "Verificatie {$name} (klantnummer {$id})";
+            
+            $debtorReference = "{$id}";
 
             $payload['userdata'] = [
                 'email' => $email,
                 'name' => $name,
                 'id' => $id
             ];
-
-            // description is shown to customer
-            $description = "Verificatie {$name} (klantnummer {$id})";
-            // client reference/number
-            $debtorReference = "{$id}";
         } else {
-            // guest user payload
-            // @todo: add guest user data such as IP
+            $description = "Verificatie identiteit";
+            
+            $debtorReference = "Gastidentificatie";
+            
             $payload['userdata'] = [
                 'ip' => $ip." (guest)"
             ];
-            
-            // description is shown to customer
-            $description = "Verificatie identiteit";
-            // client reference/number
-            $debtorReference = "Gastidentificatie";
         }
 
         $request_data = [
@@ -94,7 +81,6 @@ class Request extends BluemAction
             $request_data
         );
 
-        // Append created requestID to the URL to return to
         $returnURL .= "requestId/{$request_db_id}";
 
         $entranceCode = "";
@@ -122,12 +108,6 @@ class Request extends BluemAction
             $request->enableStatusGUI();
         }
 
-        if ($debug) {
-            var_dump("Request", $request);
-            var_dump("Request URL", $request->HttpRequestURL());
-            var_dump("Request XML", $request->XmlString());
-        }
-
         $response = $this->_bluem->PerformRequest($request);
 
         if ($response->ReceivedResponse()) {
@@ -141,13 +121,6 @@ class Request extends BluemAction
             $entranceCode = $response->getEntranceCode();
             $transactionID = $response->getTransactionID();
             $transactionURL = $response->getTransactionURL();
-
-            if ($debug) {
-                echo "entranceCode: {$entranceCode}<br>";
-                echo "transactionID: {$transactionID}<br>";
-                echo "<HR>RESPONSE:";
-                var_dump($response);
-            }
             
             $update_data = [
                 'EntranceCode' => $entranceCode,
@@ -158,10 +131,6 @@ class Request extends BluemAction
                 'Status' => "requested"
             ];
             $this->_updateRequest($request_db_id, $update_data);
-            if ($debug) {
-                die();
-            }
-            // Redirect to transaction URL
             header("Location: " . $transactionURL);
             exit;
         } else {

@@ -174,13 +174,12 @@ class Data extends AbstractHelper
          * Require any identity check?
          *
          * 0: Do not perform any automatic identification or check
-         * 1: Block the shopping procedure based on minimum age and require an minimum age Check request
-         * 2: Require a regular identification before allowing shopping, but do not check on minimum age
-         * 3: Require a regular identification before allowing shopping AND check on minimum age
-         * 4: Require a regular identification in checkout AND check on minimum age
-         * 5: Require a regular identification in checkout AND DO NOT check on minimum age
+         * 1: Require a minimum age check
+         * 2: Require a regular identification, but do not check on minimum age
+         * 3: Require a regular identification AND check on minimum age
          */
-        if ($identity_scenario >= 1) {
+        if ($identity_scenario >= 1)
+        {
             if ($debug) {
                 echo " There is some form of identity check required. Scenario: ";
                 var_dump($identity_scenario);
@@ -189,9 +188,9 @@ class Data extends AbstractHelper
                 echo ($this->_customerSession->isLoggedIn()?"yes":"no");
             }
             
-            $identity_checked = $this->_customerSession->isLoggedIn() ?
-                    $this->getBluemUserIdentified():
-                    $this->getBluemGuestIdentified();
+            $identity_checked = $this->_customerSession->isLoggedIn() ? 
+                $this->getBluemUserIdentified() : 
+                $this->getBluemGuestIdentified();
             
             if ($identity_checked->status === true) {
                 $valid = true;
@@ -218,7 +217,7 @@ class Data extends AbstractHelper
             
             /**
              * Scenario 1.
-             * Block the shopping procedure based on minimum age and require an minimum age Check request
+             * Require a minimum age check
              */
             if ($identity_scenario == 1)
             {
@@ -255,7 +254,7 @@ class Data extends AbstractHelper
             
             /**
              * Scenario 2.
-             * Require a regular identification before allowing shopping, but do not check on minimum age
+             * Require a regular identification, but do not check on minimum age
              */
             if ($identity_scenario == 2)
             {
@@ -264,7 +263,7 @@ class Data extends AbstractHelper
             
             /**
              * Scenario 3.
-             * Require a regular identification before allowing shopping AND check on minimum age
+             * Require a regular identification AND check on minimum age
              */
             if ($identity_scenario == 3)
             {
@@ -301,56 +300,6 @@ class Data extends AbstractHelper
                     target='_self'>Please identify again</a>
                     or contact us if you have any questions";
                 }
-            }
-            
-            /**
-             * Scenario 4.
-             * Require a regular identification in checkout AND check on minimum age
-             */
-            if ($identity_scenario == 4)
-            {
-                /**
-                 * Check the age.
-                 */
-                if (!empty($identity_checked->report->BirthDateResponse)) {
-                    if ($debug) {
-                        // print_r($identity_checked->report);
-                        // var_dump($identity_checked->report->BirthDateResponse."");
-
-                        // echo "<br>now_time = {$now_time}";
-                        // echo "<br>then_time = {$then_time}";
-                        // echo "<br>diff_sec = {$diff_sec}";
-                        echo "<br>age_in_years = {$age_in_years}";
-                    }
-
-                    if ($age_in_years >= $min_age) {
-                        $valid = true;
-                    } else {
-                        $valid = false;
-                        
-                        $invalid_message = "Your age appears to be insufficient.
-                        The minimum age of <strong>{$min_age} years</strong>
-                        is required. ".
-                        ($not_on_status_page?"<a href='{$this->_baseURL}bluem/identity/status' target='_blank'>View the status of your identification here</a> or contact":"Contact").
-                        " us if you have any questions.";
-                    }
-                } else {
-                    $valid = false;
-                    
-                    $invalid_message = "We could not verify your age.
-                    <a href='{$requestURL}'
-                    target='_self'>Please identify again</a>
-                    or contact us if you have any questions";
-                }
-            }
-            
-            /**
-             * Scenario 5.
-             * Require a regular identification in checkout AND DO NOT check on minimum age
-             */
-            if ($identity_scenario == 5)
-            {
-                //
             }
         }
 
@@ -440,7 +389,6 @@ class Data extends AbstractHelper
         }
         return $requestCategories;
     }
-
 
     /**
      * Get guest identifier.
