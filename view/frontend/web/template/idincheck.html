@@ -1,8 +1,13 @@
-<!--The 'step_idincheck' value from the .js file should be used-->
 <li id="identification" data-bind="fadeVisible: isVisible, attr: { id: stepCode }">
     <div class="step-title" data-bind="i18n: 'Identification'" data-role="title"></div>
     <div id="checkout-step-title" class="step-content" data-role="content">
-        <p>Some products requires a minimum age by law. We are required to verify your age online.<br/>You must confirm your identity in order to complete the checkout.<br/>Click 'Next' to start the identification using iDIN.</p>
+        <!-- ko ifnot: isVerified -->
+            <p><!-- ko i18n: 'Checkout identification text'--><!-- /ko --></p>
+        <!-- /ko -->
+        
+        <!-- ko if: isVerified -->
+            <p><!-- ko i18n: 'Checkout identification done'--><!-- /ko --></p>
+        <!-- /ko -->
 
         <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
             <div class="actions-toolbar">
