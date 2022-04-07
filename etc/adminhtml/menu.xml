@@ -16,7 +16,6 @@
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-
         <add id="Bluem_Integration::menu_item2"
             title="Payments"
             module="Bluem_Integration"
@@ -33,7 +32,7 @@
             resource="Bluem_Integration::settings"
             parent="Bluem_Integration::menu"
         />
-       <add id="Bluem_Integration::configuration"
+        <add id="Bluem_Integration::configuration"
             title="Configure Payments"
             module="Bluem_Integration"
             sortOrder="10"
