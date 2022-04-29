@@ -37,7 +37,7 @@ GNU GPLv3.
 _ Notice:_ This method is still undergoing some configuration changes, so if it does not work at the moment, please install the module manually using the steps in the section mentioned below.
 
 ```bash
-composer require daanrijpkema/bluem-magento
+composer require bluem-development/bluem-magento
 ```
 
 
@@ -83,7 +83,7 @@ Periodically we will significantly improve this module. Incorporating these bran
 
 Run:
 ```bash
-composer require daanrijpkema/bluem-magento
+composer require bluem-development/bluem-magento
 ```
 Then repeat step 2 and 3 from the aforementioned installation.
 
@@ -200,7 +200,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 
 
 ## Changelog
-See also https://github.com/DaanRijpkema/bluem-magento/releases
+See also https://github.com/bluem-development/bluem-magento/releases
 
 0.6.0   Improvements, identification service as step during checkout, account verification
 0.5.12  Fixing composer dependency issues
