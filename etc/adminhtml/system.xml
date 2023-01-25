@@ -157,6 +157,26 @@
                     <label>ePayments (iDEAL) Brand ID</label>
                     <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (iDEAL) service. It usually contains your company name and "Payments".</comment>
                 </field>
+
+                <field id="payments_paypal_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ePayments (PayPal) Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (PayPal) service. It usually contains your company name and "Payments".</comment>
+                </field>
+
+                <field id="payments_creditcard_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ePayments (Creditcard) Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (Creditcard) service. It usually contains your company name and "Payments".</comment>
+                </field>
+
+                <field id="payments_cartebancaire_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ePayments (Carte Bancaire) Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (Carte Bancaire) service. It usually contains your company name and "Payments".</comment>
+                </field>
+
+                <field id="payments_sofort_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ePayments (SOFORT) Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the ePayments (SOFORT) service. It usually contains your company name and "Payments".</comment>
+                </field>
             </group>
         </section>
        <section id="payment">

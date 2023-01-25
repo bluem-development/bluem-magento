@@ -27,6 +27,10 @@
             </identity>
             <payments>
                 <payments_brand_id>ExamplePayments</payments_brand_id>
+                <payments_paypal_brand_id>ExamplePayments</payments_paypal_brand_id>
+                <payments_creditcard_brand_id>ExamplePayments</payments_creditcard_brand_id>
+                <payments_cartebancaire_brand_id>ExamplePayments</payments_cartebancaire_brand_id>
+                <payments_sofort_brand_id>ExamplePayments</payments_sofort_brand_id>
             </payments>
         </integration>
         <payment>
