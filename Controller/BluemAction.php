@@ -78,9 +78,9 @@ class BluemAction extends Action
         $bluem_config->production_accessToken = $this->_dataHelper->getGeneralConfig('prod_token'); //"" ;         // The access token to communicate with BlueM, for the production environment.
 
         // What's your BrandID? Set at Bluem
-        $bluem_config->brandID = $this->_dataHelper->getIdentityConfig('identity_brand_id'); //"DRIdentity";
+        $bluem_config->brandID = $this->_dataHelper->getPaymentsConfig('payments_brand_id'); //"DRIdentity";
         // for now, use a single brandID
-        $bluem_config->IDINbrandID = $bluem_config->brandID;
+        $bluem_config->IDINbrandID = $this->_dataHelper->getIdentityConfig('identity_brand_id');
 
         $bluem_config->merchantReturnURLBase = $this->_baseURL;  // URL to return to after finishing the process
 

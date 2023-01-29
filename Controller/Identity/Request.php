@@ -95,6 +95,8 @@ class Request extends BluemAction
             $returnURL = $_GET['returnurl'];
         }
 
+        $this->_bluem->setConfig('brandID', $this->_dataHelper->getIdentityConfig('identity_brand_id'));
+
         $request = $this->_bluem->CreateIdentityRequest(
             $requestCategories,
             $description,

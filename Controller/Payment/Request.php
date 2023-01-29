@@ -38,7 +38,6 @@ class Request extends BluemAction
         $orderId = (int) $order->getEntityId();
         $orderIncrementId =  $order->getIncrementId();
 
-
         // :: Float
         $amount = $order->getGrandTotal();
         $currency = "EUR";
@@ -46,6 +45,7 @@ class Request extends BluemAction
         $userEmail = "";
         $userId = "";
         $userName = "";
+        
         if ($this->_customerSession->isLoggedIn()) {
             $userEmail = $this->_customerSession->getCustomer()->getEmail();
             $userName = $this->_customerSession->getCustomer()->getName();
@@ -123,6 +123,8 @@ class Request extends BluemAction
         }
 
         try {
+            $this->_bluem->setConfig('brandID', $this->_dataHelper->getPaymentsConfig('payments_brand_id'));
+
             $request = $this->_bluem->CreatePaymentRequest(
                 $description,
                 $debtorReference,
