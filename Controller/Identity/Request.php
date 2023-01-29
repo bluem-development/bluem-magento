@@ -76,7 +76,7 @@ class Request extends BluemAction
             'Payload' => json_encode($payload),
             'Status' => "created"
         ];
-
+        
         $request_db_id = parent::_createRequest(
             $request_data
         );
