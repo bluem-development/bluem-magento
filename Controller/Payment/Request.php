@@ -135,6 +135,8 @@ class Request extends BluemAction
                 $returnURL
             );
 
+            $request->setBrandId($this->_dataHelper->getPaymentsConfig('payments_brand_id'));
+
             $response = $this->_bluem->PerformRequest($request);
         } catch (Throwable $th) {
             $result = [

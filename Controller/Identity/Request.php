@@ -105,6 +105,8 @@ class Request extends BluemAction
             $responseURL
         );
 
+        $request->setBrandId($this->_dataHelper->getIdentityConfig('identity_brand_id'));
+
         $bluem_env = $this->_dataHelper->getGeneralConfig('environment');
         if ($bluem_env === "test") {
             $request->enableStatusGUI();
