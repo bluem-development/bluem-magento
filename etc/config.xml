@@ -45,6 +45,50 @@
                 <min_order_total>0</min_order_total>
                 <max_order_total>9999999</max_order_total>
             </epayment>
+            <epayment_paypal>
+                <active>0</active>
+                <model>Bluem\Integration\Model\EPaymentPayPal</model>
+                <order_status>pending</order_status>
+                <title>Bluem ePayment (PayPal)</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <sort_order>5</sort_order>
+                <min_order_total>0</min_order_total>
+                <max_order_total>9999999</max_order_total>
+            </epayment_paypal>
+            <epayment_creditcard>
+                <active>0</active>
+                <model>Bluem\Integration\Model\EPaymentCreditcard</model>
+                <order_status>pending</order_status>
+                <title>Bluem ePayment (Creditcard)</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <sort_order>5</sort_order>
+                <min_order_total>0</min_order_total>
+                <max_order_total>9999999</max_order_total>
+            </epayment_creditcard>
+            <epayment_cartebancaire>
+                <active>0</active>
+                <model>Bluem\Integration\Model\EPaymentCarteBancaire</model>
+                <order_status>pending</order_status>
+                <title>Bluem ePayment (Carte Bancaire)</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <sort_order>5</sort_order>
+                <min_order_total>0</min_order_total>
+                <max_order_total>9999999</max_order_total>
+            </epayment_cartebancaire>
+            <epayment_sofort>
+                <active>0</active>
+                <model>Bluem\Integration\Model\EPaymentSofort</model>
+                <order_status>pending</order_status>
+                <title>Bluem ePayment (SOFORT)</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <sort_order>5</sort_order>
+                <min_order_total>0</min_order_total>
+                <max_order_total>9999999</max_order_total>
+            </epayment_sofort>
         </payment>
     </default>
 </config>

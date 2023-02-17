@@ -13,5 +13,17 @@
         <method name="epayment">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
+        <method name="epayment_paypal">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="epayment_creditcard">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="epayment_cartebancaire">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="epayment_sofort">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
     </methods>
 </payment>

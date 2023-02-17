@@ -1,0 +1,18 @@
+<?php
+/* Based on  php-cuong/magento-offline-payments  */
+/**
+ * @var $block \Bluem\Integration\Block\Info\EPayment
+ */
+?>
+<div class="payment-method purchase order">
+    <div class="title"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></div>
+    <div class="content">
+        <!-- <strong><?= $block->escapeHtml(__('Assistant ID')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getData('assistant_id')) ?></span> -->
+
+
+        Informatie over je transactie volgt!
+
+        <?php var_dump($block->getPaymentRequestInfo()); ?>
+    </div>
+</div>
