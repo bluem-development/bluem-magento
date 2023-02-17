@@ -48,13 +48,21 @@ class SalesOrderPaymentBeforeSavedObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         return $this;
+
+        $payment_methods = [
+            'epayment',
+            'epayment-paypal',
+            'epayment-creditcard',
+            'epayment-cartebancaire',
+            'epayment-sofort'
+        ];
         
         $payment = $observer->getEvent()->getPayment();
         if (empty($payment)) {
             return $this;
         }
 
-        if ($payment->getMethod() != 'epayment') {
+        if (!in_array($payment->getMethod(), $payment_methods)) {
             return $this;
         }
 
