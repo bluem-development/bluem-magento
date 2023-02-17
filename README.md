@@ -182,7 +182,7 @@ docker compose -p "bluem-magento2-dev" up
 ```
 
 ## Shell access
-To access the Magento CLI, use the following command:
+To access the shell, use the following command:
 ```
 docker exec -it "bluem-magento2-dev" /bin/bash
 ```
@@ -204,7 +204,7 @@ To easily clear all cache and recompile after changes on module code, we've crea
 ```
 sh reload-application.sh -p bluem-magento2-dev
 ```
-'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
+* 'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
 
 # Developer notes
 
