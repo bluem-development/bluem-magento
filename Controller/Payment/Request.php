@@ -137,7 +137,7 @@ class Request extends BluemAction
 
             $request->setBrandId($this->_dataHelper->getPaymentsConfig('payments_brand_id'));
 
-            var_dump($this->_bluem->getConfig('brandID')); die;
+            //var_dump($this->_bluem->getConfig('brandID')); die;
 
             $response = $this->_bluem->PerformRequest($request);
         } catch (Throwable $th) {
