@@ -3,8 +3,6 @@ Bluem is an independent Dutch payment and identity specialist based in Amersfoor
 
 This Magento2 module is an integration that connects your website to Bluem's eMandate, ePayments and iDIN Identity services.
 
-
-
 Concretely, the module delivers:
 
 - A custom plug and play page allows logged-in users to perform an iDIN Identity request and store it within the user profile metadata for further usage in third-party modules or functions within your webshop. 
@@ -175,6 +173,38 @@ _Instructions on how to change the redirect after identification will follow soo
 # eMandates
 
 Will follow in a future release, as soon as Bluem clients have shown interest in integrating this into the Magento ecosystem.
+
+# Development environment
+To set up a dev-environment, we'll using Docker (docker.io) to run a project with containers to simulate a running Magento 2 instance locally. If you're not familiar with Docker, please read their documentation.
+To install and run the instance, run the following command from 'docker' folder:
+```
+docker compose -p "bluem-magento2-dev" up
+```
+
+## Shell access
+To access the Magento CLI, use the following command:
+```
+docker exec -it "bluem-magento2-dev" /bin/bash
+```
+
+## Magento installation directory
+Magento is installed in the following directory (root):
+```
+/bitnami/magento
+```
+
+## Running Magento commands
+To run Magento commands, use the following command:
+```
+docker exec -it "bluem-magento2-dev" /bin/bash php bin/magento list
+```
+
+## Clear cache, recompile
+To easily clear all cache and recompile after changes on module code, we've created a shell script. This is recommended after  Run the following code from 'docker' folder:
+```
+sh reload-application.sh -p bluem-magento2-dev
+```
+'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
 
 # Developer notes
 
