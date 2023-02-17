@@ -180,6 +180,7 @@ To install and run the instance, run the following command from 'docker' folder:
 ```
 docker compose -p "bluem-magento2-dev" up
 ```
+'bluem-magento2-dev' is the name of the Docker container, which will be used in the next sections.
 
 ## Shell access
 To access the shell, use the following command:
@@ -204,7 +205,7 @@ To easily clear all cache and recompile after changes on module code, we've crea
 ```
 sh reload-application.sh -p bluem-magento2-dev
 ```
-* 'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
+'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
 
 # Developer notes
 
