@@ -77,7 +77,7 @@ class Request extends BluemAction
             'currency'          => $currency
         ];
 
-        $request_db = $this->_getRequestByOrderId($orderIncrementId);
+        $request_db = $this->_getRequestByOrderId($orderId);
 
         // validate if item is already present in requests table
         if ($request_db === false) {
@@ -89,7 +89,7 @@ class Request extends BluemAction
                 'Type'              => "payment",
                 'Description'       => $description,
                 'DebtorReference'   => $debtorReference,
-                'OrderId'           => intval($orderIncrementId),
+                'OrderId'           => $orderId,
                 'Payload'           => json_encode($payload),
                 'Status'            => "created"
             ];
