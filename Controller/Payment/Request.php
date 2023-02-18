@@ -89,7 +89,7 @@ class Request extends BluemAction
                 'Type'              => "payment",
                 'Description'       => $description,
                 'DebtorReference'   => $debtorReference,
-                'OrderId'           => $orderIncrementId,
+                'OrderId'           => intval($orderIncrementId),
                 'Payload'           => json_encode($payload),
                 'Status'            => "created"
             ];
