@@ -1,10 +1,9 @@
-#
-# See GitHub package: https://github.com/bitnami/containers/tree/main/bitnami/magento#how-to-use-this-image
-#
 version: '2'
 services:
   mariadb:
     image: docker.io/bitnami/mariadb:10.4
+    ports:
+      - "3306:3306"
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
@@ -12,6 +11,13 @@ services:
       - MARIADB_DATABASE=bitnami_magento
     volumes:
       - 'mariadb_data:/bitnami/mariadb'
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    # restart: always
+    ports:
+      - "8580:80"
+    links:
+      - mariadb
   magento:
     image: docker.io/bitnami/magento:2
     ports:
@@ -19,16 +25,16 @@ services:
       - '443:8443'
     environment:
       - MAGENTO_HOST=localhost
-      - MAGENTO_USERNAME=bluem
-      - MAGENTO_PASSWORD=bluem
       - MAGENTO_DATABASE_HOST=mariadb
       - MAGENTO_DATABASE_PORT_NUMBER=3306
       - MAGENTO_DATABASE_USER=bn_magento
       - MAGENTO_DATABASE_NAME=bitnami_magento
+      #- MAGENTO_USERNAME=bluem
+      #- MAGENTO_PASSWORD=bluem
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT_NUMBER=9200
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=no
+      - ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - 'magento_data:/bitnami/magento'
     depends_on:
