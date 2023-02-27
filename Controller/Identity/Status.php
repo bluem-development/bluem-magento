@@ -21,8 +21,6 @@ class Status extends BluemAction
 {
     public function execute()
     {
-        
-
         return $this->_pageFactory->create();
     }
 }
