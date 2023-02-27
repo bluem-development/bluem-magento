@@ -38,6 +38,9 @@ docker exec -it $parameterP php bitnami/magento/bin/magento setup:di:compile
 echo "Do Magento static deployment..";
 docker exec -it $parameterP php bitnami/magento/bin/magento setup:static-content:deploy -f
 
+echo "Clean Magento cache..";
+docker exec -it $parameterP php bitnami/magento/bin/magento cache:clean
+
 echo "Flush Magento cache..";
 docker exec -it $parameterP php bitnami/magento/bin/magento cache:flush
 
