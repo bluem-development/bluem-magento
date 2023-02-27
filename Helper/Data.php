@@ -114,6 +114,8 @@ class Data extends AbstractHelper
         $requestURL = "{$this->_baseURL}bluem/identity/request?goto=shop";
         
         $report = "";
+
+        error_log($identity_scenario);
         
         /**
          * Require any identity check?
@@ -232,6 +234,8 @@ class Data extends AbstractHelper
             $identity_checked = $this->_customerSession->isLoggedIn() ? 
                 $this->getBluemUserIdentified() : 
                 $this->getBluemGuestIdentified();
+
+            error_log($identity_checked);
             
             if ($identity_checked->status === true) {
                 $valid = true;
