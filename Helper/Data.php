@@ -224,6 +224,21 @@ class Data extends AbstractHelper
                 }
             }
         }
+        else
+        {
+            /**
+             * No verification required. But check the status.
+             */
+            $identity_checked = $this->_customerSession->isLoggedIn() ? 
+                $this->getBluemUserIdentified() : 
+                $this->getBluemGuestIdentified();
+            
+            if ($identity_checked->status === true) {
+                $valid = true;
+                
+                $report = $identity_checked->report;
+            }
+        }
 
         if (!$valid) {
             $explanation_html = "<br><small><a href='{$this->_baseURL}bluem/identity/information' target='_blank' title='Learn more about iDIN - identity validation'>What is this?</a></small>";
