@@ -17,90 +17,88 @@ define([
     // validator,
     // checkoutData,
     // customer
-    ) {
-        'use strict';
-        return Component.extend({
-            defaults: {
-                template: 'Bluem_Integration/payment/epayment-form',
-                assistantId: ''
-            },
-
-            /** @inheritdoc */
-            initObservable: function () {
-                this._super()
-                .observe('assistantId');
-
-                return this;
-            },
-
-            /**
-            * @return {Object}
-            */
-            getData: function () {
-                return {
-                    method: this.item.method,
-                    'additional_data': {
-                        'assistant_id': typeof this.assistantId() !== "undefined" ? this.assistantId() : ""
-                    }
-                };
-            },
-
-            /**
-            * @return {jQuery}
-            */
-            validate: function () {
-                var form = 'form[data-role=epayment-form]';
-
-                return $(form).validation() && $(form).validation('isValid');
-            },
-            placeOrder: function (data, event) {
-                var self = this;
-
-                if (event) {
-                    event.preventDefault();
-                }
-
-                if (this.validate() && additionalValidators.validate()) {
-                    this.isPlaceOrderActionAllowed(false);
-
-                    this.getPlaceOrderDeferredObject()
-                        .fail(function () {
-                            console.log("Failed placing order")
-                                self.isPlaceOrderActionAllowed(true);
-                            }).done(function () {
-                                console.log("Succeeded in placing order")
-                                $.ajax({
-                                    url: urlBuilder.build('bluem/payment/request'),
-                                    data: {},
-                                    dataType: 'json',
-                                    type: 'POST'
-                                }).done(function (response) {
-                                    console.log("Successful AJAX response")
-                                    console.log(response)
-                                    if (!response.error) {
-                                        window.location.replace(response.payment_url);
-                                    } else {
-                                        redirectOnSuccessAction.execute();
-                                    }
-                                }).fail(function (response) {
-                                    console.log("Failed AJAX")
-                                    console.log(response);
-                                    redirectOnSuccessAction.execute();
-                                });
-                                console.log("Done here.")
-                                self.afterPlaceOrder();
-                            }
-                        );
-                    return true;
-                }
-
-                return false;
-            }
-        });
-    });
- 
+) {
+    'use strict';
     
+    return Component.extend({
+        defaults: {
+            template: 'Bluem_Integration/payment/epayment-form',
+            assistantId: ''
+        },
 
+        /** @inheritdoc */
+        initObservable: function () {
+            this._super()
+            .observe('assistantId');
+
+            return this;
+        },
+
+        /**
+        * @return {Object}
+        */
+        getData: function () {
+            return {
+                method: this.item.method,
+                'additional_data': {
+                    'assistant_id': typeof this.assistantId() !== "undefined" ? this.assistantId() : ""
+                }
+            };
+        },
+
+        /**
+        * @return {jQuery}
+        */
+        validate: function () {
+            var form = 'form[data-role=epayment-form]';
+
+            return $(form).validation() && $(form).validation('isValid');
+        },
+        placeOrder: function (data, event) {
+            var self = this;
+
+            if (event) {
+                event.preventDefault();
+            }
+
+            if (this.validate() && additionalValidators.validate()) {
+                this.isPlaceOrderActionAllowed(false);
+
+                this.getPlaceOrderDeferredObject()
+                    .fail(function () {
+                        console.log("Failed placing order")
+                        self.isPlaceOrderActionAllowed(true);
+                    })
+                    .done(function () {
+                        console.log("Succeeded in placing order")
+                        $.ajax({
+                            url: urlBuilder.build('bluem/payment/request'),
+                            data: {},
+                            dataType: 'json',
+                            type: 'POST'
+                        }).done(function (response) {
+                            console.log("Successful AJAX response")
+                            console.log(response)
+                            if (!response.error) {
+                                window.location.replace(response.payment_url);
+                            } else {
+                                redirectOnSuccessAction.execute();
+                            }
+                        }).fail(function (response) {
+                            console.log("Failed AJAX")
+                            console.log(response);
+                            redirectOnSuccessAction.execute();
+                        });
+                        console.log("Done here.")
+                        self.afterPlaceOrder();
+                    }
+                );
+                return true;
+            }
+            return false;
+        }
+    });
+});
 
 /* PLACE ORDER SEMI WORKING */
 /*
