@@ -51,10 +51,10 @@ class SalesOrderPaymentBeforeSavedObserver implements ObserverInterface
 
         $payment_methods = [
             'epayment',
-            'epayment-paypal',
-            'epayment-creditcard',
-            'epayment-cartebancaire',
-            'epayment-sofort'
+            'epayment_paypal',
+            'epayment_creditcard',
+            'epayment_cartebancaire',
+            'epayment_sofort'
         ];
         
         $payment = $observer->getEvent()->getPayment();
