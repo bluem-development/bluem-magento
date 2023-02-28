@@ -9,6 +9,22 @@ define([
         {
             type: 'epayment',
             component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+        },
+        {
+            type: 'epayment_paypal',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+        },
+        {
+            type: 'epayment_creditcard',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+        },
+        {
+            type: 'epayment_cartebancaire',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+        },
+        {
+            type: 'epayment_sofort',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
         }
     );
 
