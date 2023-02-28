@@ -182,7 +182,7 @@ class BluemAction extends Action
         }
 
         $data['Environment'] = $this->_bluem_environment;
-        error_log($data);
+        var_dump($data); die;
         $request = $this->_setRequestData($request, $data);
         return $request->getRequestId();
     }
