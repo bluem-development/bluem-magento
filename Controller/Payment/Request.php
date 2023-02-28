@@ -55,8 +55,6 @@ class Request extends BluemAction
             $description = "Order {$orderIncrementId} (klantnummer {$userId})";
             // client reference/number
             $debtorReference = "{$orderId}";
-
-        
         } else {
             // guest order
             $description = "Order {$orderIncrementId} (gastbestelling)"; 
