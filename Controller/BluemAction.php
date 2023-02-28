@@ -181,6 +181,8 @@ class BluemAction extends Action
             $data['UserId'] = str_replace('.', '', $ip);
         }
 
+        $data['UserId'] = '123456';
+
         $data['Environment'] = $this->_bluem_environment;
         $request = $this->_setRequestData($request, $data);
         return $request->getRequestId();
