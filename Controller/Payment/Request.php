@@ -150,6 +150,8 @@ class Request extends BluemAction
             exit;
         }
 
+        exit;
+
         if ($response->ReceivedResponse()) {
             $transactionURL ="";
 
