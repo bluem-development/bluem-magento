@@ -178,7 +178,7 @@ class BluemAction extends Action
             
             $remote = ObjectManager::getInstance()->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
             $ip = $remote->getRemoteAddress();
-            $data['OrderId'] = str_replace('.', '', $ip);
+            $data['UserId'] = str_replace('.', '', $ip);
         }
 
         $data['Environment'] = $this->_bluem_environment;
