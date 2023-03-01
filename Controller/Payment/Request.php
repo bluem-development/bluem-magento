@@ -40,8 +40,6 @@ class Request extends BluemAction
         $payment = $order->getPayment();
         $method = $payment->getMethodInstance()->getCode();
 
-        var_dump($method); die;
-
         // :: Float
         $amount = $order->getGrandTotal();
         $currency = "EUR";
@@ -76,7 +74,8 @@ class Request extends BluemAction
             'order_increment_id'=> $orderIncrementId,
             'amount'            => $amount,
             'return_url'        => $returnURL,
-            'currency'          => $currency
+            'currency'          => $currency,
+            'method'            => $method,
         ];
 
         $request_db = $this->_getRequestByOrderId($orderId);
