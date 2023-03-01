@@ -38,7 +38,7 @@ class Request extends BluemAction
         $orderId = (int) $order->getEntityId();
         $orderIncrementId =  $order->getIncrementId();
         $payment = $order->getPayment();
-        $method = $payment->getMethod();
+        $method = $payment->getMethodInstance()->getCode();
 
         var_dump($method);
 
