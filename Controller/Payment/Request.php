@@ -40,7 +40,7 @@ class Request extends BluemAction
         $payment = $order->getPayment();
         $method = $payment->getMethodInstance()->getCode();
 
-        var_dump($payment);
+        var_dump($method);
 
         // :: Float
         $amount = $order->getGrandTotal();
