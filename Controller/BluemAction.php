@@ -131,8 +131,9 @@ class BluemAction extends Action
     {
         $request = $this->_objectManager->create('Bluem\Integration\Model\Request');
 
-        // validating input data
         $data = [];
+
+        // Validating input data
         if (!empty($request_obj['Type'])) {
             $data['Type'] = $request_obj['Type'];
         }
@@ -180,8 +181,6 @@ class BluemAction extends Action
             $ip = $remote->getRemoteAddress();
             $data['UserId'] = str_replace('.', '', $ip);
         }
-
-        $data['UserId'] = '123456';
 
         $data['Environment'] = $this->_bluem_environment;
         $request = $this->_setRequestData($request, $data);
