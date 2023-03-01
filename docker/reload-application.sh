@@ -50,4 +50,7 @@ docker exec -it $parameterP php bitnami/magento/bin/magento indexer:reindex
 echo "Changing directory permissions..";
 docker exec -it $parameterP chmod -R 0777 bitnami/magento/var/ bitnami/magento/pub/ bitnami/magento/generated/
 
+echo "Restarting Docker container..";
+docker restart $parameterP
+
 echo "Done with all tasks!";
