@@ -124,7 +124,19 @@ class Request extends BluemAction
         }
 
         try {
-            $this->_bluem->setConfig('brandID', $this->_dataHelper->getPaymentsConfig('payments_brand_id'));
+            $payment_brand_id = 'payments_brand_id';
+
+            if ($method === 'epayment_paypal') {
+                $payment_brand_id = 'payments_paypal_brand_id';
+            } elseif ($method === 'epayment_creditcard') {
+                $payment_brand_id = 'payments_creditcard_brand_id';
+            } elseif ($method === 'epayment_cartebancaire') {
+                $payment_brand_id = 'payments_cartebancaire_brand_id';
+            } elseif ($method === 'epayment_sofort') {
+                $payment_brand_id = 'payments_sofort_brand_id';
+            }
+
+            $this->_bluem->setConfig('brandID', $this->_dataHelper->getPaymentsConfig($payment_brand_id));
 
             $request = $this->_bluem->CreatePaymentRequest(
                 $description,
@@ -136,7 +148,7 @@ class Request extends BluemAction
                 $returnURL
             );
 
-            $request->setBrandId($this->_dataHelper->getPaymentsConfig('payments_brand_id'));
+            $request->setBrandId($this->_dataHelper->getPaymentsConfig($payment_brand_id));
 
             //var_dump($this->_bluem->getConfig('brandID')); die;
 
