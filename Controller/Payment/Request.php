@@ -37,6 +37,10 @@ class Request extends BluemAction
         $order = $checkout_session->getLastRealOrder();
         $orderId = (int) $order->getEntityId();
         $orderIncrementId =  $order->getIncrementId();
+        $payment = $order->getPayment();
+        $method = $payment->getMethod();
+
+        var_dump($method);
 
         // :: Float
         $amount = $order->getGrandTotal();
