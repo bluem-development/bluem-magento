@@ -1,4 +1,5 @@
 ![Bluem](https://bluem.nl/img/BluemAboutIcon.svg)
+
 Bluem is an independent Dutch payment and identity specialist based in Amersfoort and Sofia, which has developed its viamijnbank cloud platform for handling online payments, mandates, identification services, digital signatures and IBAN name checks. Companies send high volumes of payment requests through our software, bills are paid faster, and direct debit mandates are issued digitally.
 
 This Magento2 module is an integration that connects your website to Bluem's eMandate, ePayments and iDIN Identity services.
