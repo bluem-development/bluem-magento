@@ -178,9 +178,9 @@ Will follow in a future release, as soon as Bluem clients have shown interest in
 To set up a dev-environment, we'll using Docker (docker.io) to run a project with containers to simulate a running Magento 2 instance locally. If you're not familiar with Docker, please read their documentation.
 To install and run the instance, run the following command from 'docker' folder:
 ```
-docker compose -p "bluem-magento2-dev" up
+docker-compose up
 ```
-'bluem-magento2-dev' is the name of the Docker container, which will be used in the next sections.
+'bluem-magento2-dev' is the name of the Docker container, which will be used in the next sections. Usely this is the name of the directory.
 
 ## Shell access
 To access the shell, use the following command:
@@ -205,7 +205,7 @@ To easily clear all cache and recompile after changes on module code, we've crea
 ```
 sh reload-application.sh -p bluem-magento2-dev
 ```
-'bluem-magento2-dev' is the name of the Docker container, which is previously defined during install in above section.
+'bluem-magento2-dev' is the name of the Docker container.
 
 # Developer notes
 
@@ -233,6 +233,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
+0.7.1   Magento v2.4.5 and PHP8+ support. Added additional payment methods
 0.6.0   Improvements, identification service as step during checkout, account verification
 0.5.12  Fixing composer dependency issues
 0.5.11  Fixing composer dependency issues
