@@ -222,7 +222,6 @@ class Display extends Template
                             }
                             $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>" . print_r($pl_obj, true) . "</pre>";
                         }
-                        
                     } elseif ($k == "transaction_url") {
                         $html .= "<a href='$v' target='_blank' 
                         class='action secondary'>Open URL</a>";
