@@ -204,7 +204,7 @@ class Display extends Template
                 $html.= "<tr>";
                 // $html.= "<td>";
                 // var_dump($request->getData());
-                foreach ($request->getData() as $k=>$v) {
+                foreach ($request->getData() as $k => $v) {
                     //{$k}<br>
                     if ($k == "type") {
                         continue;
@@ -215,14 +215,14 @@ class Display extends Template
                         $html .= "<a href='{$url}' target='_self'>{$v}</a>";
                     } elseif ($k == "payload") {
                         $v_obj = json_decode($v);
-                        $pl_obj = new RequestPayload();
-                        foreach ($v_obj as $kk=>$vv) {
-                            $pl_obj->$kk = $vv;
+                        if ($v_obj !== null) {
+                            $pl_obj = new RequestPayload();
+                            foreach ($v_obj as $kk => $vv) {
+                                $pl_obj->$kk = $vv;
+                            }
+                            $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>" . print_r($pl_obj, true) . "</pre>";
                         }
-                        $html .= "<pre style='font-size:8pt; max-height:200px; 
-                        overflow-y:auto; width:400px;'>";
-                        $html.=print_r($pl_obj, true);
-                        $html.=" </pre>" ;
+                        
                     } elseif ($k == "transaction_url") {
                         $html .= "<a href='$v' target='_blank' 
                         class='action secondary'>Open URL</a>";
