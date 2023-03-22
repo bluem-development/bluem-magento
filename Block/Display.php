@@ -175,11 +175,9 @@ class Display extends Template
                 }
             }
 
-            $html.= "<div style='width:100%; height:auto;
-        padding:10pt; overflow-y: auto;
-        overflow-x:hidden; margin-top:10pt;
-        margin-bottom:10pt;'>
-        <table class='data-grid'>";
+            $html.= "
+            <div style='width:100%; height:auto; overflow-y: auto; margin-top:40px; margin-bottom:10pt;'>
+            <table class='data-grid'>";
             $html.= "<thead><tr>";
             foreach ($headers as $h) {
                 if ($h == "type") {
@@ -202,7 +200,6 @@ class Display extends Template
                     continue;
                 }
                 $html.= "<tr>";
-                // $html.= "<td>";
                 // var_dump($request->getData());
                 foreach ($request->getData() as $k => $v) {
                     //{$k}<br>
@@ -235,7 +232,8 @@ class Display extends Template
                 $html.= "</tr>";
             }
             $html.=" </tbody>";
-            $html.= "</table></div>";
+            $html.= "</table>
+            </div>";
             return $html;
         }
         return "<p>No requests yet.</p>";
