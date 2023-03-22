@@ -48,6 +48,27 @@ class Display extends Template
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
     }
 
+    /**
+     * Get the plugin version from the composer.json file.
+     *
+     * @return string
+     */
+    protected function getPluginVersion()
+    {
+        $composerFile = $this->moduleDirReader->getModuleDir('', '<Vendor>_<Plugin>') . '/composer.json';
+
+        if (!file_exists($composerFile)) {
+            return 'Unknown';
+        }
+
+        $composerData = json_decode(file_get_contents($composerFile), true);
+        if (isset($composerData['version'])) {
+            return $composerData['version'];
+        } else {
+            return 'Unknown';
+        }
+    }
+
     public function getBluemRequests()
     {
         $requestModel = ObjectManager::getInstance()->create('Bluem\Integration\Model\Request');
@@ -190,7 +211,7 @@ class Display extends Template
                         $h
                     )
                 );
-                $html.="<th style='text-align:center'>$hs</th>";
+                $html.="<th style='text-align:center; white-space: nowrap; padding: 10px;'>$hs</th>";
             }
             $html.= "</thead><tbody>";
 
