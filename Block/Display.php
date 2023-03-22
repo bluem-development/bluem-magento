@@ -214,13 +214,15 @@ class Display extends Template
                         $url = $this->getUrl('sales/order/view', ['order_id' => $v]);
                         $html .= "<a href='{$url}' target='_self'>{$v}</a>";
                     } elseif ($k == "payload") {
-                        $v_obj = json_decode($v);
-                        if ($v_obj !== null) {
-                            $pl_obj = new RequestPayload();
-                            foreach ($v_obj as $kk => $vv) {
-                                $pl_obj->$kk = $vv;
+                        if (!empty($v)) {
+                            $v_obj = json_decode($v);
+                            if ($v_obj !== null) {
+                                $pl_obj = new RequestPayload();
+                                foreach ($v_obj as $kk => $vv) {
+                                    $pl_obj->$kk = $vv;
+                                }
+                                $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>" . print_r($pl_obj, true) . "</pre>";
                             }
-                            $html .= "<pre style='font-size:8pt; max-height:200px; overflow-y:auto; width:400px;'>" . print_r($pl_obj, true) . "</pre>";
                         }
                     } elseif ($k == "transaction_url") {
                         $html .= "<a href='$v' target='_blank' 
