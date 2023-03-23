@@ -234,7 +234,9 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
-0.7.1   Magento v2.4.5 and PHP8+ support. Added additional payment methods
+0.7.2   Some bugfixes and code improvement
+0.7.1   Some bugfixes and code improvement
+0.7.0   Magento v2.4.5 and PHP8+ support. Added additional payment methods
 0.6.0   Improvements, identification service as step during checkout, account verification
 0.5.12  Fixing composer dependency issues
 0.5.11  Fixing composer dependency issues
