@@ -21,7 +21,7 @@ If you have any questions related to your account or your credentials, please re
 
 ## Requirements
 
-- Magento2.* (tested on v2.4.5)
+- Magento2.* (tested on v2.4.6)
 
 ## License
 
