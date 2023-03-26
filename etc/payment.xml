@@ -10,6 +10,9 @@
         </group>
     </groups>
     <methods>
+        <method name="emandate">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
         <method name="epayment">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
@@ -23,9 +26,6 @@
             <allow_multiple_address>1</allow_multiple_address>
         </method>
         <method name="epayment_sofort">
-            <allow_multiple_address>1</allow_multiple_address>
-        </method>
-        <method name="emandate">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
     </methods>
