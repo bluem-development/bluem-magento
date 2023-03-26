@@ -5,13 +5,14 @@
  */
 $methodCode = $block->escapeHtml($block->getMethodCode());
 ?>
-<fieldset class="fieldset items <?= /* @noEscape */ $methodCode ?>" id="payment_form_<?= /* @noEscape */ $methodCode ?>" style="display: none">
+<fieldset class="fieldset items <?= /* @noEscape */ $methodCode ?>" id="payment_form_<?= /* @noEscape */ $methodCode ?>">
     <div class="field number required">
-        <label for="assistant_id" class="label"><span><?= $block->escapeHtml(__('Assistant ID')) ?></span></label>
+        <label for="issuer" class="label"><span><?= $block->escapeHtml(__('Selecteer een bank')) ?></span></label>
         <div class="control">
-            <input type="text" id="assistant_id" name="payment[additional_data][assistant_id]" title="<?= $block->escapeHtml(__('Assistant ID')) ?>"
-                   class="input-text required-entry"
-                   value="<?php echo "1";// $block->escapeHtml($block->getInfoData('additional_data')['assistant_id']) ?>" />
+            <select id="issuer" name="payment[additional_data][issuer]" class="input-select">
+                <option value="RABO">Rabobank (test)</option>
+                <option value="INGB">ING Bank (test)</option>
+            </select>
         </div>
     </div>
 </fieldset>
