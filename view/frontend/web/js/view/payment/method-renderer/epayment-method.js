@@ -54,6 +54,7 @@ define([
 
             return $(form).validation() && $(form).validation('isValid');
         },
+        
         placeOrder: function (data, event) {
             var self = this;
 
