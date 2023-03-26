@@ -34,6 +34,17 @@
             </payments>
         </integration>
         <payment>
+            <emandate>
+                <active>0</active>
+                <model>Bluem\Integration\Model\EMandate</model>
+                <order_status>pending</order_status>
+                <title>Bluem eMandate</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <sort_order>5</sort_order>
+                <min_order_total>0</min_order_total>
+                <max_order_total>9999999</max_order_total>
+            </emandate>
             <epayment>
                 <active>0</active>
                 <model>Bluem\Integration\Model\EPayment</model>

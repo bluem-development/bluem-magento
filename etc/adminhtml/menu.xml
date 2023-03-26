@@ -24,6 +24,14 @@
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
+        <add id="Bluem_Integration::menu_item3"
+            title="Mandates"
+            module="Bluem_Integration"
+            sortOrder="12"
+            action="bluemadmin/mandates/index"
+            resource="Bluem_Integration::menu_item"
+            parent="Bluem_Integration::menu"
+           />
         <add id="Bluem_Integration::settings"
             title="Configure Account &amp; Identity"
             module="Bluem_Integration"

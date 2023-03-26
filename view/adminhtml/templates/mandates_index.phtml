@@ -1,0 +1,17 @@
+<p>
+Here you can see all the important data surrounding eMandates (iDeal). 
+Also make sure the module is configured properly.
+<p>
+Refer to the readme at module for detailed instructions. If you have any questions or problems, contact the developers at <a 
+href="mailto:pluginsupport@bluem.nl?subject=Magento" target="_blank">pluginsupport@bluem.nl</a>.</p>
+<br>
+
+<h3>
+EMandate Requests Overview
+</h3>
+<p>Below you see the details of all emandates performed so far. 
+The Payload column contains more information about the request.
+</p>
+<?php
+echo $block->getRequestsTableHTML('emandate');
+?>
