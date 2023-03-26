@@ -40,7 +40,7 @@
             </group>
             
             <group id="identity" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>eIdentity</label>
+                <label>eIdentity configuration</label>
 
                 <field id="identity_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Identity Brand ID</label>
@@ -151,7 +151,7 @@
             </group>
 
             <group id="mandate" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>eMandate</label>
+                <label>eMandate configuration</label>
 
                 <field
                     id="mandate_brand_id"
@@ -284,7 +284,7 @@
             </group>
             
             <group id="payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>ePayments</label>
+                <label>ePayments configuration</label>
 
                 <field id="payments_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>iDEAL Brand ID</label>
