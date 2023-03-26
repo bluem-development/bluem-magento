@@ -7,6 +7,10 @@ define([
 
     rendererList.push(
         {
+            type: 'emandate',
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+        },
+        {
             type: 'epayment',
             component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
         },
