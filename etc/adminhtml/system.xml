@@ -149,6 +149,134 @@
                     <comment>This will be shown on the page where visitors or users are redirected when they click on "What is this?" or when they visit your site<code>/bluem/identity/information</code></comment>
                 </field>
             </group>
+
+            <group id="mandate" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Mandate</label>
+
+                <field
+                    id="mandate_brand_id"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Brand ID</label>
+                    <comment>Fill in the Brand ID which is provided by Bluem for the eMandate service. It usually contains your company name and "Mandate".</comment>
+                </field>
+
+                <field
+                    id="mandate_merchant_id"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Incassant MerchantID</label>
+                    <comment>The merchantID, which can be found on the contract you have with the bank for receiving direct debit mandates. This is essential: without this information, a customer will not be able to close an authorization for production.</comment>
+                </field>
+
+                <field
+                    id="mandate_merchant_subid"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Merchant SubID</label>
+                    <comment>You probably don't need to change this.</comment>
+                </field>
+
+                <field
+                    id="mandate_reason"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Reason for Authorization</label>
+                    <comment>A concise description of direct debit displayed upon issue.</comment>
+                </field>
+
+                <field
+                    id="mandate_type"
+                    translate="label"
+                    type="select"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Type of direct debit mandate issue</label>
+                    <source_model>Bluem\Integration\Model\Config\Source\MandateIssueType</source_model>
+                    <comment>Choose type of direct debit mandate. If you have any questions about this, please contact Bluem.</comment>
+                </field>
+
+                <field
+                    id="mandate_request_type"
+                    translate="label"
+                    type="select"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Type of request</label>
+                    <source_model>Bluem\Integration\Model\Config\Source\MandateRequestType</source_model>
+                    <comment>Choose type of direct debit mandate. If you have any questions about this, please contact Bluem.</comment>
+                </field>
+
+                <field
+                    id="mandate_sequence_type"
+                    translate="label"
+                    type="select"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Type of direct debit sequence</label>
+                    <source_model>Bluem\Integration\Model\Config\Source\MandateSequenceType</source_model>
+                    <comment>Choose type of direct debit sequence. If you have any questions about this, please contact Bluem.</comment>
+                </field>
+
+                <field
+                    id="mandate_start_ids"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Starting number mandate IDs</label>
+                    <comment>What number do you currently want to number your mandate to? This number is then automatically incremented.</comment>
+                </field>
+
+                <field
+                    id="mandate_check_max_order_value"
+                    translate="label"
+                    type="select"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Check for maximum order value for direct debit mandates</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Do you want a check to be carried out for business direct debit mandates on the maximum value of the direct debit, if a limited amount direct debit mandate has been issued? Then set this data to 'check'. An error message is then given if a customer places an order with an allowed amount that is lower than the order amount (multiplied by the next item, the factor). If the authorization is unlimited or otherwise larger than the order amount, the authorization will be accepted.</comment>
+                </field>
+
+                <field
+                    id="mandate_order_factor"
+                    translate="label"
+                    type="text"
+                    sortOrder="50"
+                    showInDefault="1"
+                    showInWebsite="0"
+                    showInStore="0">
+                    <label>Which factor of the order may be the maximum order amount?</label>
+                    <comment>Als er een max amount wordt meegestuurd, wat is dan het maximale bedrag wat wordt toegestaan? Gebaseerd op de order grootte.</comment>
+                </field>
+            </group>
             
             <group id="payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Payments</label>
