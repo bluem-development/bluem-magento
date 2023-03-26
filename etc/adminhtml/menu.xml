@@ -9,7 +9,7 @@
             resource="Magento_Backend::content"
            />
         <add id="Bluem_Integration::menu_item"
-            title="Identity Requests"
+            title="Identity requests"
             module="Bluem_Integration"
             sortOrder="10"
             action="bluemadmin/identity/index"
@@ -17,7 +17,7 @@
             parent="Bluem_Integration::menu"
            />
         <add id="Bluem_Integration::menu_item2"
-            title="Payments"
+            title="Payments requests"
             module="Bluem_Integration"
             sortOrder="11"
             action="bluemadmin/payments/index"
@@ -25,7 +25,7 @@
             parent="Bluem_Integration::menu"
            />
         <add id="Bluem_Integration::menu_item3"
-            title="Mandates"
+            title="Mandates requests"
             module="Bluem_Integration"
             sortOrder="12"
             action="bluemadmin/mandates/index"
@@ -33,7 +33,7 @@
             parent="Bluem_Integration::menu"
            />
         <add id="Bluem_Integration::settings"
-            title="Configure Account &amp; Identity"
+            title="Configure settings"
             module="Bluem_Integration"
             sortOrder="30"
             action="adminhtml/system_config/edit/section/integration"
@@ -41,7 +41,7 @@
             parent="Bluem_Integration::menu"
         />
         <add id="Bluem_Integration::configuration"
-            title="Configure Payments"
+            title="Configure payments"
             module="Bluem_Integration"
             sortOrder="10"
             action="adminhtml/system_config/edit/section/payment"
