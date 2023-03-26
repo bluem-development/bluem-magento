@@ -10,7 +10,7 @@
             <tab>bluem</tab>
             <resource>Bluem_Integration::integration_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Account Configuration</label>
+                <label>Account configuration</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable the Bluem module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -40,7 +40,7 @@
             </group>
             
             <group id="identity" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Identity</label>
+                <label>eIdentity</label>
 
                 <field id="identity_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Identity Brand ID</label>
@@ -151,7 +151,7 @@
             </group>
 
             <group id="mandate" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Mandate</label>
+                <label>eMandate</label>
 
                 <field
                     id="mandate_brand_id"
@@ -181,6 +181,7 @@
                     id="mandate_merchant_subid"
                     translate="label"
                     type="text"
+                    default="0"
                     sortOrder="50"
                     showInDefault="1"
                     showInWebsite="0"
@@ -193,6 +194,7 @@
                     id="mandate_reason"
                     translate="label"
                     type="text"
+                    default="Incasso machtiging"
                     sortOrder="50"
                     showInDefault="1"
                     showInWebsite="0"
@@ -244,6 +246,7 @@
                     id="mandate_start_ids"
                     translate="label"
                     type="text"
+                    default="1"
                     sortOrder="50"
                     showInDefault="1"
                     showInWebsite="0"
@@ -256,6 +259,7 @@
                     id="mandate_check_max_order_value"
                     translate="label"
                     type="select"
+                    default="1"
                     sortOrder="50"
                     showInDefault="1"
                     showInWebsite="0"
@@ -269,6 +273,7 @@
                     id="mandate_order_factor"
                     translate="label"
                     type="text"
+                    default="1,00"
                     sortOrder="50"
                     showInDefault="1"
                     showInWebsite="0"
@@ -279,7 +284,7 @@
             </group>
             
             <group id="payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Payments</label>
+                <label>ePayments</label>
 
                 <field id="payments_brand_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>iDEAL Brand ID</label>
