@@ -19,11 +19,13 @@
         <div class="payment-description">
             <span data-bind="i18n: 'Betaal gemakkelijk via Bluem.'" class="intro"></span>
         </div>
+
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+
         <div class="carts-list">
             <span><img data-bind="attr: {src: require.toUrl('Bluem_Integration/images/bluem.png'), alt: $t('Bluem'), title: $t('Bluem')}" class="bluem-logo" style="max-height:64px;" /></span>  
         </div>
@@ -31,28 +33,25 @@
         <form id="epayment-form" class="form form-epayment" data-role="epayment-form">
             <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
                 <div class="field field-number required">
-                    <label for="assistant_id" class="label" style='display:none;'>
-                        <span><!-- ko i18n: 'Assistant ID'--><!-- /ko --></span>
+                    <label for="issuer" class="label">
+                        <span><!-- ko i18n: 'Select a bank'--><!-- /ko --></span>
                     </label>
                     <div class="control">
-                        <input type="hidden"
-                               id="assistant_id"
-                               name="assistant_id"
-                               data-validate="{required:true}"
-                               data-bind='
-                                attr: {title: $t("Assistant ID"), maxlength: 10},
-                                value: assistantId'
-                               class="input-text"
-                               value='1' />
+                        <select id="issuer" name="issuer" class="input-select">
+                            <option value="RABO">Rabobank (test)</option>
+                            <option value="INGB">ING Bank (test)</option>
+                        </select>
                     </div>
                 </div>
             </fieldset>
         </form>
+
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+        
         <div class="actions-toolbar" id="review-buttons-container">
             <div class="primary">
                 <button class="action primary checkout"
