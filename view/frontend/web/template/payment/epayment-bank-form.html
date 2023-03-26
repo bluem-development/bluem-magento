@@ -31,7 +31,7 @@
         </div>
 
         <form id="epayment-form" class="form form-epayment" data-role="epayment-form">
-            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}' style="display: none;">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
                 <div class="field field-number required">
                     <label for="issuer" class="label">
                         <span><!-- ko i18n: 'Select a bank'--><!-- /ko --></span>
@@ -51,7 +51,7 @@
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-
+        
         <div class="actions-toolbar" id="review-buttons-container">
             <div class="primary">
                 <button class="action primary checkout"
