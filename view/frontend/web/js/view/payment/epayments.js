@@ -12,7 +12,7 @@ define([
         },
         {
             type: 'epayment',
-            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-method'
+            component: 'Bluem_Integration/js/view/payment/method-renderer/epayment-bank-method'
         },
         {
             type: 'epayment_paypal',
