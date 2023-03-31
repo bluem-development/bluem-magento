@@ -47,6 +47,16 @@ class Request extends BluemAction
         $userEmail = "";
         $userId = "";
         $userName = "";
+
+        // Check for recurring mode
+        if ($this->_bluem->getConfig('sequenceType') === 'RCUR')
+        {
+            //
+        }
+        else
+        {
+            //
+        }
         
         if ($this->_customerSession->isLoggedIn()) {
             $userEmail = $this->_customerSession->getCustomer()->getEmail();
@@ -68,6 +78,7 @@ class Request extends BluemAction
             . $orderId;
 
         $payload = [
+            'user_id'           => $userId,
             'user_email'        => $userEmail,
             'user_name'         => $userName,
             'order_id'          => $orderId,
@@ -128,9 +139,11 @@ class Request extends BluemAction
 
             $this->_bluem->setConfig('brandID', $this->_dataHelper->getMandateConfig($payment_brand_id));
 
+            $this->_bluem->setConfig('merchantReturnURLBase', $returnURL);
+
             $request = $this->_bluem->CreateMandateRequest(
-                $userId,
-                $orderId
+                !empty($userId) ? $userId : $orderId,
+                $orderId,
             );
 
             $request->setBrandId($this->_dataHelper->getMandateConfig($payment_brand_id));
