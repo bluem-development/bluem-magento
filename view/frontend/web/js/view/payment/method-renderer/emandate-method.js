@@ -36,27 +36,9 @@ define([
             this._super()
                 .observe('selectedBank');
 
-            return this;
-        },
+            this.getBanks();
 
-        initialize: function () {
-            this._super();
-    
-            // Retrieve bank data from external API
-            var self = this;
-            jQuery.ajax({
-                url: 'https://example.com/api/banks',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    // Set availableBanks property with retrieved data
-                    self.availableBanks = ko.observableArray(data);
-                },
-                error: function (error) {
-                    console.log('Error retrieving bank data: ', error);
-                    alert(error);
-                }
-            });
+            return this;
         },
 
         /**
@@ -69,6 +51,46 @@ define([
                     'issuer': typeof this.selectedBank() !== "undefined" ? this.selectedBank() : ""
                 }
             };
+        },
+
+        /**
+         * @inheritdoc
+         */
+        getBanks: function () {
+            var self = this;
+
+            // Call the original method to get the bank data from the payment gateway
+            var banks = this._super();
+
+            // Fetch the available banks from your own API
+            $.ajax({
+                url: url.build('bluem/mandate/getbanks'),
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    fullScreenLoader.startLoader();
+                },
+                success: function (data) {
+                    // Set the availableBanks property with the retrieved data
+                    self.availableBanks = ko.observableArray(data);
+
+                    // Update the UI with the new data
+                    self.updateBanksDropdown();
+                },
+                complete: function () {
+                    fullScreenLoader.stopLoader();
+                }
+            });
+
+            // Return the bank data from the payment gateway
+            return banks;
+        },
+        
+        /**
+         * Update the dropdown list of available banks with the latest data
+         */
+        updateBanksDropdown: function () {
+            // Code to update the dropdown list goes here
         },
 
         /**
