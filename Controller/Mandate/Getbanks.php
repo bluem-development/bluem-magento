@@ -21,17 +21,25 @@ class Getbanks extends BluemAction
     protected $resultJsonFactory;
 
     /**
+     * @var PageFactory
+     */
+    protected $resultPageFactory;
+
+    /**
      * Constructor
      *
      * @param Context $context
      * @param JsonFactory $resultJsonFactory
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
         Context $context,
-        JsonFactory $resultJsonFactory
+        JsonFactory $resultJsonFactory,
+        PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
