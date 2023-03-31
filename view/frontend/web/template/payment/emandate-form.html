@@ -33,10 +33,7 @@
                         <span><!-- ko i18n: 'Select a bank'--><!-- /ko --></span>
                     </label>
                     <div class="control">
-                        <select id="issuer" name="issuer" class="input-select">
-                            <option value="RABO">Rabobank (test)</option>
-                            <option value="INGB">ING Bank (test)</option>
-                        </select>
+                        <select data-bind="options: availableBanks, value: selectedBank" class="input-select"></select>
                     </div>
                 </div>
             </fieldset>
