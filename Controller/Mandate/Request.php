@@ -164,9 +164,13 @@ class Request extends BluemAction
         if ($response->ReceivedResponse()) {
             $transactionURL ="";
 
-            $entranceCode   = $response->getEntranceCode();
-            $transactionID  = $response->getTransactionID();
+            $entranceCode   = $request->entranceCode;
+            $transactionID  = $request->mandateID;
             $transactionURL = $response->getTransactionURL();
+
+            // Save the necessary data to later request more information and refer to this transaction
+            $_SESSION['bluem_mandateId'] = $request->mandateID;
+            $_SESSION['bluem_entranceCode'] = $request->entranceCode;
 
             $update_data = [
                 'EntranceCode'      => $entranceCode,
