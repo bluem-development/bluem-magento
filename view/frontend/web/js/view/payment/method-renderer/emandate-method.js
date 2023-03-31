@@ -39,6 +39,26 @@ define([
             return this;
         },
 
+        initialize: function () {
+            this._super();
+    
+            // Retrieve bank data from external API
+            var self = this;
+            jQuery.ajax({
+                url: 'https://example.com/api/banks',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Set availableBanks property with retrieved data
+                    self.availableBanks = ko.observableArray(data);
+                },
+                error: function (error) {
+                    console.log('Error retrieving bank data: ', error);
+                    alert(error);
+                }
+            });
+        },
+
         /**
         * @return {Object}
         */
