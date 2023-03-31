@@ -23,13 +23,18 @@ define([
     return Component.extend({
         defaults: {
             template: 'Bluem_Integration/payment/epayment-bank-form',
-            issuer: ''
+            selectedBank: '',
+            availableBanks: [
+                { label: 'Bank A', value: 'bank_a' },
+                { label: 'Bank B', value: 'bank_b' },
+                { label: 'Bank C', value: 'bank_c' }
+            ]
         },
 
         /** @inheritdoc */
         initObservable: function () {
             this._super()
-                .observe('issuer');
+                .observe('selectedBank');
 
             return this;
         },
@@ -41,7 +46,7 @@ define([
             return {
                 method: this.item.method,
                 'additional_data': {
-                    'issuer': typeof this.issuer() !== "undefined" ? this.issuer() : ""
+                    'issuer': typeof this.selectedBank() !== "undefined" ? this.selectedBank() : ""
                 }
             };
         },
