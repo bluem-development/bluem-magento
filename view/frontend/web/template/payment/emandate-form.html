@@ -1,0 +1,71 @@
+<!--
+/* Based on  php-cuong/magento-offline-payments  */
+-->
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-description">
+            <span data-bind="i18n: 'Betaal gemakkelijk via Bluem.'" class="intro"></span>
+        </div>
+
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <form id="emandate-form" class="form form-mandate" data-role="emandate-form">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
+                <div class="field field-number required">
+                    <label for="issuer" class="label">
+                        <span><!-- ko i18n: 'Select a bank'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <select id="issuer" name="issuer" class="input-select">
+                            <option value="RABO">Rabobank (test)</option>
+                            <option value="INGB">ING Bank (test)</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="carts-list">
+            <span><img data-bind="attr: {src: require.toUrl('Bluem_Integration/images/bluem.png'), alt: $t('Bluem'), title: $t('Bluem')}" class="bluem-logo" style="max-height:64px;" /></span>  
+        </div>
+
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="actions-toolbar" id="review-buttons-container">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        data-role="review-save">
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
