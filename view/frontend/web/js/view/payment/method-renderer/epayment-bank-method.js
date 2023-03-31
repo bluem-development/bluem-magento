@@ -23,13 +23,13 @@ define([
     return Component.extend({
         defaults: {
             template: 'Bluem_Integration/payment/epayment-bank-form',
-            assistantId: ''
+            issuer: ''
         },
 
         /** @inheritdoc */
         initObservable: function () {
             this._super()
-            .observe('assistantId');
+                .observe('issuer');
 
             return this;
         },
@@ -41,7 +41,7 @@ define([
             return {
                 method: this.item.method,
                 'additional_data': {
-                    'assistant_id': typeof this.assistantId() !== "undefined" ? this.assistantId() : ""
+                    'issuer': typeof this.issuer() !== "undefined" ? this.issuer() : ""
                 }
             };
         },
