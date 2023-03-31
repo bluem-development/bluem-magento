@@ -79,7 +79,8 @@ define([
                             type: 'POST'
                         }).done(function (response) {
                             console.log("Successful AJAX response")
-                            console.log(response)
+                            console.log(response);
+                            alert(response);
                             if (!response.error) {
                                 window.location.replace(response.payment_url);
                             } else {
@@ -88,6 +89,7 @@ define([
                         }).fail(function (response) {
                             console.log("Failed AJAX")
                             console.log(response);
+                            alert(response);
                             redirectOnSuccessAction.execute();
                         });
                         console.log("Done here.")
