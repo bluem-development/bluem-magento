@@ -82,6 +82,16 @@ class Data extends AbstractHelper
     {
         return $this->getConfigForSection("identity", $code, $storeId);
     }
+    
+    /**
+     * Get mandate config.
+     *
+     * @public
+     */
+    public function getMandateConfig($code, $storeId = null)
+    {
+        return $this->getConfigForSection("mandate", $code, $storeId);
+    }
 
     /**
      * Get payments config.

@@ -30,8 +30,8 @@ class SalesQuotePaymentBeforeSavedObserver implements ObserverInterface
         $payment = $observer->getEvent()->getPayment();
         $additionalData = $payment->getData(PaymentInterface::KEY_ADDITIONAL_DATA);
 
-        if (isset($additionalData['assistant_id'])) {
-            $payment->setAssistantId($additionalData['assistant_id']);
+        if (isset($additionalData['issuer'])) {
+            $payment->setAssistantId($additionalData['issuer']);
         }
 
         return $this;

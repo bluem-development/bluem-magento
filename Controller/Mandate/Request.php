@@ -126,19 +126,14 @@ class Request extends BluemAction
         try {
             $payment_brand_id = 'mandate_brand_id';
 
-            $this->_bluem->setConfig('brandID', $this->_dataHelper->getPaymentsConfig($payment_brand_id));
+            $this->_bluem->setConfig('brandID', $this->_dataHelper->getMandateConfig($payment_brand_id));
 
-            $request = $this->_bluem->CreatePaymentRequest(
-                $description,
-                $debtorReference,
-                $amount,
-                null,
-                $currency,
-                null,
-                $returnURL
+            $request = $this->_bluem->CreateMandateRequest(
+                $userId,
+                $orderId
             );
 
-            $request->setBrandId($this->_dataHelper->getPaymentsConfig($payment_brand_id));
+            $request->setBrandId($this->_dataHelper->getMandateConfig($payment_brand_id));
 
             $response = $this->_bluem->PerformRequest($request);
         } catch (Throwable $th) {

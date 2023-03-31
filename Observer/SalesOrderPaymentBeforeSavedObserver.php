@@ -50,6 +50,7 @@ class SalesOrderPaymentBeforeSavedObserver implements ObserverInterface
         return $this;
 
         $payment_methods = [
+            'emandate',
             'epayment',
             'epayment_paypal',
             'epayment_creditcard',
