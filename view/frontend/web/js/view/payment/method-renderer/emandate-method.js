@@ -23,7 +23,7 @@ define([
     return Component.extend({
         defaults: {
             template: 'Bluem_Integration/payment/emandate-form',
-            selectedBank: ko.observable(''),
+            selectedBank: '',
             availableBanks: [
                 { label: 'Bank A', value: 'bank_a' },
                 { label: 'Bank B', value: 'bank_b' },
