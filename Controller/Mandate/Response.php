@@ -115,7 +115,7 @@ class Response extends BluemAction
 
         
         // perform status request
-        $statusResponse = $this->_bluem->PaymentStatus(
+        $statusResponse = $this->_bluem->MandateStatus(
             $transactionId,
             $entranceCode
         );
@@ -127,12 +127,12 @@ class Response extends BluemAction
             exit;
         }
         
-        if (!isset($statusResponse->PaymentStatusUpdate->Status)) {
+        if (!isset($statusResponse->EMandateStatusUpdate->EMandateStatus->Status)) {
             echo "Invalid or no status received; please retry:<br> ";
             echo $request_db->getTransactionUrl();
             exit;
         }
-        $statusCode = ($statusResponse->PaymentStatusUpdate->Status)."";
+        $statusCode = ($statusResponse->EMandateStatusUpdate->EMandateStatus->Status)."";
         
         if ($debug) {
             var_dump($statusResponse);
