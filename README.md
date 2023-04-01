@@ -200,12 +200,10 @@ sh reload-application.sh -p bluem-magento2-dev
 'bluem-magento2-dev' is the name of the Docker container.
 
 # Developer notes
-- At the moment, it is not yet possible to choose the issuer (Bank) from within the webshop; this is done from within the Bluem portal, so as soon as the end-user has clicked on 'checkout' and temporarily leaves the webshop.
 - At the moment, the payment reference and client reference are automatically generated based on client information. This will be added at a later date if it appears to be necessary.
 - All transaction requests, also for identity, are logged within a database table which is created when the module is first activated.
 - Notes on Magento version 2: This module is targeted at Magento2, and there is no support for Magento v1.* at the moment.
 - Regarding data and privacy: IP Addresses are used at the moment to trace guest users. Any new transaction stores the IP Address. Please notice this when using this module within your site and acknowledge this within your privacy policy.
-- Please contact us with any remarks or notes on the module and its installation procedure: the module is rather new and therefore not yet broadly tried and tested.
 
 ## Webhooks (in development)
 Webhooks are vital to retrieve information about transactions asynchronously and periodically about order processing, independent of your end-users explicit transaction and request page visit.
@@ -223,7 +221,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
-0.7.3   Added eMandate payment method
+0.7.3   Added eMandate payment method. Bank selection for eMandate and iDEAL payments
 0.7.2   Some bugfixes and code improvement
 0.7.1   Some bugfixes and code improvement
 0.7.0   Magento v2.4.5 and PHP8+ support. Added additional payment methods
