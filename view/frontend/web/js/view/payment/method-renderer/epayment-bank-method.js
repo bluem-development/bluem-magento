@@ -27,7 +27,7 @@ define([
     return Component.extend({
         defaults: {
             template: 'Bluem_Integration/payment/epayment-bank-form',
-            availableBanks: ko.observable(''),
+            availableBanks: ko.observableArray([]),
             selectedBank: '',
         },
 
