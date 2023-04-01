@@ -6,12 +6,10 @@
  * @category Module
  * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
  */
-namespace Bluem\Integration\Controller\Payment;
+namespace Bluem\Integration\Controller\Mandate;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\View\Result\PageFactory;
 
 use Bluem\BluemPHP\Bluem as Bluem;
 
@@ -23,46 +21,17 @@ class Getbanks extends Action
     protected $_bluem;
 
     /**
-     * @var JsonFactory
-     */
-    protected $resultJsonFactory;
-
-    /**
-     * @var PageFactory
-     */
-    protected $resultPageFactory;
-
-    /**
-     * Constructor
-     *
-     * @param Context $context
-     * @param JsonFactory $resultJsonFactory
-     * @param PageFactory $resultPageFactory
-     */
-    public function __construct(
-        Context $context,
-        JsonFactory $resultJsonFactory,
-        PageFactory $resultPageFactory
-    ) {
-        parent::__construct($context);
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->resultPageFactory = $resultPageFactory;
-
-        $bluem_config = new stdClass;
-
-        $this->_bluem = new Bluem($bluem_config);
-    }
-
-    /**
      * @inheritdoc
      */
     public function execute()
     {
-        $banks = []; // Retrieve the bank data from your own API and set it to $banks
+        $banks = [];
 
-        $bics = $this->_bluem->retrieveBICCodesForContext('Payments');
+        $bluem_config = new stdClass;
 
-        $result = $this->resultJsonFactory->create();
-        return $result->setData($banks);
+        $this->_bluem = new Bluem($bluem_config);
+
+        $bics = $this->_bluem->retrieveBICCodesForContext('Mandates');
+        var_dump($bics);
     }
 }
