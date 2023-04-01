@@ -162,6 +162,12 @@ class Request extends BluemAction
 
             $request->setBrandId($this->_dataHelper->getMandateConfig($payment_brand_id));
 
+            // Check for selected bank
+            if (!empty($selectedBank))
+            {
+                $request->selectDebtorWallet($selectedBank);
+            }
+
             $response = $this->_bluem->PerformRequest($request);
         } catch (Throwable $th) {
             $result = [

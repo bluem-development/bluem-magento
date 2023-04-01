@@ -126,7 +126,9 @@ define([
                         console.log("Succeeded in placing order")
                         $.ajax({
                             url: urlBuilder.build('bluem/payment/request'),
-                            data: {},
+                            data: {
+                                'issuer': typeof _this.selectedBank() !== "undefined" ? _this.selectedBank() : ""
+                            },
                             dataType: 'json',
                             type: 'POST'
                         }).done(function (response) {

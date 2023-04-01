@@ -21,7 +21,7 @@ class Getbanks extends BluemAction
     {
         $banks = [];
 
-        $bics = $this->_bluem->retrieveBICsForContext('Mandates');
+        $bics = $this->_bluem->retrieveBICsForContext('Payments');
         
         // Loop through BICs
         foreach ($bics as $bic) {
