@@ -149,9 +149,11 @@ class Request extends BluemAction
         }
 
         try {
-            $payment_brand_id = 'mandate_brand_id';
+            $payment_brand_id = '';
 
-            $this->_bluem->setConfig('brandID', $this->_dataHelper->getMandateConfig($payment_brand_id));
+            $this->_bluem->setConfig('brandID', $this->_dataHelper->getMandateConfig('mandate_brand_id'));
+            
+            $this->_bluem->setConfig('merchantID', $this->_dataHelper->getMandateConfig('mandate_merchant_id'));
 
             $this->_bluem->setConfig('merchantReturnURLBase', $returnURL);
 
@@ -160,7 +162,7 @@ class Request extends BluemAction
                 $orderId,
             );
 
-            $request->setBrandId($this->_dataHelper->getMandateConfig($payment_brand_id));
+            //$request->setBrandId($this->_dataHelper->getMandateConfig($payment_brand_id));
 
             // Check for selected bank
             if (!empty($selectedBank))
