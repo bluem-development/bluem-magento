@@ -14,17 +14,14 @@ Concretely, the module delivers:
 - and more to come!
 
 ## Support
-
 If you have any questions concerning the module's installation or configuration or feature requests, please contact us at [pluginsupport@bluem.nl](mailto:pluginsupport@bluem.nl?subject=Bluem+Magento2+Question).
 
 If you have any questions related to your account or your credentials, please refer to your Bluem account manager.
 
 ## Requirements
-
 - Magento2.* (tested on v2.4.6)
 
 ## License
-
 GNU GPLv3.
 
 ## Installation:
@@ -39,7 +36,6 @@ _ Notice:_ This method is still undergoing some configuration changes, so if it 
 composer require bluem-development/bluem-magento
 ```
 
-
 You require authorization keys from Magento's module repository. You can find these in your Magento account. [Refer to this help article to find your auth credentials](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html). [Here, you can find a guide on how to install and update modules through composer](https://devdocs.magento.com/cloud/howtos/install-components.html).
 
 _ Notice_: This is the developer repository for the Bluem Magento2 module. Use the code in this repository to get insight and possibly contribute to the development of this module. A subset of this documentation will be available as end-user documentation in the future as well. Only if you are familiar with Magento will you be able to properly install the module from the pure source code.
@@ -49,7 +45,6 @@ _ Notice_: This is the developer repository for the Bluem Magento2 module. Use t
 - Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Integration` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
 
 **Magento Marketplace**: will be considered at a later stage of development.
-
 
 ### 2: Enable the module
 Check to see if you can see the module in the response of this command:
@@ -62,7 +57,6 @@ php bin/magento module:enable Bluem_Integration
 ```
 
 ### 3: Update your Magento2 installation
-
 This command is vital to ensure the proper instantiation of tables:
 
 ```
@@ -77,7 +71,6 @@ php bin/magento setup:static-content:deploy
 ```
 
 ## Updating to newer versions 
-
 Periodically we will significantly improve this module. Incorporating these brand new updates is easy:
 
 Run:
@@ -85,7 +78,6 @@ Run:
 composer require bluem-development/bluem-magento
 ```
 Then repeat step 2 and 3 from the aforementioned installation.
-
 
 # Configuration of Bluem settings
 Go to `Stores` > `Configuration` and open the Bluem Tab. 
@@ -97,7 +89,6 @@ Detailed instructions per service are stated below:
 This module offers a payment gateway that functions seamlessly inside the checkout flow of your webshop. 
 
 ## Enabling and configuring payments
-
 To enable the payment gateway, go to Stores > Configuration, select Sales > Payment methods. You should see a Bluem ePayment gateway there, which you can Enable. *Note:* You might have to disable the System setting, the small checkbox to the right, to allow changes to specific settings.
 
 **Important**: Set your account settings by going to Bluem > Configure Account & Identity and scroll down to verify the complete configuration. You have to fill in your account details such as your SenderID, the Payment brandID and the access token for the Test and or Production environment setting. It is strongly advised to first test all functionality in an isolated test instance of your website and use the Test environment setting of this module.
@@ -105,13 +96,11 @@ To enable the payment gateway, go to Stores > Configuration, select Sales > Paym
 If end users encounter errors _within_ the Bluem portal viamijnbank.net, this is probably because of an incorrectly configured or not yet activated account within the bank or a problem with your account credentials. Please check if your details are correctly filled in. Refer to your Bluem account manager if you are unsure.
 
 ## Using payments
-
 Once enabled within your webshop settings, end users can select the Bluem payment method when they check out. 
 
 Once the checkout is completed, a payment request is created based on your Bluem settings and account credentials. The flow brings the end-user to the Bluem payment page, which, in turn, directs the user to their bank and consequently back to your webshop with a response. A webhook (described below) transfers additional status information from Bluem to your website after the transaction has been completed or otherwise processed (failed, expired, etc.).
 
 ## Managing and viewing payments
-
 On the administrator side, navigating to Bluem > Payments will yield an overview of all payment requests thus far, their status, and corresponding orders. The order status will also be automatically updated when users pay. In the payload section of this overview, you can view details of each transaction.
 
 Also refer to the [Production viamijnbank.net](https://viamijnbank.net) or [Test viamijnbank.net](https://test.viamijnbank.net) portal. Bluem client can see more in-depth details of each transaction to troubleshoot or investigate your end users' payment habits. 
@@ -119,6 +108,7 @@ Also refer to the [Production viamijnbank.net](https://viamijnbank.net) or [Test
 Payments work out of the box for logged-in and guest users. Payments work alongside and independently from identity. An identity can be configured to be required before the Checkout procedure can be completed. Only after this requirement is met, the checkout procedure and subsequent payment methods will be selectable.
 
 # Identity 
+
 ## How Identity service Works
 This module enables identification during checkout and account verification.
 
@@ -131,7 +121,6 @@ You can indicate in the settings which parts of an IDIN request are requested. C
 - _Note:_ Please ensure the settings (see Configuration section) for the Identity service are correct. One important setting to focus on is the type of request you want to initiate: either an AgeCheck Request or a CustomerData Request.
 
 ## Choosing and enabling automatic identity-checking scenario's
-
 Enforce an identity check during checkout by selecting a desired scenario from the Bluem configuration page. Options are:
 
 - Not performing an automatic identity-check
@@ -140,7 +129,6 @@ Enforce an identity check during checkout by selecting a desired scenario from t
 - Requiring a regular identity verification to be completed and requiring a minimum age (default 18 years and up)
 
 ## Or: perform ad-hoc identity requests
-
 - _Note:_ Replace `myawesome.shop` with your store domain in the following steps.
 
 1. Direct the user to the following page in your webshop:
@@ -162,22 +150,25 @@ https://myawesome.shop/bluem/identity/request
 4. The user can click a button to return to the original page (step 1).
 
 ## Ensure some products are set to require identity/age verification
-
 Set a new product attribute at the products that require an age check to `1`. The key of this product attribute is set in the settings. If unchanged, the default key is `agecheck_required`. This attribute will be added automatically during install or update.
 
 ### Important notes on identity verification:
-
 _Instructions on how to include the Identify button will follow soon_ 
 The simplest way to do so is to include a link to the page from step 2 of the above set-up procedure. When unverified users are redirected there, they can follow the procedure right away. If they are already verified, they will be told so and can return to the previous page.
 
 _Instructions on how to change the redirect after identification will follow soon._ Refer to the Configuration section to enable this functionality.
-# eMandates
 
-Will follow in a future release, as soon as Bluem clients have shown interest in integrating this into the Magento ecosystem.
+# eMandates
+This module offers a mandate gateway that functions seamlessly inside the checkout flow of your webshop. 
+
+## Enabling and configuring mandates
+To enable the mandate gateway, go to Stores > Configuration, select Sales > Payment methods. You should see a Bluem eMandate gateway there, which you can Enable. *Note:* You might have to disable the System setting, the small checkbox to the right, to allow changes to specific settings.
+
+**Important**: Set your account settings by going to Bluem > Configure Account & Identity and scroll down to verify the complete configuration. You have to fill in your account details such as your SenderID, the Mandate brandID and the access token for the Test and or Production environment setting. It is strongly advised to first test all functionality in an isolated test instance of your website and use the Test environment setting of this module.
 
 # Development environment
 To set up a dev-environment, we'll using Docker (docker.io) to run a project with containers to simulate a running Magento 2 instance locally. If you're not familiar with Docker, please read their documentation.
-To install and run the instance, run the following command from 'docker' folder:
+To install and run the instance, run the following command from our folder:
 ```
 docker-compose up
 ```
@@ -209,7 +200,6 @@ sh reload-application.sh -p bluem-magento2-dev
 'bluem-magento2-dev' is the name of the Docker container.
 
 # Developer notes
-
 - At the moment, it is not yet possible to choose the issuer (Bank) from within the webshop; this is done from within the Bluem portal, so as soon as the end-user has clicked on 'checkout' and temporarily leaves the webshop.
 - At the moment, the payment reference and client reference are automatically generated based on client information. This will be added at a later date if it appears to be necessary.
 - All transaction requests, also for identity, are logged within a database table which is created when the module is first activated.
@@ -230,10 +220,10 @@ They will function in the environment set in settings (either `test` or `prod`).
 
 When completed, you can communicate this fact and the above URLs to your Bluem account manager to have the webhook functionality enabled for your account.
 
-
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
+0.7.3   Added eMandate payment method
 0.7.2   Some bugfixes and code improvement
 0.7.1   Some bugfixes and code improvement
 0.7.0   Magento v2.4.5 and PHP8+ support. Added additional payment methods
