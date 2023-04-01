@@ -221,25 +221,25 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
--0.7.3   Added eMandate payment method. Bank selection for eMandate and iDEAL payments
--0.7.2   Some bugfixes and code improvement
--0.7.1   Some bugfixes and code improvement
--0.7.0   Magento v2.4.5 and PHP8+ support. Added additional payment methods
--0.6.0   Improvements, identification service as step during checkout, account verification
--0.5.12  Fixing composer dependency issues
--0.5.11  Fixing composer dependency issues
--0.5.10  Major updated to dependency libraries; improving blocking of products through checkout filter
--0.5.9   Updated composer dependencies, fixing minor bugs
--0.5.8   Domain whitelisting for iDIN
--0.5.5   Improved identification service including robust guest identification and flow when registering or logging in
--0.5.4   Code standardization, minor stability fixes
--0.5.3   Minor changes
--0.5.2   Updating Bluem dependencies to most recent version
--0.5.1   Cleared out some artefact code calls, Improved code stability, added versatile product filters
--0.4.7   Documentation updated
--0.4.6   Working payment method - ready for first deployment and testing of use cases
--0.3.4   Initial release (Identity functions) to first participant testing.
--0.2.0   IDIN functional, settings page functional. Working on datastore and model creation
+- 0.7.3   Added eMandate payment method. Bank selection for eMandate and iDEAL payments
+- 0.7.2   Some bugfixes and code improvement
+- 0.7.1   Some bugfixes and code improvement
+- 0.7.0   Magento v2.4.5 and PHP8+ support. Added additional payment methods
+- 0.6.0   Improvements, identification service as step during checkout, account verification
+- 0.5.12  Fixing composer dependency issues
+- 0.5.11  Fixing composer dependency issues
+- 0.5.10  Major updated to dependency libraries; improving blocking of products through checkout filter
+- 0.5.9   Updated composer dependencies, fixing minor bugs
+- 0.5.8   Domain whitelisting for iDIN
+- 0.5.5   Improved identification service including robust guest identification and flow when registering or logging in
+- 0.5.4   Code standardization, minor stability fixes
+- 0.5.3   Minor changes
+- 0.5.2   Updating Bluem dependencies to most recent version
+- 0.5.1   Cleared out some artefact code calls, Improved code stability, added versatile product filters
+- 0.4.7   Documentation updated
+- 0.4.6   Working payment method - ready for first deployment and testing of use cases
+- 0.3.4   Initial release (Identity functions) to first participant testing.
+- 0.2.0   IDIN functional, settings page functional. Working on datastore and model creation
 
 ### References
 I referred quite often to [MagePlaza](https://www.mageplaza.com/magento-2-module-development) and [the official dev docs](https://devdocs.magento.com/).
