@@ -13,8 +13,15 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\View\Result\PageFactory;
 
+use Bluem\BluemPHP\Bluem as Bluem;
+
 class Getbanks extends Action
 {
+    /**
+     * @var Bluem
+     */
+    protected $_bluem;
+
     /**
      * @var JsonFactory
      */
@@ -40,6 +47,10 @@ class Getbanks extends Action
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->resultPageFactory = $resultPageFactory;
+
+        $bluem_config = new stdClass;
+
+        $this->_bluem = new Bluem($bluem_config);
     }
 
     /**
