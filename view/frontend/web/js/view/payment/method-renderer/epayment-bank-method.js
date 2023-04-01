@@ -27,12 +27,8 @@ define([
     return Component.extend({
         defaults: {
             template: 'Bluem_Integration/payment/epayment-bank-form',
+            availableBanks: [],
             selectedBank: '',
-            availableBanks: [
-                { label: 'Bank A', value: 'bank_a' },
-                { label: 'Bank B', value: 'bank_b' },
-                { label: 'Bank C', value: 'bank_c' }
-            ]
         },
 
         /** @inheritdoc */
@@ -63,38 +59,43 @@ define([
         getBanks: function () {
             var self = this;
 
-            // Call the original method to get the bank data from the payment gateway
-            var banks = this._super();
+            // Show loading spinner
+            fullScreenLoader.startLoader();
 
-            // Fetch the available banks from your own API
+            // Make AJAX request to get the list of available banks
             $.ajax({
                 url: urlBuilder.build('bluem/payment/getbanks'),
                 type: 'GET',
                 dataType: 'json',
-                beforeSend: function () {
-                    fullScreenLoader.startLoader();
-                },
                 success: function (data) {
-                    // Set the availableBanks property with the retrieved data
-                    self.availableBanks = ko.observableArray(data);
+                    // Update the availableBanks observable array with the data
+                    self.updateBanksDropdown(data);
 
-                    // Update the UI with the new data
-                    self.updateBanksDropdown();
-                },
-                complete: function () {
+                    // Hide loading spinner
                     fullScreenLoader.stopLoader();
+                },
+                error: function () {
+                    // Handle error
                 }
             });
-
-            // Return the bank data from the payment gateway
-            return banks;
         },
 
         /**
-         * Update the dropdown list of available banks with the latest data
+         * Updates the availableBanks dropdown with the given data.
+         *
+         * @param {Array} banks
          */
-        updateBanksDropdown: function () {
-            // Code to update the dropdown list goes here
+        updateBanksDropdown: function (banks) {
+            var self = this;
+
+            self.availableBanks.removeAll();
+
+            $.each(banks, function (index, bank) {
+                self.availableBanks.push({
+                    value: bank.value,
+                    label: bank.label
+                });
+            });
         },
 
         /**
