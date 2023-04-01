@@ -117,6 +117,8 @@ define([
             if (this.validate() && additionalValidators.validate()) {
                 this.isPlaceOrderActionAllowed(false);
 
+                let _this = this;
+
                 this.getPlaceOrderDeferredObject()
                     .fail(function () {
                         console.log("Failed placing order")
@@ -127,7 +129,7 @@ define([
                         $.ajax({
                             url: urlBuilder.build('bluem/mandate/request'),
                             data: {
-                                'issuer': typeof this.selectedBank() !== "undefined" ? this.selectedBank() : ""
+                                'issuer': typeof _this.selectedBank() !== "undefined" ? _this.selectedBank() : ""
                             },
                             dataType: 'json',
                             type: 'POST'
