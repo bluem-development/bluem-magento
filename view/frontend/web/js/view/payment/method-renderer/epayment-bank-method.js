@@ -136,18 +136,20 @@ define([
                         }).done(function (response) {
                             console.log("Successful AJAX response")
                             console.log(response)
+                            alert(response);
                             if (!response.error) {
-                                window.location.replace(response.payment_url);
+                                //window.location.replace(response.payment_url);
                             } else {
-                                redirectOnSuccessAction.execute();
+                                //redirectOnSuccessAction.execute();
                             }
                         }).fail(function (response) {
                             console.log("Failed AJAX")
                             console.log(response);
-                            redirectOnSuccessAction.execute();
+                            alert(response);
+                            //redirectOnSuccessAction.execute();
                         });
                         console.log("Done here.")
-                        self.afterPlaceOrder();
+                        //self.afterPlaceOrder();
                     }
                 );
                 return true;
