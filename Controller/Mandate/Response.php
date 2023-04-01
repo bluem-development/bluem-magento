@@ -6,7 +6,6 @@
  * @category Module
  * @author   Daan Rijpkema <d.rijpkema@bluem.nl>
  */
-
 namespace Bluem\Integration\Controller\Mandate;
 
 use Exception;

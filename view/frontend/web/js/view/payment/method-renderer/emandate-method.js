@@ -64,7 +64,7 @@ define([
 
             // Fetch the available banks from your own API
             $.ajax({
-                url: url.build('bluem/mandate/getbanks'),
+                url: urlBuilder.build('bluem/mandate/getbanks'),
                 type: 'GET',
                 dataType: 'json',
                 beforeSend: function () {
