@@ -30,6 +30,9 @@ class Getbanks extends BluemAction
                 'value' => $bic->issuerID,
             ];
         }
-        return json_encode($banks);
+
+        header("Content-type: application/json; charset=utf-8");
+        echo json_encode($banks);
+        exit;
     }
 }
