@@ -61,7 +61,6 @@ class Getbanks extends Action
         $banks = []; // Retrieve the bank data from your own API and set it to $banks
 
         $bics = $this->_bluem->retrieveBICCodesForContext('Payments');
-        var_dump($bics);
 
         $result = $this->resultJsonFactory->create();
         return $result->setData($banks);
