@@ -95,6 +95,8 @@ class BluemAction extends Action
         $this->_bluem = new Bluem($bluem_config);
         $this->_bluem_environment = $bluem_config->environment;
 
+        var_dump($bluem_config);
+
         return parent::__construct(
             $context
         );
