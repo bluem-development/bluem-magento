@@ -117,6 +117,8 @@ define([
             if (this.validate() && additionalValidators.validate()) {
                 this.isPlaceOrderActionAllowed(false);
 
+                let _this = this;
+
                 this.getPlaceOrderDeferredObject()
                     .fail(function () {
                         console.log("Failed placing order")
