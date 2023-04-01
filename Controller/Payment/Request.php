@@ -168,7 +168,7 @@ class Request extends BluemAction
             // Check for selected bank
             if (!empty($selectedBank))
             {
-                //$request->selectDebtorWallet($selectedBank);
+                $request->selectDebtorWallet($selectedBank);
             }
 
             $response = $this->_bluem->PerformRequest($request);
