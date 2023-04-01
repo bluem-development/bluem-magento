@@ -171,10 +171,7 @@ class Request extends BluemAction
                 $request->selectDebtorWallet($selectedBank);
             }
 
-            var_dump($request);
-
             $response = $this->_bluem->PerformRequest($request);
-            var_dump($response);
         } catch (Throwable $th) {
             $result = [
                 'error' => true,
