@@ -8,13 +8,12 @@
  */
 namespace Bluem\Integration\Controller\Mandate;
 
-use Bluem\Integration\Controller\BluemAction;
-
+use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\View\Result\PageFactory;
 
-class Getbanks extends BluemAction
+class Getbanks extends Action
 {
     /**
      * @var JsonFactory
