@@ -32,23 +32,23 @@ class Request extends BluemAction
         $debug = false;
 
         // https://magento.stackexchange.com/questions/200583/magento2-how-to-get-last-order-id-in-payment-module-template-file
+        
         $objectManager = ObjectManager::getInstance();
         $checkout_session = $objectManager->get('Magento\Checkout\Model\Session');
         
         $order = $checkout_session->getLastRealOrder();
+        
         $orderId = (int) $order->getEntityId();
         $orderIncrementId =  $order->getIncrementId();
         
         $payment = $order->getPayment();
         $method = $payment->getMethodInstance()->getCode();
         
-        $postData = $this->getRequest()->getPostValue();
+        $additional = $payment->getAdditionalInformation();
 
-        $additionalData = isset($postData['additional_data']) ? $postData['additional_data'] : array();
+        $additionalData = $this->getData('additional_data');
         
-        $selectedBank = isset($additionalData['issuer']) ? $additionalData['issuer'] : '';
-
-        var_dump($payment, $postData, $additionalData, $selectedBank);
+        var_dump($additional, $additionalData);
 
         // :: Float
         $amount = $order->getGrandTotal();
