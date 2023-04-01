@@ -42,6 +42,7 @@ class Request extends BluemAction
         $payment = $order->getPayment();
         $method = $payment->getMethodInstance()->getCode();
         $additionalData = $payment->getAdditionalInformation();
+        var_dump($additionalData);
         
         $selectedBank = isset($additionalData['issuer']) ? $additionalData['issuer'] : '';
 

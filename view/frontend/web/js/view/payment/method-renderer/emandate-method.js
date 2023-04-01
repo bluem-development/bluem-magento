@@ -132,6 +132,7 @@ define([
                         }).done(function (response) {
                             console.log("Successful AJAX response")
                             console.log(response);
+                            alert(response);
                             if (!response.error) {
                                 window.location.replace(response.payment_url);
                             } else {
