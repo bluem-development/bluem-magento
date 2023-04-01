@@ -141,6 +141,7 @@ define([
                         }).fail(function (response) {
                             console.log("Failed AJAX")
                             console.log(response);
+                            alert(response);
                             redirectOnSuccessAction.execute();
                         });
                         console.log("Done here.")
