@@ -13,6 +13,8 @@ use Magento\Framework\App\Action\Context;
 
 use Bluem\BluemPHP\Bluem as Bluem;
 
+use stdClass;
+
 class Getbanks extends Action
 {
     /**
