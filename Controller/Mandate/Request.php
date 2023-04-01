@@ -46,7 +46,7 @@ class Request extends BluemAction
 
         $additional = $payment->getAdditionalInformation();
 
-        $additionalData = $this->getRequest()->getPost();
+        $additionalData = $this->getRequest()->getParams();
         
         var_dump($additional, $additionalData);
 
