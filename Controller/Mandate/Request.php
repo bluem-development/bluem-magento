@@ -48,7 +48,7 @@ class Request extends BluemAction
         
         $selectedBank = isset($additionalData['issuer']) ? $additionalData['issuer'] : '';
 
-        var_dump($postData, $additionalData, $selectedBank);
+        var_dump($payment, $postData, $additionalData, $selectedBank);
 
         // :: Float
         $amount = $order->getGrandTotal();
