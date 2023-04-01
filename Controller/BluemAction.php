@@ -82,6 +82,8 @@ class BluemAction extends Action
         // for now, use a single brandID
         $bluem_config->IDINbrandID = $this->_dataHelper->getIdentityConfig('identity_brand_id');
 
+        $bluem_config->merchantID = $this->_dataHelper->getMandateConfig('mandate_merchant_id');
+        
         $bluem_config->merchantReturnURLBase = $this->_baseURL;  // URL to return to after finishing the process
 
         // What status would you like to get back for a TEST transaction or status request?
