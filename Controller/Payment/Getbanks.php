@@ -30,6 +30,6 @@ class Getbanks extends BluemAction
                 'value' => $bic->issuerID,
             ];
         }
-        var_dump($bics, $banks);
+        return json_encode($banks);
     }
 }
