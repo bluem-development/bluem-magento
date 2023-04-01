@@ -47,8 +47,10 @@ class Request extends BluemAction
         $additional = $payment->getAdditionalInformation();
 
         $additionalData = $this->getRequest()->getParams();
+
+        $postData = $this->getRequest()->getPostValue();
         
-        var_dump($additional, $additionalData);
+        var_dump($additional, $additionalData, $postData);
 
         // :: Float
         $amount = $order->getGrandTotal();
