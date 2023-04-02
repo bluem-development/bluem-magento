@@ -36,9 +36,16 @@ class Request extends BluemAction
         $remote = $objectManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
         $ip = $remote->getRemoteAddress();
 
+        // Retrieve post data
+        $postData = $this->getRequest()->getPostValue();
+
+        // Define selected bank
+        $selectedBank = !empty($postData['issuer']) ? $postData['issuer'] : '';
+
         $payload = [
             'usecase' => $scenario,
             'categories' => $requestCategories,
+            'selected_bank' => $selectedBank,
             'ip' => $ip,
             'userdata' => []
         ];
@@ -106,6 +113,12 @@ class Request extends BluemAction
         );
 
         $request->setBrandId($this->_dataHelper->getIdentityConfig('identity_brand_id'));
+
+        // Check for selected bank
+        if (!empty($selectedBank))
+        {
+            $request->selectDebtorWallet($selectedBank);
+        }
 
         $bluem_env = $this->_dataHelper->getGeneralConfig('environment');
         if ($bluem_env === "test") {
