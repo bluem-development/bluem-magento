@@ -1,5 +1,7 @@
 ![Bluem](https://bluem.nl/img/BluemAboutIcon.svg)
 
+**Bluem-Magento plug-in for Payment, Mandates & iDIN**
+
 Bluem is an independent Dutch payment and identity specialist based in Amersfoort and Sofia, which has developed its viamijnbank cloud platform for handling online payments, mandates, identification services, digital signatures and IBAN name checks. Companies send high volumes of payment requests through our software, bills are paid faster, and direct debit mandates are issued digitally.
 
 This Magento2 module is an integration that connects your website to Bluem's eMandate, ePayments and iDIN Identity services.
@@ -44,7 +46,7 @@ _ Notice_: This is the developer repository for the Bluem Magento2 module. Use t
 - Either download the provided ZIP file of the latest version from the root directory or clone/fork the source code.  
 - Install the module code to `YOUR_MAGENTO_DIR/code/Bluem/Integration` and run `composer update` from within this folder. Be sure that you know how to configure and use this method.
 
-**Magento Marketplace**: will be considered at a later stage of development.
+**Magento Marketplace**: will be available soon.
 
 ### 2: Enable the module
 Check to see if you can see the module in the response of this command:
