@@ -223,6 +223,7 @@ When completed, you can communicate this fact and the above URLs to your Bluem a
 ## Changelog
 See also https://github.com/bluem-development/bluem-magento/releases
 
+- 0.7.4   Added bank selection for identity and some improvements
 - 0.7.3   Added eMandate payment method. Bank selection for iDEAL payments
 - 0.7.2   Some bugfixes and code improvement
 - 0.7.1   Some bugfixes and code improvement
