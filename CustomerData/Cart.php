@@ -9,11 +9,7 @@
 
 namespace Bluem\Integration\CustomerData;
 
-use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Magento\Customer\Model\Session;
-use Magento\Framework\App\Http\Context as HttpContext;
-use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 /**
  * Cart data source
@@ -21,35 +17,11 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 class Cart extends \Magento\Checkout\CustomerData\Cart implements SectionSourceInterface
 {
     /**
-     * @var Session
-     */
-    protected $customerSession;
-
-    /**
-     * @param CheckoutSession $checkoutSession
-     * @param HttpContext $httpContext
-     * @param Session $customerSession
-     * @param TimezoneInterface $localeDate
-     */
-    public function __construct(
-        CheckoutSession $checkoutSession,
-        HttpContext $httpContext,
-        Session $customerSession,
-        TimezoneInterface $localeDate
-    ) {
-        parent::__construct($checkoutSession, $httpContext, $localeDate);
-        $this->customerSession = $customerSession;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getSectionData()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
-        $sessionData = $this->customerSession->getData('bluem_identification_done');
-        var_dump($sessionData);
         
         $bluem_module_enabled = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('integration/general/enable');
         
@@ -67,7 +39,6 @@ class Cart extends \Magento\Checkout\CustomerData\Cart implements SectionSourceI
         
         $totals = $this->getQuote()->getTotals();
         $subtotalAmount = $totals['subtotal']->getValue();
-        
         return [
             'age_verification_enabled' => $age_verification_enabled === true ? 'yes' : 'no',
             'is_bluem_verified' => !empty($_SESSION['bluem_identification_done']) ? 'yes' : 'no',
