@@ -27,5 +27,8 @@
         "psr-4": {
             "Bluem\\Integration\\": ""
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }
