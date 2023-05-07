@@ -36,7 +36,7 @@ services:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - './docker/magento:/bitnami/magento'
+      - './magento:/bitnami/magento'
     depends_on:
       - mariadb
       - elasticsearch
