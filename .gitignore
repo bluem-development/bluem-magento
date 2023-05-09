@@ -2,7 +2,6 @@
 .DS_Store
 _notes
 
-docker/magento
 vendor
 
 #--------------------------#
