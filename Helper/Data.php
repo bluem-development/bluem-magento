@@ -20,9 +20,27 @@ use stdClass;
 
 class Data extends AbstractHelper
 {
+    /**
+     * The customer session
+     * 
+     * @protected
+     */
     protected $_customerSession;
+    
+    /**
+     * The base URL
+     * 
+     * @protected
+     */
     protected $_baseURL;
 
+    /**
+     * Constructor
+     * 
+     * @param Context $context
+     * @param Session $customerSession
+     * @public
+     */
     public function __construct(
         Context $context,
         Session $customerSession
@@ -31,14 +49,17 @@ class Data extends AbstractHelper
         $this->_customerSession = $customerSession;
 
         $this->_storeManager = ObjectManager::getInstance()
-            ->get('\Magento\Store\Model\StoreManagerInterface');
+            ->get(Magento\Store\Model\StoreManagerInterface::class);
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
     }
-    const XML_BASE_PATH = 'integration';
+    
+    public const XML_BASE_PATH = 'integration';
 
     /**
      * Get config value.
      *
+     * @param $field
+     * @param $storeId
      * @public
      */
     public function getConfigValue($field, $storeId = null)
@@ -53,6 +74,9 @@ class Data extends AbstractHelper
     /**
      * Get config for section.
      *
+     * @param $section
+     * @param $code
+     * @param $storeId
      * @public
      */
     public function getConfigForSection($section, $code, $storeId = null)
@@ -66,6 +90,8 @@ class Data extends AbstractHelper
     /**
      * Get general config.
      *
+     * @param $code
+     * @param $storeId
      * @public
      */
     public function getGeneralConfig($code, $storeId = null)
@@ -76,6 +102,8 @@ class Data extends AbstractHelper
     /**
      * Get identity config.
      *
+     * @param $code
+     * @param $storeId
      * @public
      */
     public function getIdentityConfig($code, $storeId = null)
@@ -85,7 +113,9 @@ class Data extends AbstractHelper
     
     /**
      * Get mandate config.
-     *
+     * 
+     * @param $code
+     * @param $storeId
      * @public
      */
     public function getMandateConfig($code, $storeId = null)
@@ -96,6 +126,8 @@ class Data extends AbstractHelper
     /**
      * Get payments config.
      *
+     * @param $code
+     * @param $storeId
      * @public
      */
     public function getPaymentsConfig($code, $storeId = null)
@@ -107,6 +139,7 @@ class Data extends AbstractHelper
      * Get identity valid.
      * Conditions based on several scenarios.
      *
+     * @param $not_on_status_page
      * @public
      */
     public function getIdentityValid($not_on_status_page = true)

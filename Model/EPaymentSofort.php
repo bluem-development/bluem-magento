@@ -16,7 +16,7 @@ use Magento\Quote\Api\Data\PaymentInterface;
 
 class EPaymentSofort extends AbstractMethod
 {
-    const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment_sofort';
+    public const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment_sofort';
 
     /**
      * Payment method code

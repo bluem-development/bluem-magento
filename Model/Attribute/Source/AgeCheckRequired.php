@@ -12,9 +12,10 @@ class AgeCheckRequired extends AbstractSource
 {
     /**
      * Get all options
+     * 
      * @return array
      */
-    public function getAllOptions()
+    public function getAllOptions(): array
     {
         if (!$this->_options) {
             $this->_options = [

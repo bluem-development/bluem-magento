@@ -41,12 +41,11 @@ use Magento\Framework\Stdlib\DateTime;
  */
 class Request extends AbstractModel
 {
-    /**
-     * @var DateTime
-     */
     protected $_dateTime;
 
     /**
+     * Initialize resource model
+     *
      * @return void
      */
     protected function _construct()

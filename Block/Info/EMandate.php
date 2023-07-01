@@ -14,11 +14,15 @@ use Magento\Payment\Block\Info;
 class EMandate extends Info
 {
     /**
+     * Define template
+     * 
      * @var string
      */
     protected $_template = 'Bluem_Integration::info/emandate.phtml';
 
     /**
+     * Convert to PDF
+     * 
      * @return string
      */
     public function toPdf()
@@ -27,6 +31,11 @@ class EMandate extends Info
         return $this->toHtml();
     }
 
+    /**
+     * Get payment request info
+     * 
+     * @return array
+     */
     public function getPaymentRequestInfo()
     {
         return $this->getInfoData('order_id');

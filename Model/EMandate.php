@@ -16,7 +16,7 @@ use Magento\Quote\Api\Data\PaymentInterface;
 
 class EMandate extends AbstractMethod
 {
-    const PAYMENT_METHOD_EMANDATE_CODE = 'emandate';
+    public const PAYMENT_METHOD_EMANDATE_CODE = 'emandate';
 
     /**
      * Payment method code

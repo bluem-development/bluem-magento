@@ -16,7 +16,7 @@ use Magento\Quote\Api\Data\PaymentInterface;
 
 class EPaymentPayPal extends AbstractMethod
 {
-    const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment_paypal';
+    public const PAYMENT_METHOD_EPAYMENT_CODE = 'epayment_paypal';
 
     /**
      * Payment method code

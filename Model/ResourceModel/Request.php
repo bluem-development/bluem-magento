@@ -9,7 +9,7 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
  *
  *  Reference: https://www.pierrefay.com/magento2-training/create-magento2-model-database.html
  *
- *  @author      Daan Rijpkema
+ *  @author Daan Rijpkema
  */
 class Request extends AbstractDb
 {

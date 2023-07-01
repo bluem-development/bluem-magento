@@ -14,11 +14,15 @@ use Magento\Payment\Block\Info;
 class EPaymentCarteBancaire extends Info
 {
     /**
+     * Define template
+     * 
      * @var string
      */
     protected $_template = 'Bluem_Integration::info/epayment-cartebancaire.phtml';
 
     /**
+     * Convert to PDF
+     * 
      * @return string
      */
     public function toPdf()
@@ -27,7 +31,9 @@ class EPaymentCarteBancaire extends Info
         return $this->toHtml();
     }
 
-
+    /**
+     * Get payment request info
+     */
     public function getPaymentRequestInfo()
     {
         return $this->getInfoData('order_id');
