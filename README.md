@@ -201,6 +201,23 @@ sh reload-application.sh -p bluem-magento2-dev
 ```
 'bluem-magento2-dev' is the name of the Docker container.
 
+## Magento Coding Standard
+Magento uses his Code Standard to check and verify all codes.
+Errors needs to be solved before any submission to the Marketplace.
+
+Magento guide: https://developer.adobe.com/commerce/marketplace/guides/sellers/code-sniffer/
+
+To install all required packages using composer, run our script:
+```
+sh scripts/code_sniffer.sh
+```
+This will install all required packages and set them in the configuration of PHP CodeSniffer.
+
+Run the following command to start the scan.
+```
+phpcs --standard=Magento2 --extensions=php --report=full --colors /dir/to/bluem-magento
+```
+
 # Developer notes
 - At the moment, the payment reference and client reference are automatically generated based on client information. This will be added at a later date if it appears to be necessary.
 - All transaction requests, also for identity, are logged within a database table which is created when the module is first activated.
