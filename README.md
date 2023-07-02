@@ -201,8 +201,8 @@ sh reload-application.sh -p bluem-magento2-dev
 ```
 'bluem-magento2-dev' is the name of the Docker container.
 
-## Magento Coding Standard
-Magento uses his Code Standard to check and verify all codes.
+# Magento Coding Standard
+Magento uses his Coding Standard to check and verify all codes.
 Errors needs to be solved before any submission to the Marketplace.
 
 Magento guide: https://developer.adobe.com/commerce/marketplace/guides/sellers/code-sniffer/
