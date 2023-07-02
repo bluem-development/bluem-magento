@@ -15,14 +15,14 @@ class EPaymentCarteBancaire extends Info
 {
     /**
      * Define template
-     * 
+     *
      * @var string
      */
     protected $_template = 'Bluem_Integration::info/epayment-cartebancaire.phtml';
 
     /**
      * Convert to PDF
-     * 
+     *
      * @return string
      */
     public function toPdf()
@@ -33,6 +33,8 @@ class EPaymentCarteBancaire extends Info
 
     /**
      * Get payment request info
+     *
+     * @return mixed
      */
     public function getPaymentRequestInfo()
     {

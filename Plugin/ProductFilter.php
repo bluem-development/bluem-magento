@@ -90,7 +90,7 @@ class ProductFilter
                     // - The filter is not used when not on the whitelisted domain
                     if ($current_domain === $domain_sanitized) {
                         if ($filter_debug) {
-                            echo "Whitelisted";
+                            var_dump("Whitelisted");
                         }
                         continue;
                     } else {
@@ -104,7 +104,7 @@ class ProductFilter
             ->getIdentityConfig('identity_block_mode');
         
         if ($filter_debug) {
-            echo "Initiating product filter";
+            var_dump("Initiating product filter");
             var_dump($identity_block_mode);
         }
         
@@ -133,14 +133,14 @@ class ProductFilter
                 }
             } catch (Throwable $th) {
                 if ($filter_debug) {
-                    echo "ERROR in productfilter";
+                    var_dump("ERROR in productfilter");
                 }
                 // Error in retrieving the data? Then just allow the checkout for now
                 $check_necessary = false;
             }
             if (is_null($attr)) {
                 if ($filter_debug) {
-                    echo "Emtpy in productfilter";
+                    var_dump("Emtpy in productfilter");
                 }
                 // Attribute is not set? Then just allow the checkout for now
                 $check_necessary = false;
@@ -152,11 +152,13 @@ class ProductFilter
                     $check_necessary = true;
                 }
             }
-            // echo "Success in productfilter";
+            if ($filter_debug) {
+                var_dump("Success in productfilter");
+            }
         }
 
         if ($filter_debug) {
-            echo "Check necessary? " . ($check_necessary?"Yes":"No");
+            var_dump("Check necessary? " . ($check_necessary ? "Yes" : "No"));
         }
         // No check? Then just say s'all good
         if ($check_necessary == false) {
@@ -166,7 +168,7 @@ class ProductFilter
         if ($check_necessary) {
             $identity_valid = $this->_dataHelper->getIdentityValid();
             if ($filter_debug) {
-                echo "Identity valid? " . ($identity_valid->valid?"Yes":"No");
+                var_dump("Identity valid? " . ($identity_valid->valid ? "Yes" : "No"));
                 var_dump($identity_valid);
             }
             return $identity_valid->valid;

@@ -15,14 +15,14 @@ class EMandate extends Info
 {
     /**
      * Define template
-     * 
+     *
      * @var string
      */
     protected $_template = 'Bluem_Integration::info/emandate.phtml';
 
     /**
      * Convert to PDF
-     * 
+     *
      * @return string
      */
     public function toPdf()
@@ -33,7 +33,7 @@ class EMandate extends Info
 
     /**
      * Get payment request info
-     * 
+     *
      * @return array
      */
     public function getPaymentRequestInfo()

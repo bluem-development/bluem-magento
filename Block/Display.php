@@ -20,16 +20,52 @@ use Bluem\Integration\Helper\Data as DataHelper;
 
 class Display extends Template
 {
+    /**
+     * The identity factory
+     *
+     * @var mixed
+     */
     protected $_identityFactory;
 
+    /**
+     * The customer session
+     *
+     * @var mixed
+     */
     protected $_customerSession;
 
+    /**
+     * The resource connection
+     *
+     * @var mixed
+     */
     protected $_resourceConnection;
 
+    /**
+     * The store manager
+     *
+     * @var mixed
+     */
     protected $_storeManager;
 
+    /**
+     * The Base URL
+     *
+     * @var string
+     */
     protected $_baseURL;
 
+    /**
+     * Constructor
+     *
+     * @param Context $context
+     * @param Session $customerSession
+     * @param ResourceConnection $resourceConnection
+     * @param DataHelper $dataHelper
+     * @param BackendHelper $backendHelper
+     *
+     * @return void
+     */
     public function __construct(
         Context $context,
         Session $customerSession,
@@ -44,7 +80,7 @@ class Display extends Template
         $this->_dataHelper = $dataHelper;
         $this->_backendHelper = $backendHelper;
 
-        $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
+        $this->_storeManager = ObjectManager::getInstance()->get(Magento\Store\Model\StoreManagerInterface::class);
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
     }
 
@@ -69,49 +105,92 @@ class Display extends Template
         }
     }
 
+    /**
+     * Get Bluem requests
+     *
+     * @return colllection
+     */
     public function getBluemRequests()
     {
-        $requestModel = ObjectManager::getInstance()->create('Bluem\Integration\Model\Request');
+        $requestModel = ObjectManager::getInstance()->create(Bluem\Integration\Model\Request::class);
         $collection = $requestModel->getCollection();
         return $collection;
     }
 
+    /**
+     * Debugmode
+     *
+     * @return bool
+     */
     public function debugMode(): bool
     {
         return false;//BLUEM_DEBUG;
     }
 
+    /**
+     * Get Base URL
+     *
+     * @return string
+     */
     public function getBaseUrl() : string
     {
         return $this->_baseURL;
     }
 
+    /**
+     * Show Bluem identity button
+     *
+     * @return string
+     */
     public function showBluemIdentityButton() : string
     {
         return "<a href='{$this->_baseURL}bluem/identity/request' class='action primary' >Start identification procedure..</a>";
     }
     
+    /**
+     * Show Bluem account verification button
+     *
+     * @return string
+     */
     public function showBluemAccountVerificationButton() : string
     {
         return "<a href='{$this->_baseURL}bluem/identity/request?verify=account&returnurl={$this->_baseURL}bluem/identity/index' class='action primary'>" . __('Start identification procedure') . "</a>";
     }
 
+    /**
+     * Check if user is logged in
+     *
+     * @return bool
+     */
     public function getUserLoggedIn() : bool
     {
         return ($this->_customerSession->isLoggedIn());
     }
     
+    /**
+     * Authenticate user
+     *
+     * @return bool
+     */
     public function authenticateUser() : bool
     {
         return ($this->_customerSession->authenticate());
     }
 
+    /**
+     * Get identity valid
+     *
+     * @param bool $not_on_status_page
+     * @return void
+     */
     public function getIdentityValid($not_on_status_page = true)
     {
         return $this->_dataHelper->getIdentityValid($not_on_status_page);
     }
 
     /**
+     * Get user data
+     *
      * @return array
      */
     public function getUserData(): array
@@ -126,9 +205,10 @@ class Display extends Template
     /**
      * Display product warning.
      *
+     * @return string
      * @public
      */
-    public function showProductWarning()
+    public function showProductWarning(): string
     {
         $identity_block_mode = $this->_dataHelper
             ->getIdentityConfig('identity_block_mode');
@@ -141,14 +221,14 @@ class Display extends Template
         
         $check_necessary = false;
         
-        if (is_null($identity_block_mode)
-            || (!is_null($identity_block_mode)
+        if (empty($identity_block_mode)
+            || (!empty($identity_block_mode)
             && $identity_block_mode == "all_products")
         ) {
             $check_necessary = true;
         }
         
-        if (!is_null($identity_block_mode)
+        if (!empty($identity_block_mode)
             && $identity_block_mode == "product_attribute"
         ) {
             $check_necessary = true;
@@ -177,7 +257,13 @@ class Display extends Template
         }
     }
 
-    public function getRequestsTableHTML($type_filter = false)
+    /**
+     * Get requests table
+     *
+     * @param bool $type_filter
+     * @return string
+     */
+    public function getRequestsTableHTML($type_filter = false): string
     {
         $html = "";
         $requests = $this->getBluemRequests();
@@ -235,7 +321,7 @@ class Display extends Template
                         if (!empty($v)) {
                             $v_obj = json_decode($v);
                             if ($v_obj !== null) {
-                                $pl_obj = new RequestPayload();
+                                $pl_obj = (object) [];
                                 foreach ($v_obj as $kk => $vv) {
                                     $pl_obj->$kk = $vv;
                                 }
@@ -260,15 +346,15 @@ class Display extends Template
         return "<p>No requests yet.</p>";
     }
 
+    /**
+     * Get additional idin information
+     *
+     * @return string
+     */
     public function getAdditionalIdinInfo() : string
     {
         $idin_additional_description = $this->_dataHelper
             ->getIdentityConfig('idin_additional_description');
         return nl2br($idin_additional_description);
     }
-}
-
-// starting to make use of elegant classes, here:
-class RequestPayload
-{
 }

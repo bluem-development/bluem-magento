@@ -16,7 +16,6 @@ use Magento\Framework\App\ObjectManager;
 
 // https://magento.stackexchange.com/questions/178873/magento-2-get-customer-data-after-login-with-observer
 
-
 class UpdateUserBluemMeta implements ObserverInterface
 {
     protected $_customerRepositoryInterface;
@@ -69,16 +68,11 @@ class UpdateUserBluemMeta implements ObserverInterface
                 $c->save();
 
                 if ($debug) {
-                    echo "Found!";
+                    var_dump("Found!");
                     var_dump($d);
-                    echo "connecting to userid;". $new_user_id." result: ";
+                    var_dump("Connecting to userid; ". $new_user_id." result: ");
                 }
             }
-        }
-
-        if ($debug) {
-            // output it for now
-            exit();
         }
     }
 }
