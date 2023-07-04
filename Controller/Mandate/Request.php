@@ -62,12 +62,9 @@ class Request extends BluemAction
         $userName = "";
 
         // Check for recurring mode
-        if ($this->_bluem->getConfig('sequenceType') === 'RCUR')
-        {
+        if ($this->_bluem->getConfig('sequenceType') === 'RCUR') {
             //
-        }
-        else
-        {
+        } else {
             //
         }
         
@@ -82,7 +79,7 @@ class Request extends BluemAction
             $debtorReference = "{$orderId}";
         } else {
             // guest order
-            $description = "Order {$orderIncrementId} (gastbestelling)"; 
+            $description = "Order {$orderIncrementId} (gastbestelling)";
             $debtorReference = "{$orderId}";
         }
 
@@ -163,8 +160,7 @@ class Request extends BluemAction
             $request->setBrandId($this->_dataHelper->getMandateConfig('mandate_brand_id'));
 
             // Check for selected bank
-            if (!empty($selectedBank))
-            {
+            if (!empty($selectedBank)) {
                 $request->selectDebtorWallet($selectedBank);
             }
 

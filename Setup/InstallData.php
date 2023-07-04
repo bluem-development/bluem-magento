@@ -17,15 +17,15 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 class InstallData implements InstallDataInterface
 {
-	private $eavSetupFactory;
+    private $eavSetupFactory;
 
-	public function __construct(EavSetupFactory $eavSetupFactory)
-	{
-		$this->eavSetupFactory = $eavSetupFactory;
-	}
-	
-	public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
-	{
+    public function __construct(EavSetupFactory $eavSetupFactory)
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
+    
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    {
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
         
         // @todo; get code from module setting if possible (maybe not because this will be executed during install..
@@ -58,5 +58,5 @@ class InstallData implements InstallDataInterface
                 ]
             );
         }
-	}
+    }
 }

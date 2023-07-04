@@ -12,7 +12,7 @@ class AgeCheckRequired extends AbstractSource
 {
     /**
      * Get all options
-     * 
+     *
      * @return array
      */
     public function getAllOptions(): array

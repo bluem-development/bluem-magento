@@ -23,4 +23,3 @@ class Index extends BluemAction
         return $this->_pageFactory->create();
     }
 }
-

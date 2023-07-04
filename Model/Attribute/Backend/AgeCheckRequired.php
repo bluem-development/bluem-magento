@@ -13,7 +13,7 @@ class AgeCheckRequired extends AbstractBackend
 {
     /**
      * Validate
-     * 
+     *
      * @param Product $object
      * @return bool
      */

@@ -59,7 +59,7 @@ class UpdateUserBluemMeta implements ObserverInterface
             }
 
             $pl = json_decode($d['payload']);
-            if (isset($pl->ip) 
+            if (isset($pl->ip)
                 && $cur_ip===$pl->ip
             ) {
                 // if found connect it to the current user ID

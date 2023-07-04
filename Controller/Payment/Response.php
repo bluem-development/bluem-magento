@@ -69,7 +69,7 @@ class Response extends BluemAction
             var_dump($order_id);
         }
 
-        if ($order_id=="" ||!is_numeric($order_id)) {
+        if ($order_id=="" || !is_numeric($order_id)) {
             echo "Fout: Order ID niet goed teruggekregen;";
             exit;
         }
@@ -147,60 +147,60 @@ class Response extends BluemAction
         );
 
         switch ($statusCode) {
-        case 'Success':
-            // do what you need to do if successful
+            case 'Success':
+                // do what you need to do if successful
 
-            $curPayload =(object) json_decode($request_db->getPayload());
-            // potentially add to the payload
+                $curPayload =(object) json_decode($request_db->getPayload());
+                // potentially add to the payload
             
-            $payloadString = json_encode($curPayload);
+                $payloadString = json_encode($curPayload);
 
-            $this->_updateRequest(
-                $request_db->getId(),
-                [
+                $this->_updateRequest(
+                    $request_db->getId(),
+                    [
                     'Status'=>"Status_".$statusCode,
                     'Payload'=>$payloadString
-                ]
-            );
+                    ]
+                );
 
-            $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING);
-            $order->save();
+                $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING);
+                $order->save();
 
-            $redirect->setUrl($this->_baseURL.'/checkout/onepage/success');
-            // echo "<p>Thanks for verifying your identity. You can now go back and proceed to other areas of our shop: <a href='".$home_url."'>$home_url</a>";
-            // header("Location: $home_url ");
-            return $redirect;
-        case 'New':
-            // what to do with NEW?
-        case 'Processing':
-        case 'Pending':
-            echo "do something when the request is still processing (for example tell the user to come back later to this page)";
-            // @todo do something when the request is still processing (for example tell the user to come back later to this page)
-            break;
-        case 'Cancelled':
-            $msg = "You have cancelled the procedure. Please try again or contact support.";
-            $this->_messageManager->addErrorMessage($msg);
-            $redirect->setUrl(
-                $this->_baseURL.'/checkout/onepage/failure'
-            );
-            return $redirect;
+                $redirect->setUrl($this->_baseURL.'/checkout/onepage/success');
+                // echo "<p>Thanks for verifying your identity. You can now go back and proceed to other areas of our shop: <a href='".$home_url."'>$home_url</a>";
+                // header("Location: $home_url ");
+                return $redirect;
+            case 'New':
+                // what to do with NEW?
+            case 'Processing':
+            case 'Pending':
+                echo "do something when the request is still processing (for example tell the user to come back later to this page)";
+                // @todo do something when the request is still processing (for example tell the user to come back later to this page)
+                break;
+            case 'Cancelled':
+                $msg = "You have cancelled the procedure. Please try again or contact support.";
+                $this->_messageManager->addErrorMessage($msg);
+                $redirect->setUrl(
+                    $this->_baseURL.'/checkout/onepage/failure'
+                );
+                return $redirect;
             case 'Open':
             // What to do when the request is not yet completed by the user
             // e.g.: redirect to the transactionURL.
-            $msg = "Your request is still in progress. Please complete it on this page:";
-            $msg .= $request_db->getTransactionUrl();
-            $this->_messageManager->addErrorMessage($msg);
-            $redirect->setUrl(
-                $this->_baseURL.'/checkout/onepage/failure'
-            );
-            return $redirect;
-        case 'Expired':
-            $msg = "Your request has expired. Please try again or contact support.";
-            $this->_messageManager->addErrorMessage($msg);
-            $redirect->setUrl(
-                $this->_baseURL.'/checkout/onepage/failure'
-            );
-            return $redirect;
+                $msg = "Your request is still in progress. Please complete it on this page:";
+                $msg .= $request_db->getTransactionUrl();
+                $this->_messageManager->addErrorMessage($msg);
+                $redirect->setUrl(
+                    $this->_baseURL.'/checkout/onepage/failure'
+                );
+                return $redirect;
+            case 'Expired':
+                $msg = "Your request has expired. Please try again or contact support.";
+                $this->_messageManager->addErrorMessage($msg);
+                $redirect->setUrl(
+                    $this->_baseURL.'/checkout/onepage/failure'
+                );
+                return $redirect;
         }
         $msg = "Your request has encountered an unexpected status. Please try again or contact support.";
         $this->_messageManager->addErrorMessage($msg);

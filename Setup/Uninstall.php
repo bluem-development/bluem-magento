@@ -15,12 +15,12 @@ use Magento\Framework\Setup\ModuleContextInterface;
 
 class Uninstall implements UninstallInterface
 {
-	public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
-	{
-		$setup->startSetup();
+    public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $setup->startSetup();
 
-		// $setup->getConnection()->dropTable($setup->getTable('bluem_integration_request'));
+        // $setup->getConnection()->dropTable($setup->getTable('bluem_integration_request'));
 
-		$setup->endSetup();
-	}
+        $setup->endSetup();
+    }
 }

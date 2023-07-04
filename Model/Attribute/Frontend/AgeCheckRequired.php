@@ -13,7 +13,7 @@ class AgeCheckRequired extends AbstractFrontend
 {
     /**
      * Get value
-     * 
+     *
      * @return string
      */
     public function getValue(DataObject $object): string

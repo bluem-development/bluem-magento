@@ -50,33 +50,33 @@ class RecurringData implements InstallDataInterface
             // @todo; get code from module setting if possible (maybe not because this will be executed during install..
             $attribute_code = 'agecheck_required';
 
-            if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, $attribute_code)) {
-                $eavSetup->addAttribute(
-                    \Magento\Catalog\Model\Product::ENTITY,
-                    $attribute_code,
-                    [
-                        'type' => 'int',
-                        'backend' => '',
-                        'frontend' => '',
-                        'label' => 'Age verification',
-                        'input' => 'boolean',
-                        'class' => '',
-                        'source' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
-                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
-                        'visible' => true,
-                        'required' => true,
-                        'user_defined' => false,
-                        'default' => '0',
-                        'searchable' => false,
-                        'filterable' => false,
-                        'comparable' => false,
-                        'visible_on_front' => false,
-                        'used_in_product_listing' => true,
-                        'unique' => false,
-                        'apply_to' => ''
-                    ]
-                );
-            }
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, $attribute_code)) {
+            $eavSetup->addAttribute(
+                \Magento\Catalog\Model\Product::ENTITY,
+                $attribute_code,
+                [
+                    'type' => 'int',
+                    'backend' => '',
+                    'frontend' => '',
+                    'label' => 'Age verification',
+                    'input' => 'boolean',
+                    'class' => '',
+                    'source' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
+                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                    'visible' => true,
+                    'required' => true,
+                    'user_defined' => false,
+                    'default' => '0',
+                    'searchable' => false,
+                    'filterable' => false,
+                    'comparable' => false,
+                    'visible_on_front' => false,
+                    'used_in_product_listing' => true,
+                    'unique' => false,
+                    'apply_to' => ''
+                ]
+            );
+        }
         //}
         $setup->endSetup();
     }

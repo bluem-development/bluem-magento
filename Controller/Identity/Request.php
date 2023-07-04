@@ -115,8 +115,7 @@ class Request extends BluemAction
         $request->setBrandId($this->_dataHelper->getIdentityConfig('identity_brand_id'));
 
         // Check for selected bank
-        if (!empty($selectedBank))
-        {
+        if (!empty($selectedBank)) {
             $request->selectDebtorWallet($selectedBank);
         }
 

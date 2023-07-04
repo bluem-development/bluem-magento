@@ -25,13 +25,13 @@ class Response extends BluemAction
         $requestId = (int) $this->getRequest()->getParam('requestId');
 
         if ($requestId == "" || !is_numeric($requestId)) {
-            echo $this->_getErrorMessageHtml(" Request ID niet goed teruggekregen","Kon verzoek niet aanmaken",true);
+            echo $this->_getErrorMessageHtml(" Request ID niet goed teruggekregen", "Kon verzoek niet aanmaken", true);
             exit;
         }
 
         $request_db_obj = $this->_getRequestByRequestId($requestId);
         if ($request_db_obj === false) {
-            echo $this->_getErrorMessageHtml(" NO DB ITEM FOUND with ID {$requestId}","Kon verzoek niet aanmaken",true);
+            echo $this->_getErrorMessageHtml(" NO DB ITEM FOUND with ID {$requestId}", "Kon verzoek niet aanmaken", true);
             exit;
         }
 
@@ -88,7 +88,7 @@ class Response extends BluemAction
                             You can now go back to our website.</p>"
                         );
                     }
-                break;
+                    break;
                 case 'Processing':
                 case 'Pending':
                     if ($returnUrl !== $responseUrl) {
@@ -99,7 +99,7 @@ class Response extends BluemAction
                             "Please come back later"
                         );
                     }
-                break;
+                    break;
                 case 'Cancelled':
                     if ($returnUrl !== $responseUrl) {
                         header("Location: {$returnUrl}");
@@ -109,7 +109,7 @@ class Response extends BluemAction
                             " <a href='{$this->_baseURL}bluem/identity/request'>Please try again</a>."
                         );
                     }
-                break;
+                    break;
                 case 'Open':
                     if ($returnUrl !== $responseUrl) {
                         header("Location: {$returnUrl}");
@@ -119,7 +119,7 @@ class Response extends BluemAction
                             "Please complete it on the previous page."
                         );
                     }
-                break;
+                    break;
                 case 'Expired':
                     if ($returnUrl !== $responseUrl) {
                         header("Location: {$returnUrl}");
@@ -131,7 +131,7 @@ class Response extends BluemAction
                             </a>."
                         );
                     }
-                break;
+                    break;
                 default:
                     if ($returnUrl !== $responseUrl) {
                         header("Location: {$returnUrl}");

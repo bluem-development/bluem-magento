@@ -15,7 +15,8 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
  * DefaultItem data source
  */
 class DefaultItem extends \Magento\Checkout\CustomerData\DefaultItem implements SectionSourceInterface
-{   
+{
+
     /**
      * {@inheritdoc}
      */

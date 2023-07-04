@@ -162,14 +162,14 @@ class InstallSchema implements InstallSchemaInterface
             $setup->getConnection()->createTable($table);
 
             // $setup->getConnection()->addIndex(
-            // 	$setup->getTable('bluem_integration_request'),
-            // 	$setup->getIdxName(
-            // 		$setup->getTable('bluem_integration_request'),
-            // 		['user_id','transaction_id','entrance_code','transaction_url','status' ],
-            // 		AdapterInterface::INDEX_TYPE_FULLTEXT
-            // 	),
-            // 	['user_id','transaction_id','entrance_code','transaction_url','status' ],
-            // 	AdapterInterface::INDEX_TYPE_FULLTEXT
+            //     $setup->getTable('bluem_integration_request'),
+            //     $setup->getIdxName(
+            //         $setup->getTable('bluem_integration_request'),
+            //         ['user_id','transaction_id','entrance_code','transaction_url','status' ],
+            //         AdapterInterface::INDEX_TYPE_FULLTEXT
+            //     ),
+            //     ['user_id','transaction_id','entrance_code','transaction_url','status' ],
+            //     AdapterInterface::INDEX_TYPE_FULLTEXT
             // );
         }
 

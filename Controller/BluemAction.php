@@ -28,8 +28,8 @@ use Bluem\BluemPHP\Bluem as Bluem;
 class BluemAction extends Action
 {
     /**
-    * @var PageFactory
-    */
+     * @var PageFactory
+     */
     protected $_pageFactory;
     protected $_storeManager;
     protected $_identityFactory;
@@ -38,17 +38,17 @@ class BluemAction extends Action
     protected $_bluem_environment = "test";
     
     /**
-    * @var Bluem
-    */
+     * @var Bluem
+     */
     protected $_bluem;
 
     /**
-    * @param Context $context
-    * @param PageFactory $_pageFactory
-    *
-    * @codeCoverageIgnore
-    * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-    */
+     * @param Context $context
+     * @param PageFactory $_pageFactory
+     *
+     * @codeCoverageIgnore
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         Context $context,
         PageFactory $pageFactory,
@@ -115,7 +115,7 @@ class BluemAction extends Action
      */
     protected function _setRequestData($obj, $data)
     {
-        foreach ($data as $k=>$v) {
+        foreach ($data as $k => $v) {
             $fn = "set{$k}";
             $obj->$fn($v);
         }
@@ -223,7 +223,7 @@ class BluemAction extends Action
         $requestModel = $this->_objectManager->create('Bluem\Integration\Model\Request');
         $collection = $requestModel->getCollection()->addFieldToFilter(
             $field,
-            array('eq'=> $request_id)
+            ['eq'=> $request_id]
         );
         if ($collection->count() == 0) {
             return false;
@@ -232,8 +232,9 @@ class BluemAction extends Action
         return $collection->getFirstItem();
     }
 
-    // Helper functions for layout   
-    private function _wrapSimplePage($mixed_content) {
+    // Helper functions for layout
+    private function _wrapSimplePage($mixed_content)
+    {
         $home_url = $this->_baseURL."";
         
         return "<html lang='en'><body style='font-family:Arial, sans-serif;'>
@@ -254,8 +255,8 @@ class BluemAction extends Action
      */
     protected function _getErrorMessageHtml(
         $error_details,
-        $error_header="Invalid response received", 
-        $include_cta=true
+        $error_header = "Invalid response received",
+        $include_cta = true
     ) : String {
         $error_message_html = "<h2>$error_header</h2>";
         if ($include_cta) {
@@ -264,7 +265,6 @@ class BluemAction extends Action
         $error_message_html .= "<p>$error_details</p>";
         // @todo add a go back link
         return $this->_wrapSimplePage($error_message_html);
-        
     }
     
     /**

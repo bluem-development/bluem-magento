@@ -22,21 +22,21 @@ class Data extends AbstractHelper
 {
     /**
      * The customer session
-     * 
+     *
      * @protected
      */
     protected $_customerSession;
     
     /**
      * The base URL
-     * 
+     *
      * @protected
      */
     protected $_baseURL;
 
     /**
      * Constructor
-     * 
+     *
      * @param Context $context
      * @param Session $customerSession
      * @public
@@ -113,7 +113,7 @@ class Data extends AbstractHelper
     
     /**
      * Get mandate config.
-     * 
+     *
      * @param $code
      * @param $storeId
      * @public
@@ -166,10 +166,9 @@ class Data extends AbstractHelper
          * 2: Require a regular identification, but do not check on minimum age
          * 3: Require a regular identification AND check on minimum age
          */
-        if ($identity_scenario >= 1)
-        {
-            $identity_checked = $this->_customerSession->isLoggedIn() ? 
-                $this->getBluemUserIdentified() : 
+        if ($identity_scenario >= 1) {
+            $identity_checked = $this->_customerSession->isLoggedIn() ?
+                $this->getBluemUserIdentified() :
                 $this->getBluemGuestIdentified();
             
             if ($identity_checked->status === true) {
@@ -185,8 +184,7 @@ class Data extends AbstractHelper
             /**
              * Get birthdate and define age in years.
              */
-            if (!empty($identity_checked->report->BirthDateResponse))
-            {
+            if (!empty($identity_checked->report->BirthDateResponse)) {
                 try {
                     $age_in_years = Carbon::parse($identity_checked->report->BirthDateResponse)
                         ->diffInYears(Carbon::now());
@@ -199,8 +197,7 @@ class Data extends AbstractHelper
              * Scenario 1.
              * Require a minimum age check
              */
-            if ($identity_scenario == 1)
-            {
+            if ($identity_scenario == 1) {
                 if (!empty($identity_checked->report->AgeCheckResponse)) {
                     if ($identity_checked->report->AgeCheckResponse == "true"
                         || $identity_checked->report->AgeCheckResponse == "1"
@@ -231,8 +228,7 @@ class Data extends AbstractHelper
              * Scenario 2.
              * Require a regular identification, but do not check on minimum age
              */
-            if ($identity_scenario == 2)
-            {
+            if ($identity_scenario == 2) {
                 //
             }
             
@@ -240,8 +236,7 @@ class Data extends AbstractHelper
              * Scenario 3.
              * Require a regular identification AND check on minimum age
              */
-            if ($identity_scenario == 3)
-            {
+            if ($identity_scenario == 3) {
                 /**
                  * Check the age.
                  */
@@ -266,14 +261,12 @@ class Data extends AbstractHelper
                     or contact us if you have any questions";
                 }
             }
-        }
-        else
-        {
+        } else {
             /**
              * No verification required. But check the status.
              */
-            $identity_checked = $this->_customerSession->isLoggedIn() ? 
-                $this->getBluemUserIdentified() : 
+            $identity_checked = $this->_customerSession->isLoggedIn() ?
+                $this->getBluemUserIdentified() :
                 $this->getBluemGuestIdentified();
             
             if ($identity_checked->status === true) {
@@ -432,7 +425,7 @@ class Data extends AbstractHelper
                 }
             }
         }
-        return $this->_getIdentity($identified,$rq);
+        return $this->_getIdentity($identified, $rq);
     }
 
     /**
@@ -440,7 +433,7 @@ class Data extends AbstractHelper
      *
      * @private
      */
-    private function _getIdentity($identified,$rq)
+    private function _getIdentity($identified, $rq)
     {
         $identity = new stdClass;
         $identity->status = $identified;
@@ -487,6 +480,6 @@ class Data extends AbstractHelper
                 }
             }
         }
-        return $this->_getIdentity($identified,$rq);
+        return $this->_getIdentity($identified, $rq);
     }
 }

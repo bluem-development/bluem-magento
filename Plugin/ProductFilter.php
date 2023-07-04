@@ -86,7 +86,7 @@ class ProductFilter
                             )
                         )
                     );
-                    // Always allow this product if domain is not whitelisted 
+                    // Always allow this product if domain is not whitelisted
                     // - The filter is not used when not on the whitelisted domain
                     if ($current_domain === $domain_sanitized) {
                         if ($filter_debug) {
