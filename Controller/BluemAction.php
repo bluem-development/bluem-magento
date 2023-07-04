@@ -56,15 +56,15 @@ class BluemAction extends Action
         DataHelper $dataHelper,
         Session $customerSession,
         ResourceConnection $resourceConnection,
-        ResultFactory $resultFactory,
-        StoreManagerInterface $storeManager
+        ResultFactory $resultFactory
     ) {
         $this->_pageFactory = $pageFactory;
         $this->_dataHelper = $dataHelper;
         $this->_customerSession = $customerSession;
         $this->_resourceConnection = $resourceConnection;
         $this->_resultFactory = $resultFactory;
-        $this->_storeManager = $storeManager;
+
+        $this->_storeManager = ObjectManager::getInstance()->get(\Magento\Store\Model\StoreManagerInterface::class);
 
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
 
