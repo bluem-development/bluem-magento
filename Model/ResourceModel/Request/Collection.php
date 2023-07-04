@@ -18,6 +18,6 @@ class Collection extends AbstractCollection
      */
     public function _construct()
     {
-        $this->_init(Bluem\Integration\Model\Request::class, Bluem\Integration\Model\ResourceModel\Request::class);
+        $this->_init(\Bluem\Integration\Model\Request::class, \Bluem\Integration\Model\ResourceModel\Request::class);
     }
 }
