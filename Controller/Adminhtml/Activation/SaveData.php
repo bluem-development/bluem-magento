@@ -4,6 +4,7 @@ namespace Bluem\Integration\Controller\Adminhtml\Activation;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\RedirectFactory;
@@ -20,6 +21,11 @@ class SaveData extends Action
      * @var $transportBuilder
      */
     protected $transportBuilder;
+    
+    /**
+     * @var $storeManager
+     */
+    protected $storeManager;
 
     /**
      * @var $request
@@ -31,18 +37,21 @@ class SaveData extends Action
      * 
      * @param Context $context
      * @param RedirectFactory $resultRedirectFactory
+     * @param StoreManagerInterface $storeManager
      * @param TransportBuilder $transportBuilder
      * @param RequestInterface $request
      */
     public function __construct(
         Context $context,
         RedirectFactory $resultRedirectFactory,
+        StoreManagerInterface $storeManager,
         TransportBuilder $transportBuilder,
         RequestInterface $request
     ) {
         parent::__construct($context);
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->transportBuilder = $transportBuilder;
+        $this->storeManager = $storeManager;
         $this->request = $request;
     }
 
@@ -78,7 +87,7 @@ class SaveData extends Action
 
         $transport = $this->transportBuilder
             ->setTemplateIdentifier('activation_email_bluem')
-            ->setTemplateOptions(['area' => 'adminhtml', 'store' => 1])
+            ->setTemplateOptions(['area' => 'adminhtml', 'store' => $this->storeManager->getStore()->getId()])
             ->setTemplateVars($templateVars)
             ->setFrom('general')
             ->addTo('p.meester@bluem.nl')
