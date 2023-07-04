@@ -112,7 +112,7 @@ class Display extends Template
      */
     public function getBluemRequests()
     {
-        $requestModel = ObjectManager::getInstance()->create(Bluem\Integration\Model\Request::class);
+        $requestModel = ObjectManager::getInstance()->create(\Bluem\Integration\Model\Request::class);
         $collection = $requestModel->getCollection();
         return $collection;
     }
