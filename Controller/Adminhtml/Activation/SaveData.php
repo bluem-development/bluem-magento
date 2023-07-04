@@ -7,6 +7,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\RedirectFactory;
+use Magento\Framework\App\RequestInterface;
 
 class SaveData extends Action
 {
@@ -20,6 +21,8 @@ class SaveData extends Action
      */
     protected $transportBuilder;
 
+    protected $request;
+
     /**
      * Constructor
      * 
@@ -30,11 +33,13 @@ class SaveData extends Action
     public function __construct(
         Context $context,
         RedirectFactory $resultRedirectFactory,
-        TransportBuilder $transportBuilder
+        TransportBuilder $transportBuilder,
+        RequestInterface $request
     ) {
         parent::__construct($context);
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->transportBuilder = $transportBuilder;
+        $this->request = $request;
     }
 
     /**
@@ -42,10 +47,10 @@ class SaveData extends Action
      */
     public function execute()
     {
-        $post = (array)$this->getRequest()->getPost();
+        $postData = $this->request->getPostValue();
 
         // Send email with form data
-        $this->sendEmail($post);
+        $this->sendEmail($postData);
 
         // Redirect to a success page
         /** @var Redirect $resultRedirect */
