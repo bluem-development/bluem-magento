@@ -36,4 +36,12 @@ class SubmitForm extends Action
         $resultPage->getConfig()->getTitle()->set(__('Submit Form'));
         return $resultPage;
     }
+
+    /**
+     * Is allowed
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Bluem_Integration::menu');
+    }
 }

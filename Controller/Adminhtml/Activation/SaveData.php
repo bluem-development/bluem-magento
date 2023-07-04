@@ -51,7 +51,9 @@ class SaveData extends Action
      */
     public function execute()
     {
+        var_dump($this->request);
         $postData = $this->request->getPostValue();
+        var_dump($postData);
 
         // Send email with form data
         $this->sendEmail($postData);
@@ -84,5 +86,13 @@ class SaveData extends Action
             ->getTransport();
 
         $transport->sendMessage();
+    }
+
+    /**
+     * Is allowed
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Bluem_Integration::menu');
     }
 }
