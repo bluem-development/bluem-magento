@@ -50,7 +50,7 @@ class SaveData extends Action
         // Redirect to a success page
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        $resultRedirect->setPath('module/activation/success');
+        $resultRedirect->setPath('bluemadmin/activation/success');
         return $resultRedirect;
     }
 
