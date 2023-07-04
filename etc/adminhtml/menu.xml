@@ -9,6 +9,14 @@
             resource="Magento_Backend::content"
            />
         <add id="Bluem_Integration::menu_item"
+            title="Activation"
+            module="Bluem_Integration"
+            sortOrder="9"
+            action="bluemadmin/activation/index"
+            resource="Bluem_Integration::menu_item"
+            parent="Bluem_Integration::menu"
+           />
+        <add id="Bluem_Integration::menu_item"
             title="Identity requests"
             module="Bluem_Integration"
             sortOrder="10"
