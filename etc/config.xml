@@ -5,7 +5,7 @@
             <general>
                 <enable>1</enable>
                 <environment>test</environment>
-                <sender_id>S0001</sender_id>
+                <sender_id>S001</sender_id>
                 <test_token></test_token>
                 <prod_token></prod_token>
             </general>
