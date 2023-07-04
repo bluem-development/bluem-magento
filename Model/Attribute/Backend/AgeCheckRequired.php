@@ -17,7 +17,7 @@ class AgeCheckRequired extends AbstractBackend
      * @param Product $object
      * @return bool
      */
-    public function validate($object): boolean
+    public function validate($object): bool
     {
         // $value = $object->getData($this->getAttribute()->getAttributeCode());
         // if ( ($object->getAttributeSetId() == 10) && ($value == 'wool')) {
