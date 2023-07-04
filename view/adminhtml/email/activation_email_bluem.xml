@@ -1,0 +1,3 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="activation_email_bluem" label="Activation Email for Bluem" file="activation_email_bluem.html" type="html" module="Bluem_Integration" area="adminhtml"/>
+</config>
