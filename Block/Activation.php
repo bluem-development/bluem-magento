@@ -23,6 +23,6 @@ class Activation extends Template
      */
     public function getFormAction()
     {
-        return $this->getUrl('module/activation/savedata', ['_secure' => true]);
+        return $this->getUrl('bluemadmin/activation/savedata', ['_secure' => true]);
     }
 }
