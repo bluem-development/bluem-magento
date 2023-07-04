@@ -21,6 +21,9 @@ class SaveData extends Action
      */
     protected $transportBuilder;
 
+    /**
+     * @var $request
+     */
     protected $request;
 
     /**
@@ -29,6 +32,7 @@ class SaveData extends Action
      * @param Context $context
      * @param RedirectFactory $resultRedirectFactory
      * @param TransportBuilder $transportBuilder
+     * @param RequestInterface $request
      */
     public function __construct(
         Context $context,
