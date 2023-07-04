@@ -49,7 +49,7 @@ class Data extends AbstractHelper
         $this->_customerSession = $customerSession;
 
         $this->_storeManager = ObjectManager::getInstance()
-            ->get(Magento\Store\Model\StoreManagerInterface::class);
+            ->get(\Magento\Store\Model\StoreManagerInterface::class);
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
     }
     
