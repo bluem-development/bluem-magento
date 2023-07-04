@@ -87,7 +87,7 @@ class SaveData extends Action
 
         $transport = $this->transportBuilder
             ->setTemplateIdentifier('activation_email_bluem')
-            ->setTemplateOptions(['area' => 'adminhtml', 'store' => $this->storeManager->getStore()->getId()])
+            ->setTemplateOptions(['area' => 'adminhtml', 'store' => 1])
             ->setTemplateVars($templateVars)
             ->setFrom('general')
             ->addTo('p.meester@bluem.nl')
