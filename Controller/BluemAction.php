@@ -18,6 +18,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 use stdClass;
 use Exception;
@@ -55,15 +56,16 @@ class BluemAction extends Action
         DataHelper $dataHelper,
         Session $customerSession,
         ResourceConnection $resourceConnection,
-        ResultFactory $resultFactory
+        ResultFactory $resultFactory,
+        StoreManagerInterface $storeManager
     ) {
         $this->_pageFactory = $pageFactory;
         $this->_dataHelper = $dataHelper;
         $this->_customerSession = $customerSession;
         $this->_resourceConnection = $resourceConnection;
         $this->_resultFactory = $resultFactory;
+        $this->_storeManager = $storeManager;
 
-        $this->_storeManager = ObjectManager::getInstance()->get('\Magento\Store\Model\StoreManagerInterface');
         $this->_baseURL =  $this->_storeManager->getStore()->getBaseUrl();
 
         $bluem_config = new stdClass;
