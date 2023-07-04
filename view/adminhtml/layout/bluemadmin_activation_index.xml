@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Bluem\Integration\Block\Activation" name="activation_index" template="Bluem_Integration::activation.phtml" cacheable="false" />
+            <block class="Bluem\Integration\Block\Activation" template="Bluem_Integration::activatio_index.phtml" cacheable="false" />
         </referenceContainer>
     </body>
 </page>
