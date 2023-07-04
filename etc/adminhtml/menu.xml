@@ -8,7 +8,7 @@
             sortOrder="50"
             resource="Magento_Backend::content"
            />
-        <add id="Bluem_Integration::menu_item"
+        <add id="Bluem_Integration::activation"
             title="Activation"
             module="Bluem_Integration"
             sortOrder="9"
@@ -16,7 +16,7 @@
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-        <add id="Bluem_Integration::menu_item"
+        <add id="Bluem_Integration::identity"
             title="Identity requests"
             module="Bluem_Integration"
             sortOrder="10"
@@ -24,7 +24,7 @@
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-        <add id="Bluem_Integration::menu_item2"
+        <add id="Bluem_Integration::payments"
             title="Payments requests"
             module="Bluem_Integration"
             sortOrder="11"
@@ -32,7 +32,7 @@
             resource="Bluem_Integration::menu_item"
             parent="Bluem_Integration::menu"
            />
-        <add id="Bluem_Integration::menu_item3"
+        <add id="Bluem_Integration::mandates"
             title="Mandates requests"
             module="Bluem_Integration"
             sortOrder="12"
