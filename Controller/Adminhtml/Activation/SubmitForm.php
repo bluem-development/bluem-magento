@@ -1,9 +1,9 @@
 <?php
 
-namespace Bluem\Integration\Controller\Activation;
+namespace Bluem\Integration\Controller\Adminhtml\Activation;
 
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
 class SubmitForm extends Action
