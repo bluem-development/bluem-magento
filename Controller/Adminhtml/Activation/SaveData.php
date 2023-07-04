@@ -8,7 +8,6 @@ use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\Area;
 
 class SaveData extends Action
 {
@@ -79,7 +78,7 @@ class SaveData extends Action
 
         $transport = $this->transportBuilder
             ->setTemplateIdentifier('activation_email_bluem')
-            ->setTemplateOptions(['area' => Area::AREA_ADMINHTML, 'store' => 1])
+            ->setTemplateOptions(['area' => 'adminhtml', 'store' => 1])
             ->setTemplateVars($templateVars)
             ->setFrom('general')
             ->addTo('p.meester@bluem.nl')
