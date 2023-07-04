@@ -8,6 +8,7 @@ use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\Area;
 
 class SaveData extends Action
 {
@@ -52,7 +53,6 @@ class SaveData extends Action
     public function execute()
     {
         $postData = $this->request->getPostValue();
-        var_dump($postData);
 
         // Send email with form data
         $this->sendEmail($postData);
@@ -77,8 +77,9 @@ class SaveData extends Action
             'email' => $data['email'],
         ];
 
-        $transport = $this->transportBuilder->setTemplateIdentifier('activation_email_bluem')
-            ->setTemplateOptions(['area' => 'frontend', 'store' => 1])
+        $transport = $this->transportBuilder
+            ->setTemplateIdentifier('activation_email_bluem')
+            ->setTemplateOptions(['area' => Area::AREA_ADMINHTML, 'store' => 1])
             ->setTemplateVars($templateVars)
             ->setFrom('general')
             ->addTo('p.meester@bluem.nl')
