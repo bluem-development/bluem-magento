@@ -51,7 +51,6 @@ class SaveData extends Action
      */
     public function execute()
     {
-        var_dump($this->request);
         $postData = $this->request->getPostValue();
         var_dump($postData);
 
