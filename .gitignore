@@ -1,6 +1,7 @@
 .composer
 .DS_Store
 _notes
+.idea
 
 vendor
 
